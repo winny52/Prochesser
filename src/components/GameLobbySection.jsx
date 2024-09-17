@@ -12,7 +12,7 @@ const GameLobbySection =() => {
         </p>
         <a
           href="/game-lobby"
-          className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-3 px-6 rounded-full transition duration-300"
+          className="bg-yellow-500 hover:text-black hover:bg-yellow-600 text-black font-bold py-3 px-6 rounded-full transition duration-300"
         >
           Explore the Game Lobby
         </a>

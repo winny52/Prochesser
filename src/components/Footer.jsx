@@ -7,10 +7,10 @@ const Footer = () => {
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 px-4">
         
         <div>
-          <h3 className="text-lg font-bold mb-4">Resources</h3>
+          <h3 className="text-lg  text-yellow-600 font-bold mb-4">Resources</h3>
           <ul>
             <li className="mb-2">
-              <Link to="/classes" className="text-black hover:text-yellow-500">Sign Up for Classes</Link>
+              <Link to="/classes" className="hover:text-yellow-500">Sign Up for Classes</Link>
             </li>
             <li className="mb-2">
               <Link to="/how-it-works" className="text-black hover:text-yellow-500">How It Works</Link>
@@ -28,7 +28,7 @@ const Footer = () => {
         </div>
 
         <div>
-          <h3 className="text-lg font-bold mb-4">Earn Money</h3>
+          <h3 className="text-lg text-yellow-600 font-bold mb-4">Earn Money</h3>
           <ul>
             <li className="mb-2">
               <Link to="/game-lobby" className=" text-black hover:text-yellow-500">Play Chess</Link>
@@ -40,7 +40,7 @@ const Footer = () => {
         </div>
 
         <div>
-          <h3 className="text-lg font-bold mb-4">Contact Us</h3>
+          <h3 className="text-lg font-bold  text-yellow-600 mb-4">Contact Us</h3>
           <p className="mb-2">
             <a href="/live-chat" className=" text-black hover:text-yellow-500">Live Chat</a>
           </p>
