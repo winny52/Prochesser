@@ -3,7 +3,7 @@ import backgroundVideo from '../assets/HeroVideo.mp4'; // Make sure to replace w
 
 const HeroSection = () => {
   return (
-    <section className="relative w-screen h-screen bg-gradient-to-b from-gray-900 to-black text-white h-screen w-screen overflow-hidden">
+    <section className="relative w-screen h-screen bg-gradient-to-b from-gray-900 to-black text-white  overflow-hidden">
       <div className="absolute inset-0">
         {/* Dark overlay for contrast */}
         <div className="absolute inset-0 bg-black opacity-50"></div>
@@ -18,22 +18,22 @@ const HeroSection = () => {
         />
       </div>
 
-      <div className="relative container mx-auto  p-0 px-0 flex flex-col md:flex-row items-center justify-center h-full">
+      <div className="relative container mx-auto  p-0 px-0 flex flex-col md:flex-row items-center justify-center h-full z-10 ">
         {/* Text Column */}
-        <div className="flex-1 text-center md:text-left md:pr-6 mb-6 md:mb-0 z-10">
-          <h1 className="text-4xl md:text-6xl font-bold">
+        <div className="flex-1 text-left mb-6 md:mb-0 z-10">
+          <h1 className="text-5xl text-6xl font-bold">
             Turn Every Checkmate Into a Payday: <br /> Compete, Conquer, Cash In
           </h1>
 
-          <p className="mt-6 text-lg md:text-xl max-w-2xl mx-auto md:mx-0">
+          <p className="mt-6 text-3xl md:text-xl max-w-2xl mx-auto md:mx-0">
             Immerse yourself in a world where strategy meets reward. At ProChesser, every checkmate isn't just a win on the board; it's a victory for your wallet. Experience the exhilaration of classic chess with the added thrill of earning with every victorious move. Are you ready to play?
           </p>
 
           <div className="mt-8 flex flex-col items-center md:items-start space-y-4">
-            <a href="/account" className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-3 px-6 rounded-full transition duration-300">
+            <a href="/signup" className="bg-yellow-500 hover:bg-yellow-600  text-black hover:text-black font-bold py-3 px-6 rounded-full transition duration-300">
               Sign Up & Start Playing Now
             </a>
-            <a href="/learn-more" className="bg-transparent border border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-black font-bold py-3 px-6 rounded-full transition duration-300">
+            <a href="/about" className="bg-transparent border border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-black font-bold py-3 px-6 rounded-full transition duration-300">
               Learn More
             </a>
           </div>

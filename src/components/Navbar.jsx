@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   return (
-    <nav className="bg-white">
+    <nav className="bg-white w-screen h-32">
       {/* Top Row */}
       <div className="flex justify-between items-center p-4">
         {/* Logo on the left */}
@@ -63,14 +63,7 @@ const Navbar = () => {
               FAQs
             </Link>
           </li>
-          <li>
-            <Link 
-              to="/testimonials" 
-              className="text-black hover:text-yellow-500 transition-colors duration-300"
-            >
-              Testimonials
-            </Link>
-          </li>
+         
           <li>
             <Link 
               to="/blog" 

@@ -2,9 +2,9 @@ import React from 'react';
 
 const FrequentlyAskedQuestions =() => {
   return (
-    <section className="bg-gray-100 py-16 px-6 md:px-12">
+    <section className="bg-gray-100 w-screen mt-2 mb-4  md:px-12">
       <div className="container mx-auto">
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-800 text-center mb-10">
+        <h2 className="text-3xl md:text-4xl font-bold text-yellow-600 text-center mb-10">
           Frequently Asked Questions
         </h2>
         <div className="space-y-8">

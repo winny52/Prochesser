@@ -7,7 +7,7 @@ const HowItWorks = () => {
         <div className="absolute w-screen h-full bg-gray-100 opacity-50"></div>
       </div>
       <div className="relative container mx-auto">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+        <h2 className="text-3xl md:text-4xl  text-yellow-600 font-bold text-center mb-12">
           How It Works
         </h2>
         
