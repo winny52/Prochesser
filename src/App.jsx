@@ -12,9 +12,11 @@ import About from './components/About'
 import Testimonials from './components/Testimonials'
 import Newsletter from './components/Newsletter'
 import HowItWorks from './components/Howitworks'
+import ScrollToTop from './components/ScrollTop'
 function App() {
   return (
     <Router>
+      <ScrollToTop/>
       <div>
         <Navbar />
         <Routes>
