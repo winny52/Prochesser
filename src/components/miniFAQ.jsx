@@ -1,6 +1,13 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const FAQ = () => {
+  const navigate = useNavigate();
+
+  const handleExploreMore = () => {
+    navigate('/faqs');
+  };
+
   return (
     <section className="bg-gray-100 py-16 px-6 md:px-12">
       <div className="container mx-auto">
@@ -11,7 +18,6 @@ const FAQ = () => {
         </div>
 
         <div className="space-y-8 text-black">
-          {/* FAQ Items */}
           <div>
             <h3 className="text-xl font-semibold text-black mb-2">
               What Kind of Rewards Can I Earn From Playing?
@@ -55,7 +61,10 @@ const FAQ = () => {
         </div>
 
         <div className="mt-10 text-center">
-          <button className="bg-yellow-500 text-black font-bold py-3 px-6 rounded-full hover:bg-yellow-600 transition-colors">
+          <button
+            onClick={handleExploreMore}
+            className="bg-yellow-500 text-black font-bold py-3 px-6 rounded-full hover:bg-yellow-600 transition-colors"
+          >
             Explore More FAQs
           </button>
         </div>
