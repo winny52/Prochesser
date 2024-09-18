@@ -11,6 +11,7 @@ import Footer from './components/Footer'
 import About from './components/About'
 import Testimonials from './components/Testimonials'
 import Newsletter from './components/Newsletter'
+import HowItWorks from './components/Howitworks'
 function App() {
   return (
     <Router>
@@ -24,6 +25,7 @@ function App() {
           <Route path="/about" element={<About/>} />
           <Route path="/testimonials" element={<Testimonials/>} />
           <Route path="/subscribe" element ={<Newsletter/>} />
+          <Route path="/how-it-works" element={<HowItWorks/>}/>
         </Routes>
         <Footer/>
       </div>

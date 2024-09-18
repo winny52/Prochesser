@@ -31,7 +31,7 @@ const Testimonials = () => {
     if (!isPaused) {
       const interval = setInterval(() => {
         setCurrentIndex((prevIndex) => (prevIndex + 1) % testimonialsData.length);
-      }, 5000); // Change testimonial every 3 seconds
+      }, 5000); // Change testimonial every 5 seconds
 
       return () => clearInterval(interval);
     }
@@ -44,34 +44,34 @@ const Testimonials = () => {
   const currentTestimonial = testimonialsData[currentIndex];
 
   return (
-    <section className="bg-gray-100 m-0 w-screen py-16 px-6 md:px-12">
+    <section className="bg-gray-100 py-16 px-6 md:px-12">
       <div className="container mx-auto">
-        <div className="grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* First Column */}
-          <div className="items-center text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-yellow-600 mb-6 md:mb-10">
+          <div className="text-center md:text-left mb-8 md:mb-0">
+            <h2 className="text-3xl md:text-4xl font-bold text-yellow-600 mb-4 md:mb-6">
               Testimonials
             </h2>
-            <h2 className="text-3xl md:text-4xl font-bold text-black mb-6 md:mb-10">
+            <h3 className="text-2xl md:text-3xl font-bold text-black">
               Hear From Our Victorious Players
-            </h2>
+            </h3>
           </div>
 
           {/* Second Column - Display one testimonial at a time */}
-          <div className="grid grid-cols-1">
+          <div className="flex items-center justify-center">
             <blockquote
-              className="bg-black p-6 rounded-lg shadow-md text-white italic cursor-pointer"
+              className="bg-black p-6 rounded-lg shadow-md text-white italic cursor-pointer max-w-lg"
               onClick={handleTestimonialClick} // Pause on click
             >
               "{currentTestimonial.quote}"
-              <span className="block mt-2 text-gray-900 font-semibold">
+              <span className="block mt-2 text-gray-300 font-semibold">
                 – {currentTestimonial.author}
               </span>
             </blockquote>
           </div>
         </div>
         <div className="mt-10 text-center">
-          <button className="bg-yellow-500 text-black font-semibold py-3 px-6 rounded-full">
+          <button className="bg-yellow-500 text-black font-semibold py-3 px-6 rounded-full hover:bg-yellow-600 transition-colors">
             Join a Community Where Your Skills Pay Off
           </button>
         </div>
