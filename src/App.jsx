@@ -13,6 +13,10 @@ import Testimonials from './components/Testimonials'
 import Newsletter from './components/Newsletter'
 import HowItWorks from './components/Howitworks'
 import ScrollToTop from './components/ScrollTop'
+import Register from './classes/Register'
+import SignIn from './classes/Signin'
+import Dashboard from './classes/Dashboard'
+
 function App() {
   return (
     <Router>
@@ -28,6 +32,10 @@ function App() {
           <Route path="/testimonials" element={<Testimonials/>} />
           <Route path="/subscribe" element ={<Newsletter/>} />
           <Route path="/how-it-works" element={<HowItWorks/>}/>
+          <Route path="/start-learning" element={<Register/>}/>
+          <Route path="/signin" element={<SignIn/>} />
+          <Route path="/dashboard" element={<Dashboard/>} />
+
         </Routes>
         <Footer/>
       </div>
