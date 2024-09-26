@@ -1,21 +1,40 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handleSignIn = (e) => {
+  const handleSignIn = async (e) => {
     e.preventDefault();
-    // Basic client-side validation (you can extend this)
     if (!email || !password) {
       setError('Please fill out both fields.');
       return;
     }
     setError('');
 
-    // Handle sign-in logic here, e.g., sending credentials to the server
-    console.log('Sign in with', { email, password });
+    try {
+      // Make a POST request to the custom WordPress API endpoint to authenticate the user
+      const response = await axios.post('http://localhost/wordpress/wp-json/jwt-auth/v1/login', {
+        username: email,
+        password: password,
+      });
+
+      const token = response.data.token; // Store the token from the response
+
+      // Store the token in local storage
+      localStorage.setItem('token', token);
+      // Optionally, store user info if returned
+      // localStorage.setItem('userDetails', JSON.stringify(response.data));
+
+      console.log('User signed in successfully', response.data);
+      // Redirect to dashboard or another page here
+    } catch (error) {
+      // Handle errors (e.g., invalid credentials)
+      setError('Invalid email or password.');
+      console.error('Sign-in error:', error);
+    }
   };
 
   return (

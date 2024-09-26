@@ -7,7 +7,7 @@ const Blog = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    axios.get('https://yourdomain.com/wp-json/wp/v2/posts')
+    axios.get('http://localhost/wordpress/wp-json/wp/v2/posts')
       .then(response => {
         setPosts(response.data);
         setLoading(false);
@@ -23,16 +23,16 @@ const Blog = () => {
 
   return (
     <div>
-      <h1>Blog Posts</h1>
-      <ul>
-        {posts.map(post => (
-          <li key={post.id}>
-            <h2>{post.title.rendered}</h2>
-            <div dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }}></div>
-            <a href={post.link}>Read more</a>
-          </li>
-        ))}
-      </ul>
+      <h1 classname="text-yellow-600"> Posts</h1>
+      <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    {posts.map(post => (
+      <li key={post.id} className="border p-4 rounded-lg shadow-md">
+        <h2 className="text-xl font-semibold mb-2">{post.title.rendered}</h2>
+        <div className="mb-4" dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }}></div>
+        <a href={post.link} className="text-yellow-500 hover:underline">Read more</a>
+      </li>
+    ))}
+  </ul>
     </div>
   );
 };

@@ -74,7 +74,7 @@ const Navbar = () => {
           </li>
           <li>
             <Link 
-              to="/start-learning" 
+              to="/learnchess" 
               className="text-black hover:text-yellow-500 transition-colors duration-300"
             >
               Learn Chess
