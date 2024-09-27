@@ -54,11 +54,11 @@ const FaqsSection =()=> {
 
   return (
     <section className="faqs-section">
-      <h2>FAQs</h2>
+      <h2 className='   text-3xl  font-bold mt-6 mb-6' >Frequently Asked Questions</h2>
       <ul>
         {faqs.map((faq, index) => (
           <li key={index}>
-            <h3>{faq.question}</h3>
+            <h3 className='text-xl font-semibold'>{faq.question}</h3>
             <p>{faq.answer}</p>
           </li>
         ))}

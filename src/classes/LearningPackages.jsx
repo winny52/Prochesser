@@ -43,38 +43,27 @@ const LearningSection =()=> {
     }
   ];
 
-  const resources = [
-    'Interactive Video Lessons',
-    'Chess Puzzles & Daily Drills',
-    'Personalized Game Analysis',
-    'Live Practice Games & Competitive Play'
-  ];
-
+  
+ 
   return (
     <section className="learning-section">
-      <h2>Our Learning Packages and Resources</h2>
-      <div className="package-list">
+      <h2 className="text-3xl font-bold mb-4">Our Learning Packages and Resources</h2>
+      <div className="package-grid grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {packages.map((packageData, index) => (
-          <div className="package" key={index}>
-            <h3>{packageData.name}</h3>
-            <p>{packageData.price}</p>
-            <p>{packageData.description}</p>
-            <ul>
+          <div className="package-card border rounded-lg p-4" key={index}>
+            <h3 className="text-2xl font-semibold mb-2">{packageData.name}</h3>
+            <p className="text-lg mb-4">{packageData.price}</p>
+            <p className="text-gray-700 mb-4">{packageData.description}</p>
+            <ul className="list-none space-y-2">
               {packageData.includedMaterials.map((material, i) => (
-                <li key={i}>{material}</li>
+                <li className="text-gray-600" key={i}>{material}</li>
               ))}
             </ul>
-            <button className="cta-button">{packageData.cta}</button>
+            <button className="bg-yellow-600 text-white font-bold py-2 px-4 rounded-full mt-4 hover:bg-blue-600">
+              {packageData.cta}
+            </button>
           </div>
         ))}
-      </div>
-      <div className="resource-list">
-        <h2>Learning Tools & Resources</h2>
-        <ul>
-          {resources.map((resource, index) => (
-            <li key={index}>{resource}</li>
-          ))}
-        </ul>
       </div>
     </section>
   );
