@@ -6,17 +6,23 @@ const Newsletter = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Logic  form submission
+    // Logic for form submission
     console.log("Newsletter subscription:", email);
 
-    
     setEmail("");
     setMessage("Thank you for subscribing!");
   };
 
   return (
-    <div className="bg-gray-100 p-6 rounded-lg shadow-md">
-      <h3 className="text-xl font-bold text-center mb-4">Subscribe to Our Newsletter</h3>
+    <section className="pt-32 relative w-screen bg-gray-100 text-black py-16 px-6 mx-auto">
+
+
+     <div className="pt-20 text-center mb-12">
+          <h2 className="text-4xl font-bold text-yellow-600">
+           Subscribe to Our Newsletter
+          </h2>
+        </div>
+
       <form onSubmit={handleSubmit} className="flex flex-col items-center">
         <input
           type="email"
@@ -24,17 +30,20 @@ const Newsletter = () => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          className="w-full max-w-md px-4 py-2 mb-4 border rounded shadow-sm focus:outline-none focus:border-blue-500"
+          className="w-3/4 px-4 py-3 mb-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
         />
         <button
           type="submit"
-          className="bg-yellow-500 text-black py-2 px-6 rounded-full hover:bg-yellow-600 transition-colors"
+          className="w-3/4 bg-yellow-500 text-black font-semibold py-3 px-6 rounded-full hover:bg-yellow-600 hover:text-white transition-colors duration-300"
         >
           Subscribe
         </button>
-        {message && <p className="mt-4 text-green-600">{message}</p>}
+        {message && (
+          <p className="mt-4 text-green-600 font-medium text-center">{message}</p>
+        )}
       </form>
-    </div>
+
+    </section>
   );
 };
 

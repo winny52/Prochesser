@@ -11,9 +11,8 @@ import Guide from "./Guide";
 const Homepage =()=> {
     return (
         
-        <div w-full mx-auto >
-            <HeroSection/> 
-
+        <div className="w-full">
+        <HeroSection/> 
         <HowItWorks/>
         <GameLobbySection/>
         <WhyChooseProChesser/>

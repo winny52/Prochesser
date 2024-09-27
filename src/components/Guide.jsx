@@ -5,7 +5,7 @@ const Guide = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="bg-gray-100 p-8 rounded-lg shadow-md mx-auto max-w-4xl">
+    <div className="bg-black-100 p-8 rounded-lg shadow-md mx-auto ">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* First Column */}
         <section className="border-b md:border-r md:border-b-0 border-gray-300 pb-8 md:pb-0 md:pr-4">
@@ -16,7 +16,7 @@ const Guide = () => {
           <div className="text-center mt-4">
             <button
               onClick={() => navigate("/start-learning")}
-              className="bg-yellow-500 text-black py-2 px-6 rounded-full hover:bg-yellow-600 transition-colors"
+              className="bg-yellow-500 text-black py-2 px-6 rounded-full hover:bg-yellow-600 hover:text-white font-bold transition-colors"
             >
               Start Learning
             </button>
@@ -32,7 +32,7 @@ const Guide = () => {
           <div className="text-center mt-4">
             <button
               onClick={() => navigate("/join-now")}
-              className="bg-yellow-500 text-black py-2 px-6 rounded-full hover:bg-yellow-600 transition-colors"
+              className="bg-yellow-500 text-black py-2 px-6 rounded-full hover:bg-yellow-600 hover:text-white font-bold  transition-colors"
             >
               Join Now
             </button>
@@ -48,7 +48,7 @@ const Guide = () => {
           <div className="text-center mt-4">
             <button
               onClick={() => navigate("/subscribe")}
-              className="bg-yellow-500 text-black py-2 px-6 rounded-full hover:bg-yellow-600 transition-colors"
+              className="bg-yellow-500 text-black py-2 px-6 rounded-full hover:bg-yellow-600 hover:text-white font-bold transition-colors"
             >
               Subscribe
             </button>

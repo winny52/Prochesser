@@ -52,26 +52,37 @@ const Testimonials = () => {
             <h2 className="text-3xl md:text-4xl font-bold text-yellow-600 mb-4 md:mb-6">
               Testimonials
             </h2>
-            <h3 className="text-2xl md:text-3xl font-bold text-black">
+            <h3 className="text-2xl md:text-3xl font-bold text-black mb-4">
               Hear From Our Victorious Players
             </h3>
+            <p className="text-lg text-gray-600">
+              Discover what our players have to say about their journey with ProChesser!
+            </p>
           </div>
 
           {/* Second Column - Display one testimonial at a time */}
           <div className="flex items-center justify-center">
             <blockquote
-              className="bg-black p-6 rounded-lg shadow-md text-white italic cursor-pointer max-w-lg"
+              className="bg-gradient-to-r from-yellow-500 to-yellow-600 p-6 rounded-lg shadow-md text-white italic cursor-pointer max-w-lg transition-transform transform hover:scale-105"
               onClick={handleTestimonialClick} // Pause on click
+              aria-label={`Testimonial from ${currentTestimonial.author}`} // Accessibility
+              role="blockquote" // Accessibility
             >
               "{currentTestimonial.quote}"
-              <span className="block mt-2 text-gray-300 font-semibold">
+              <span className="block mt-4 text-gray-200 font-semibold">
                 – {currentTestimonial.author}
               </span>
             </blockquote>
           </div>
         </div>
+
+        {/* Call to Action Button */}
         <div className="mt-10 text-center">
-          <button className="bg-yellow-500 text-black font-semibold py-3 px-6 rounded-full hover:bg-yellow-600 transition-colors">
+          <button 
+              className="bg-yellow-500 hover:bg-yellow-600 text-black hover:text-white font-bold py-4 px-8 rounded-full shadow-lg transition-transform transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-yellow-300 focus:ring-opacity-50"
+              onClick={() => alert("Join Us!")} // Example action
+            aria-label="Join the community where your skills pay off" // Accessibility
+          >
             Join a Community Where Your Skills Pay Off
           </button>
         </div>
