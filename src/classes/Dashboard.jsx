@@ -39,6 +39,7 @@ const Dashboard = () => {
   if (error) return <p>{error}</p>;
 
   return (
+    
     <div className="min-h-screen bg-gray-100 p-6">
       <div className="max-w-5xl mx-auto bg-white p-8 rounded-lg shadow-lg">
         <h1 className="text-3xl font-bold mb-6 text-center text-yellow-600">Dashboard</h1>

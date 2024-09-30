@@ -46,6 +46,7 @@ const Dashboard = () => {
   ];
 
   return (
+    <section className="relative w-screen mx-auto">
     <div className='w-full'>
       
       <WelcomeBanner userName={user.name} />
@@ -54,6 +55,7 @@ const Dashboard = () => {
       <LearningTools />
       <SupportSection />
     </div>
+    </section>
   );
 };
 
