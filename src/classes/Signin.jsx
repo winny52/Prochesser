@@ -38,7 +38,8 @@ const SignIn = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white p-4">
+    <section className="pt-12 relative w-screen bg-black text-black py-16 px-6 mx-auto">
+    <div className="flex w-full justify-center items-center min-h-screen text-white p-4">
       <div className="bg-black p-8 rounded-lg shadow-lg max-w-md w-full">
         <h2 className="text-3xl font-extrabold text-center text-yellow-500 animate-pulse mb-6">
           Welcome Back! Sign In
@@ -70,7 +71,7 @@ const SignIn = () => {
 
           <button
             type="submit"
-            className="w-full bg-yellow-500 text-black font-bold py-2 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105 hover:bg-yellow-400"
+            className="w-full bg-yellow-500 text-black font-bold py-2 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105 hover:bg-yellow-600"
           >
             {error ? 'Retry' : 'Sign In'}
           </button>
@@ -78,12 +79,13 @@ const SignIn = () => {
 
         <p className="text-center text-gray-400 mt-4">
           Don't have an account?{' '}
-          <a href="/register" className="text-yellow-500 hover:text-yellow-400 underline">
+          <a href="/register" className="text-yellow-500 hover:text-yellow-600 underline">
             Register
           </a>
         </p>
       </div>
     </div>
+    </section>
   );
 };
 

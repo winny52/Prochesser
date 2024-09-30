@@ -61,12 +61,13 @@ const Register = () => {
   };
 
   return (
-    <div className="flex  w-full justify-center items-center min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white mt-32 ">
+    <section className="pt-32 relative w-screen bg-black text-black py-16 px-6 mx-auto">
+    <div className="flex  w-full justify-center items-center min-h-screen text-white ">
       <form
         onSubmit={handleSubmit}
-        className="bg-black p-8 rounded-lg shadow-lg w-full w-full space-y-6 md:space-y-8"
+        className="bg-black p-8 rounded-lg shadow-md  w-96 space-y-6 md:space-y-8"
       >
-        <h2 className="text-3xl font-extrabold text-center text-yellow-500 animate-pulse">Sign Up</h2>
+        <h2 className="text-2xl font-extrabold text-center text-yellow-500 animate-pulse">Sign Up</h2>
 
         {/* Display error or success message */}
         {error && <p className="text-red-500 text-center">{error}</p>}
@@ -171,7 +172,7 @@ const Register = () => {
         {/* Submit Button */}
         <button
           type="submit"
-          className="w-full bg-yellow-500 text-black font-bold py-2 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105 hover:bg-yellow-400"
+          className="w-full bg-yellow-500 text-black font-bold py-2 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105 hover:bg-yellow-600"
           disabled={loading}
         >
           {loading ? 'Signing Up...' : 'Sign Up'}
@@ -180,12 +181,13 @@ const Register = () => {
         {/* Login Link */}
         <p className="text-center text-white mt-4">
           Already have an account?{' '}
-          <Link to="/signin" className="text-yellow-500 hover:text-yellow-400 underline">
+          <Link to="/signin" className="text-yellow-500 hover:text-yellow-600 underline">
             Login
           </Link>
         </p>
       </form>
     </div>
+    </section>
   );
 };
 
