@@ -1,188 +1,85 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate
 import { FaBars, FaTimes } from 'react-icons/fa'; // Importing icons for the mobile menu
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate(); // Initialize the navigate function
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
+  const toggleMenu = () => setIsOpen(!isOpen);
+
+  const handleSignupClick = () => {
+    // Navigate to the signup page when button is clicked
+    navigate('/signup');
+  };
+
+  const handleLoginClick = () => {
+    // Navigate to the login page when button is clicked
+    navigate('/login');
   };
 
   return (
-    <nav className="bg-white w-full fixed top-0 left-0 right-0 z-20 shadow-md">
-      {/* Top Row */}
-      <div className="flex justify-between items-center p-4">
-        {/* Logo on the left */}
-        <div className="text-lg font-bold">
-          <Link to="/" className="text-black hover:text-yellow-500 transition-colors duration-300">
-            ProChesser
-          </Link>
-        </div>
+    <nav className="bg-white w-full fixed top-0 z-20 shadow-md">
+      <div className="flex justify-between mx-auto items-center p-4">
+        {/* Logo */}
+        <Link to="/" className="text-lg font-bold text-black hover:text-yellow-500">
+          ProChesser
+        </Link>
 
-        {/* Hamburger menu for small screens */}
-        <div className="block sm:hidden">
-          <button onClick={toggleMenu} className="text-black focus:outline-none">
+        {/* Hamburger Menu for small screens */}
+        <div className="sm:hidden">
+          <button onClick={toggleMenu} className="focus:outline-none">
             {isOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
           </button>
         </div>
 
-        {/* Sign Up and Login links for larger screens */}
+        {/* Buttons for larger screens */}
         <div className="hidden sm:flex space-x-4">
-          <Link 
-            to="/login" 
-            className="text-black hover:text-yellow-500 transition-colors duration-300"
+          <button
+            onClick={handleLoginClick}
+            className=" text-black font-bold py-2 px-4 rounded-full shadow-lg transition duration-300 ease-in-out transform "
           >
             Login
-          </Link>
-          <Link 
-            to="/signup" 
-            className="text-black hover:text-yellow-500 transition-colors duration-300"
+          </button>
+          <button
+            onClick={handleSignupClick}
+            className="bg-yellow-500 text-black font-bold py-2 px-4 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105 hover:bg-yellow-400"
           >
-            Sign Up
-          </Link>
+            Create Account
+          </button>
         </div>
       </div>
 
-      {/* Bottom Row for larger screens */}
-      <div className="hidden sm:flex justify-between items-center bg-gray-100 p-4">
-        {/* Invisible placeholder for spacing */}
-        <div className="text-lg font-bold invisible">
-          ProChesser
-        </div>
-
-        {/* Navigation links */}
-        <ul className="flex space-x-4">
+      {/* Menu Links for mobile */}
+      <div className={`sm:flex justify-center items-center p-4 bg-gray-100 ${isOpen ? 'block' : 'hidden'}`}>
+        <ul className="flex sm:space-x-4 flex-col sm:flex-row space-y-4 sm:space-y-0">
           <li>
-            <Link 
-              to="/" 
-              className="text-black hover:text-yellow-500 transition-colors duration-300"
-            >
+            <Link to="/" className="text-black hover:text-yellow-500" onClick={toggleMenu}>
               Home
             </Link>
           </li>
           <li>
-            <Link 
-              to="/about" 
-              className="text-black hover:text-yellow-500 transition-colors duration-300"
-            >
+            <Link to="/about" className="text-black hover:text-yellow-500" onClick={toggleMenu}>
               About
             </Link>
           </li>
           <li>
-            <Link 
-              to="/faqs" 
-              className="text-black hover:text-yellow-500 transition-colors duration-300"
-            >
+            <Link to="/faqs" className="text-black hover:text-yellow-500" onClick={toggleMenu}>
               FAQs
             </Link>
           </li>
           <li>
-            <Link 
-              to="/blog" 
-              className="text-black hover:text-yellow-500 transition-colors duration-300"
-            >
+            <Link to="/blog" className="text-black hover:text-yellow-500" onClick={toggleMenu}>
               Our Blog
             </Link>
           </li>
           <li>
-            <Link 
-              to="/learnchess" 
-              className="text-black hover:text-yellow-500 transition-colors duration-300"
-            >
-              Learn Chess
-            </Link>
-          </li>
-          <li>
-            <Link 
-              to="/account" 
-              className="text-black hover:text-yellow-500 transition-colors duration-300"
-            >
-              Account
+            <Link to="/learnchess" className="text-black hover:text-yellow-500" onClick={toggleMenu}>
+              Academy
             </Link>
           </li>
         </ul>
       </div>
-
-      {/* Mobile Menu */}
-      {isOpen && (
-        <div className="sm:hidden bg-gray-100 p-4">
-          <ul className="space-y-4">
-            <li>
-              <Link 
-                to="/" 
-                className="text-black hover:text-yellow-500 transition-colors duration-300"
-                onClick={toggleMenu}  // Close the menu after clicking
-              >
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link 
-                to="/about" 
-                className="text-black hover:text-yellow-500 transition-colors duration-300"
-                onClick={toggleMenu}
-              >
-                About
-              </Link>
-            </li>
-            <li>
-              <Link 
-                to="/faqs" 
-                className="text-black hover:text-yellow-500 transition-colors duration-300"
-                onClick={toggleMenu}
-              >
-                FAQs
-              </Link>
-            </li>
-            <li>
-              <Link 
-                to="/blog" 
-                className="text-black hover:text-yellow-500 transition-colors duration-300"
-                onClick={toggleMenu}
-              >
-                Our Blog
-              </Link>
-            </li>
-            <li>
-              <Link 
-                to="/learnchess" 
-                className="text-black hover:text-yellow-500 transition-colors duration-300"
-                onClick={toggleMenu}
-              >
-                Learn Chess
-              </Link>
-            </li>
-            <li>
-              <Link 
-                to="/account" 
-                className="text-black hover:text-yellow-500 transition-colors duration-300"
-                onClick={toggleMenu}
-              >
-                Account
-              </Link>
-            </li>
-            <li>
-              <Link 
-                to="/login" 
-                className="text-black hover:text-yellow-500 transition-colors duration-300"
-                onClick={toggleMenu}
-              >
-                Login
-              </Link>
-            </li>
-            <li>
-              <Link 
-                to="/signup" 
-                className="text-black hover:text-yellow-500 transition-colors duration-300"
-                onClick={toggleMenu}
-              >
-                Sign Up
-              </Link>
-            </li>
-          </ul>
-        </div>
-      )}
     </nav>
   );
 };

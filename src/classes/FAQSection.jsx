@@ -1,6 +1,6 @@
 import React from 'react';
 
-const FaqsSection =()=> {
+const FaqsSection = () => {
   const faqs = [
     {
       question: 'Who can join ProChesser Academy?',
@@ -53,16 +53,18 @@ const FaqsSection =()=> {
   ];
 
   return (
-    <section className="faqs-section">
-      <h2 className='   text-3xl  font-bold mt-6 mb-6' >Frequently Asked Questions</h2>
-      <ul>
-        {faqs.map((faq, index) => (
-          <li key={index}>
-            <h3 className='text-xl font-semibold'>{faq.question}</h3>
-            <p>{faq.answer}</p>
-          </li>
-        ))}
-      </ul>
+    <section className="faqs-section py-12 bg-gray-100 text-gray-800 rounded-lg shadow-lg">
+      <div className="container mx-auto px-6">
+        <h2 className="text-4xl font-extrabold mb-8 text-center text-gray-900">Frequently Asked Questions</h2>
+        <ul className="space-y-6">
+          {faqs.map((faq, index) => (
+            <li key={index} className="bg-white p-6 rounded-md shadow hover:shadow-lg transition-shadow duration-300">
+              <h3 className="text-2xl font-semibold text-blue-600 hover:text-blue-700 transition-colors duration-300">{faq.question}</h3>
+              <p className="mt-2 text-gray-700">{faq.answer}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
     </section>
   );
 };

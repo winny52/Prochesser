@@ -1,131 +1,190 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate
-import axios from 'axios'; // Import axios
+import { Link } from 'react-router-dom';
 
 const Register = () => {
-  const [firstName, setFirstName] = useState('');
-  const [secondName, setSecondName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
+
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-  const [loading, setLoading] = useState(false); // Loading state
-  const navigate = useNavigate(); // Initialize useNavigate
 
-  const handleSignUp = async (e) => {
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+    setSuccess('');
 
-    // Check if passwords match
-    if (password !== confirmPassword) {
+    if (formData.password !== formData.confirmPassword) {
       setError('Passwords do not match');
       return;
     }
 
-    setError('');
-    setSuccess('');
-    setLoading(true); // Start loading
+    setLoading(true);
 
     try {
-      // Send POST request to WordPress REST API
-      const response = await axios.post('http://localhost/wordpress/wp-json/jwt-auth/v1/register', {
-        username: email, // Use email as username
-        first_name: firstName,
-        last_name: secondName,
-        password,
+      const response = await fetch('http://localhost/wordpress/wp-json/custom-api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          username: formData.username,
+          email: formData.email,
+          password: formData.password,
+        }),
       });
 
-      if (response.status === 201) {
-        setSuccess('User created successfully!');
-        // Redirect to the dashboard after successful registration
-        navigate('/dashboard');
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to register');
       }
+
+      setSuccess('User registration successful!');
     } catch (error) {
-      console.error('Error creating user:', error);
-      setError(error.response?.data?.message || 'An error occurred. Please try again.');
+      setError(error.message);
     } finally {
-      setLoading(false); // Stop loading
+      setLoading(false);
     }
   };
 
   return (
-    <div className="flex flex-col lg:flex-row items-center justify-center min-h-screen bg-gray-100 p-6">
-      <div className="lg:w-1/2 w-full p-6">
-        <h1 className="text-3xl font-bold text-yellow-600 mb-4">Learn How To Play Chess</h1>
-        <h2 className="text-2xl text-gray-700 mb-4">New to Chess? No Problem!</h2>
-        <p className="text-gray-600 text-lg">
-          Discover the beauty of chess with our comprehensive guides, tutorials,
-          and strategies designed for beginners and advanced players alike.
-          Master the fundamentals, refine your technique, and prepare to conquer the board.
-        </p>
-      </div>
+    <div className="flex  w-full justify-center items-center min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white mt-32 ">
+      <form
+        onSubmit={handleSubmit}
+        className="bg-black p-8 rounded-lg shadow-lg w-full w-full space-y-6 md:space-y-8"
+      >
+        <h2 className="text-3xl font-extrabold text-center text-yellow-500 animate-pulse">Sign Up</h2>
 
-      <div className="lg:w-1/2 w-full p-6">
-        <div className="bg-white p-8 rounded-lg shadow-lg max-w-sm w-full mx-auto">
-          <h2 className="text-2xl font-bold text-yellow-600 mb-6 text-center">Join the Chess Journey</h2>
-          <form onSubmit={handleSignUp} className="space-y-4">
-            <input
-              type="text"
-              placeholder="First Name"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-              required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-yellow-500 transition-colors"
-            />
-            <input
-              type="text"
-              placeholder="Last Name"
-              value={secondName}
-              onChange={(e) => setSecondName(e.target.value)}
-              required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-yellow-500 transition-colors"
-            />
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-yellow-500 transition-colors"
-            />
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-yellow-500 transition-colors"
-            />
-            <input
-              type="password"
-              placeholder="Confirm Password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-yellow-500 transition-colors"
-            />
-            {error && <p className="text-red-600 text-sm text-center">{error}</p>}
-            {success && <p className="text-green-600 text-sm text-center">{success}</p>}
-            {loading ? (
-              <p className="text-yellow-600 text-sm text-center">Creating account...</p>
-            ) : (
-              <p className="text-center text-gray-600">
-                Already have an account?{' '}
-                <Link to="/signin" className="text-yellow-600 font-semibold hover:underline">
-                  Login
-                </Link>
-              </p>
-            )}
-            <button
-              type="submit"
-              disabled={loading} // Disable button while loading
-              className={`w-full bg-yellow-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-yellow-600 transition-colors ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
-            >
-              {loading ? 'Loading...' : 'Sign Up'}
-            </button>
-          </form>
+        {/* Display error or success message */}
+        {error && <p className="text-red-500 text-center">{error}</p>}
+        {success && <p className="text-green-500 text-center">{success}</p>}
+
+        {/* First Name Input */}
+        <div>
+          <label className="block text-sm font-bold text-gray-300 mb-2" htmlFor="firstName">
+            First Name
+          </label>
+          <input
+            type="text"
+            id="firstName"
+            name="firstName"
+            value={formData.firstName}
+            onChange={handleChange}
+            className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 transition duration-300"
+            required
+          />
         </div>
-      </div>
+
+        {/* Last Name Input */}
+        <div>
+          <label className="block text-sm font-bold text-gray-300 mb-2" htmlFor="lastName">
+            Last Name
+          </label>
+          <input
+            type="text"
+            id="lastName"
+            name="lastName"
+            value={formData.lastName}
+            onChange={handleChange}
+            className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 transition duration-300"
+            required
+          />
+        </div>
+
+        {/* Username Input */}
+        <div>
+          <label className="block text-sm font-bold text-gray-300 mb-2" htmlFor="username">
+            Username
+          </label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
+            className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 transition duration-300"
+            required
+          />
+        </div>
+
+        {/* Email Input */}
+        <div>
+          <label className="block text-sm font-bold text-gray-300 mb-2" htmlFor="email">
+            Email
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 transition duration-300"
+            required
+          />
+        </div>
+
+        {/* Password Input */}
+        <div>
+          <label className="block text-sm font-bold text-gray-300 mb-2" htmlFor="password">
+            Password
+          </label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 transition duration-300"
+            required
+          />
+        </div>
+
+        {/* Confirm Password Input */}
+        <div>
+          <label className="block text-sm font-bold text-gray-300 mb-2" htmlFor="confirmPassword">
+            Confirm Password
+          </label>
+          <input
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+            className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 transition duration-300"
+            required
+          />
+        </div>
+
+        {/* Submit Button */}
+        <button
+          type="submit"
+          className="w-full bg-yellow-500 text-black font-bold py-2 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105 hover:bg-yellow-400"
+          disabled={loading}
+        >
+          {loading ? 'Signing Up...' : 'Sign Up'}
+        </button>
+
+        {/* Login Link */}
+        <p className="text-center text-white mt-4">
+          Already have an account?{' '}
+          <Link to="/signin" className="text-yellow-500 hover:text-yellow-400 underline">
+            Login
+          </Link>
+        </p>
+      </form>
     </div>
   );
 };

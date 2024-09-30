@@ -5,7 +5,7 @@ import LearningSection from './LearningPackages';
 import CommunityAndSupport from './Community';
 import FaqsSection from './FAQSection';
 import YourFutureAwaits from "./Future";
-
+import LearningTools from "./LearningTools";
 const Content =() => {
   return (
     <div className="content">
@@ -13,6 +13,7 @@ const Content =() => {
       <WhyChooseProChesserAcademy />
       <YourFutureAwaits/>
       <LearningSection />
+      <LearningTools/>
       <CommunityAndSupport />
       <FaqsSection />
     </div>
