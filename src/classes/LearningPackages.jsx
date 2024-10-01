@@ -29,6 +29,7 @@ const LearningSection = () => {
         'Monthly one-on-one coaching sessions (60 min) with an expert coach',
         'Personal game reviews with feedback to help you improve',
       ],
+      popularLabel: true, // Add a property to indicate popularity
     },
     {
       name: 'Advanced Package: "Road to Mastery"',
@@ -55,10 +56,17 @@ const LearningSection = () => {
             className="package-card border rounded-3xl p-6 bg-white shadow-lg transition-all duration-300 hover:shadow-2xl hover:scale-105 hover:bg-gray-500 text-black hover:text-white"
             key={index}
           >
-            <h3 className="text-2xl font-bold mb-4">{packageData.name}</h3>
+            <h3 className="text-2xl font-bold mb-4">
+              {packageData.name}
+              {packageData.popularLabel && (
+                <span className="bg-blue-800 text-white font-semibold text-xs uppercase rounded-full px-2 ml-2">
+                  Most Popular and Recommended
+                </span>
+              )}
+            </h3>
             <p className="text-xl mb-4 font-bold">{packageData.price}</p>
             <p className="text-gray-900 mb-6 hover:text-white">{packageData.description}</p>
-            <ul className="list-none space-y-2 mb-6">
+            <ul className="list-disc list-inside space-y-2 mb-6">
               {packageData.includedMaterials.map((material, i) => (
                 <li className="text-gray-900 hover:text-white transition-colors" key={i}>
                   {material}

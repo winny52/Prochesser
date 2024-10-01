@@ -1,12 +1,12 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import mockupImage from '../assets/mockup.png'; // Replace with your image file
+import mockupImage from '../assets/mockup.png'; 
 
 const HeroSection = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="pt-32   w-screen h-screen bg-gradient-to-r from-gray-100 to-black text-white">
+    <section className="pt-32   w-screen h-screen bg-gradient-to-r from-gray-100 to-gray-900 text-white">
       {/* Content Section */}
       <div className="relative z-10 flex flex-col md:flex-row items-center justify-between h-full px-6 sm:px-12">
         
