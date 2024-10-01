@@ -7,13 +7,14 @@ import FAQ from "./miniFAQ";
 import Testimonials from "./Testimonials";
 import WhoAreWe from "./WhoAreWe";
 import Guide from "./Guide";
+import MiniHowItWorks from "./miniHowItWorks";
 
 const Homepage =()=> {
     return (
         
         <div className="w-full">
         <HeroSection/> 
-        <HowItWorks/>
+        <MiniHowItWorks/>
         <GameLobbySection/>
         <WhyChooseProChesser/>
         <WhoAreWe/>

@@ -18,6 +18,13 @@ const WhyChooseProChesser = () => {
               Your victories translate directly to earnings. It's rewarding in every sense.
             </p>
           </div>
+           {/* Feature 2 */}
+           <div className="bg-gray-100 border-b border-r border-yellow-600 p-6 rounded-lg  hover:shadow-lg transition duration-300">
+            <h3 className="text-2xl font-semibold text-gray-800 mb-4">Same Day Payments</h3>
+            <p className="text-gray-600">
+            Enjoy prompt access to your winnings, as funds are typically processed within 24 hours of your withdrawal request.
+            </p>
+          </div>
 
           {/* Feature 2 */}
           <div className="bg-gray-100 border-b border-r border-yellow-600 p-6 rounded-lg  hover:shadow-lg transition duration-300">
@@ -37,9 +44,9 @@ const WhyChooseProChesser = () => {
 
           {/* Feature 4 */}
           <div className="bg-gray-100 border-b border-r border-yellow-600 p-6 rounded-lg  hover:shadow-lg transition duration-300">
-            <h3 className="text-2xl font-semibold text-gray-800 mb-4">Accessible Anywhere</h3>
+            <h3 className="text-2xl font-semibold text-gray-800 mb-4">Mobile-Friendly Experience</h3>
             <p className="text-gray-600">
-              Play at home or on the go; the next match is always at your fingertips.
+            Our platform is optimized for mobile, so you can easily play from your laptop, tablet, or smartphone - enjoy your next match wherever you are!
             </p>
           </div>
 

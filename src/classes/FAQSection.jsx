@@ -4,11 +4,11 @@ const FaqsSection = () => {
   const faqs = [
     {
       question: 'Who can join ProChesser Academy?',
-      answer: 'Anyone! Whether you\'re an absolute beginner or an intermediate player...',
+      answer: 'Anyone! Whether you\'re an absolute beginner or an intermediate player looking to improve, we have lessons tailored to your level.',
     },
     {
       question: 'How are the classes delivered?',
-      answer: 'All lessons are delivered online through video tutorials, live practice games, and interactive exercises.',
+      answer: 'All lessons are delivered online through video tutorials, live practice games, and interactive exercises. You can learn at your own pace.',
     },
     {
       question: 'How long does it take to see improvement?',
@@ -54,7 +54,7 @@ const FaqsSection = () => {
 
   return (
     <section className="faqs-section py-12 bg-gray-100">
-      <h2 className="text-4xl font-bold text-center mb-12  bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-blue-600">Frequently Asked Questions</h2>
+      <h2 className="text-4xl font-bold text-center mb-12 bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-blue-600">Frequently Asked Questions</h2>
       <div className="faq-grid grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-8">
         {faqs.map((faq, index) => (
           <div
@@ -65,6 +65,11 @@ const FaqsSection = () => {
             <p className="text-gray-900 hover:text-white">{faq.answer}</p>
           </div>
         ))}
+      </div>
+      <div className="text-center mt-8">
+        <a href="/register" className="bg-yellow-600 text-white py-2 px-4 rounded-full hover:text-white hover:bg-yellow-700 transition duration-300">
+          Sign Up and Start Your Journey Today
+        </a>
       </div>
     </section>
   );
