@@ -10,7 +10,7 @@ const Footer = () => {
           <h3 className="text-lg text-yellow-600 font-bold mb-4">Resources</h3>
           <ul>
             <li className="mb-2">
-              <Link to="/register" className="text-black hover:text-yellow-500">Sign Up for Classes</Link>
+              <Link to="/learnchess" className="text-black hover:text-yellow-500">Sign Up for Chess Classes</Link>
             </li>
             <li className="mb-2">
               <Link to="/how-it-works" className="text-black hover:text-yellow-500">How It Works</Link>
@@ -21,9 +21,9 @@ const Footer = () => {
             <li className="mb-2">
               <Link to="/blog" className="text-black hover:text-yellow-500">Read Our Blog</Link>
             </li>
-            <li className="mb-2">
+            {/* <li className="mb-2">
               <Link to="/community" className="text-black hover:text-yellow-500">Community</Link>
-            </li>
+            </li> */}
           </ul>
         </div>
 

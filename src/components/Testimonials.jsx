@@ -49,7 +49,7 @@ const Testimonials = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* First Column */}
           <div className="text-center md:text-left mb-8 md:mb-0">
-            <h2 className="text-3xl md:text-4xl font-bold text-yellow-600 mb-4 md:mb-6">
+            <h2 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-black hover:from-pink-500 hover:to-yellow-500 transition-colors duration-300 mb-4 md:mb-6">
               Testimonials
             </h2>
             <h3 className="text-2xl md:text-3xl font-bold text-black mb-4">

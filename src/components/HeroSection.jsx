@@ -6,17 +6,20 @@ const HeroSection = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="pt-32 w-screen h-screen bg-gradient-to-b from-gray-900 to-black text-white">
+    <section className="pt-32 mt-12  w-screen h-screen bg-gradient-to-r from-gray-100 to-black text-white">
       {/* Content Section */}
       <div className="relative z-10 flex flex-col md:flex-row items-center justify-between h-full px-6 sm:px-12">
         
         {/* Left: Text Content */}
         <div className="flex-1 text-center md:text-left md:pr-10 order-2 md:order-1"> {/* Order change for smaller devices */}
-          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight tracking-tight">
-            Turn Every Checkmate Into a Payday: <br className="hidden md:block" /> Compete, Conquer, Cash In
-          </h1>
+        <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-black hover:from-pink-500 hover:to-yellow-500 transition-colors duration-300">
+  Turn Every Checkmate Into a Payday: 
+  <br className="hidden md:block" /> 
+  Compete, Conquer, Cash In
+</h1>
 
-          <p className="mt-6 text-base font-bold sm:text-lg md:text-xl lg:text-2xl leading-relaxed md:leading-normal max-w-2xl mx-auto md:mx-0 text-white">
+
+          <p className="mt-6 text-base font-bold sm:text-lg md:text-xl lg:text-2xl leading-relaxed md:leading-normal max-w-2xl mx-auto md:mx-0  bg-clip-text text-black">
             Immerse yourself in a world where strategy meets reward. At ProChesser, every checkmate isn't just a win on the board; it's a victory for your wallet. Experience the thrill of classic chess with the added excitement of earning with each move.
           </p>
 

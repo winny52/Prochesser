@@ -4,7 +4,7 @@ import WhyChooseProChesser from "./WhyChooseProChesser";
 
 const About =()=> {
     return (
-        <div>
+        <div className="mt-24" >
 <WhoAreWe/>
 <WhyChooseProChesser/>
         </div>

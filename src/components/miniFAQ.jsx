@@ -13,14 +13,14 @@ const FAQ = () => {
       <div className="container mx-auto">
         {/* Heading Section */}
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-yellow-600">
+          <h2 className="text-4xl font-bold  bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-black hover:from-pink-500 hover:to-yellow-500 transition-colors duration-300">
             Frequently Asked Questions
           </h2>
         </div>
 
         {/* FAQ Questions and Answers */}
         <div className="space-y-10">
-          <div className="p-4 border-l-4 border-yellow-500 bg-white rounded-lg shadow-lg">
+          <div className="p-4 border-l-4 border-yellow-500 bg-white bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-black hover:from-pink-500 hover:to-yellow-500 transition-colors duration-300 rounded-lg shadow-lg">
             <h3 className="text-2xl font-semibold text-black mb-2">
               What Kind of Rewards Can I Earn From Playing?
             </h3>

@@ -5,7 +5,7 @@ const GameLobbySection = () => {
     <section className="bg-black w-screen py-12 px-6 md:py-16 md:px-8">
       <div className="container mx-auto text-center max-w-screen-lg">
         {/* Title */}
-        <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-6 md:mb-8 tracking-tight">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-6 md:mb-8 bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-black hover:from-pink-500 hover:to-yellow-500 transition-colors duration-300 tracking-tight">
           Ready to Make Your Move? <br /> Welcome to the Game Lobby
         </h2>
 
