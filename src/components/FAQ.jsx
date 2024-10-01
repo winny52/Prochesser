@@ -30,7 +30,7 @@ const FrequentlyAskedQuestions = () => {
             </p>
           </div>
           <div className="p-4 border-l-4 border-yellow-500 bg-white rounded-lg shadow-lg">
-            <h3 className="text-2xl font-semibold text-black mb-2">
+            <h3 className="text-2xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-black hover:from-pink-500 hover:to-yellow-500 transition-colors duration-300 text-black mb-2">
               How Can a Beginner Start Playing Chess for Money?
             </h3>
             <p className="text-lg text-gray-700">
@@ -38,7 +38,7 @@ const FrequentlyAskedQuestions = () => {
             </p>
           </div>
           <div className="p-4 border-l-4 border-yellow-500 bg-white rounded-lg shadow-lg">
-            <h3 className="text-2xl font-semibold text-black mb-2">
+            <h3 className="text-2xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-black hover:from-pink-500 hover:to-yellow-500 transition-colors duration-300 text-black mb-2">
               What Do I Need To Get Started on ProChesser?
             </h3>
             <p className="text-lg text-gray-700">
@@ -46,7 +46,7 @@ const FrequentlyAskedQuestions = () => {
             </p>
           </div>
           <div className="p-4 border-l-4 border-yellow-500 bg-white rounded-lg shadow-lg">
-            <h3 className="text-2xl font-semibold text-black mb-2">
+            <h3 className="text-2xl font-semibold  bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-black hover:from-pink-500 hover:to-yellow-500 transition-colors duration-300 text-black mb-2">
               How Can I Sign Up and Start Playing?
             </h3>
             <p className="text-lg text-gray-700">
@@ -54,7 +54,7 @@ const FrequentlyAskedQuestions = () => {
             </p>
           </div>
           <div className="p-4 border-l-4 border-yellow-500 bg-white rounded-lg shadow-lg">
-            <h3 className="text-2xl font-semibold text-black mb-2">
+            <h3 className="text-2xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-black hover:from-pink-500 hover:to-yellow-500 transition-colors duration-300  text-black mb-2">
               How Do I Deposit Money to My ProChesser Account?
             </h3>
             <p className="text-lg text-gray-700">
@@ -62,7 +62,7 @@ const FrequentlyAskedQuestions = () => {
             </p>
           </div>
           <div className="p-4 border-l-4 border-yellow-500 bg-white rounded-lg shadow-lg">
-            <h3 className="text-2xl font-semibold text-black mb-2">
+            <h3 className="text-2xl font-semibold  bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-black hover:from-pink-500 hover:to-yellow-500 transition-colors duration-300 text-black mb-2">
               Are My Financial Details Safe When Depositing Money?
             </h3>
             <p className="text-lg text-gray-700">
@@ -70,7 +70,7 @@ const FrequentlyAskedQuestions = () => {
             </p>
           </div>
           <div className="p-4 border-l-4 border-yellow-500 bg-white rounded-lg shadow-lg">
-            <h3 className="text-2xl font-semibold text-black mb-2">
+            <h3 className="text-2xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-black hover:from-pink-500 hover:to-yellow-500 transition-colors duration-300  text-black mb-2">
               Does the Deposited Money Reflect in My Account Right Away?
             </h3>
             <p className="text-lg text-gray-700">
@@ -78,7 +78,7 @@ const FrequentlyAskedQuestions = () => {
             </p>
           </div>
           <div className="p-4 border-l-4 border-yellow-500 bg-white rounded-lg shadow-lg">
-            <h3 className="text-2xl font-semibold text-black mb-2">
+            <h3 className="text-2xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-black hover:from-pink-500 hover:to-yellow-500 transition-colors duration-300 text-black mb-2">
               Is There a Guarantee My Funds Are Safe With ProChesser?
             </h3>
             <p className="text-lg text-gray-700">
@@ -86,7 +86,7 @@ const FrequentlyAskedQuestions = () => {
             </p>
           </div>
           <div className="p-4 border-l-4 border-yellow-500 bg-white rounded-lg shadow-lg">
-            <h3 className="text-2xl font-semibold text-black mb-2">
+            <h3 className="text-2xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-black hover:from-pink-500 hover:to-yellow-500 transition-colors duration-300 text-black mb-2">
               Can I Deposit Using Cryptocurrency?
             </h3>
             <p className="text-lg text-gray-700">
@@ -94,7 +94,7 @@ const FrequentlyAskedQuestions = () => {
             </p>
           </div>
           <div className="p-4 border-l-4 border-yellow-500 bg-white rounded-lg shadow-lg">
-            <h3 className="text-2xl font-semibold text-black mb-2">
+            <h3 className="text-2xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-black hover:from-pink-500 hover:to-yellow-500 transition-colors duration-300 text-black mb-2">
               Is There a Minimum or Maximum Stake Requirement?
             </h3>
             <p className="text-lg text-gray-700">
@@ -102,7 +102,7 @@ const FrequentlyAskedQuestions = () => {
             </p>
           </div>
           <div className="p-4 border-l-4 border-yellow-500 bg-white rounded-lg shadow-lg">
-            <h3 className="text-2xl font-semibold text-black mb-2">
+            <h3 className="text-2xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-black hover:from-pink-500 hover:to-yellow-500 transition-colors duration-300 text-black mb-2">
               What Happens if I Win a Game?
             </h3>
             <p className="text-lg text-gray-700">
@@ -110,7 +110,7 @@ const FrequentlyAskedQuestions = () => {
             </p>
           </div>
           <div className="p-4 border-l-4 border-yellow-500 bg-white rounded-lg shadow-lg">
-            <h3 className="text-2xl font-semibold text-black mb-2">
+            <h3 className="text-2xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-black hover:from-pink-500 hover:to-yellow-500 transition-colors duration-300 text-black mb-2">
               What if the Game Ends in a Draw or Stalemate?
             </h3>
             <p className="text-lg text-gray-700">
@@ -118,7 +118,7 @@ const FrequentlyAskedQuestions = () => {
             </p>
           </div>
           <div className="p-4 border-l-4 border-yellow-500 bg-white rounded-lg shadow-lg">
-            <h3 className="text-2xl font-semibold text-black mb-2">
+            <h3 className="text-2xl font-semibold  bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-black hover:from-pink-500 hover:to-yellow-500 transition-colors duration-300 text-black mb-2">
               What Happens if I Lose?
             </h3>
             <p className="text-lg text-gray-700">
@@ -126,7 +126,7 @@ const FrequentlyAskedQuestions = () => {
             </p>
           </div>
           <div className="p-4 border-l-4 border-yellow-500 bg-white rounded-lg shadow-lg">
-            <h3 className="text-2xl font-semibold text-black mb-2">
+            <h3 className="text-2xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-black hover:from-pink-500 hover:to-yellow-500 transition-colors duration-300 text-black mb-2">
               How Do I Withdraw My Earnings?
             </h3>
             <p className="text-lg text-gray-700">
@@ -134,7 +134,7 @@ const FrequentlyAskedQuestions = () => {
             </p>
           </div>
           <div className="p-4 border-l-4 border-yellow-500 bg-white rounded-lg shadow-lg">
-            <h3 className="text-2xl font-semibold text-black mb-2">
+            <h3 className="text-2xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-black hover:from-pink-500 hover:to-yellow-500 transition-colors duration-300 text-black mb-2">
               How Are Matches and Opponents Determined?
             </h3>
             <p className="text-lg text-gray-700">
@@ -142,7 +142,7 @@ const FrequentlyAskedQuestions = () => {
             </p>
           </div>
           <div className="p-4 border-l-4 border-yellow-500 bg-white rounded-lg shadow-lg">
-            <h3 className="text-2xl font-semibold text-black mb-2">
+            <h3 className="text-2xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-black hover:from-pink-500 hover:to-yellow-500 transition-colors duration-300 text-black mb-2">
               What Measures Are in Place To Ensure Fair Play?
             </h3>
             <p className="text-lg text-gray-700">
@@ -150,7 +150,7 @@ const FrequentlyAskedQuestions = () => {
             </p>
           </div>
           <div className="p-4 border-l-4 border-yellow-500 bg-white rounded-lg shadow-lg">
-            <h3 className="text-2xl font-semibold text-black mb-2">
+            <h3 className="text-2xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-black hover:from-pink-500 hover:to-yellow-500 transition-colors duration-300 text-black mb-2">
               Are There Any Fees or Subscriptions Required To Play?
             </h3>
             <p className="text-lg text-gray-700">
@@ -158,7 +158,7 @@ const FrequentlyAskedQuestions = () => {
             </p>
           </div>
           <div className="p-4 border-l-4 border-yellow-500 bg-white rounded-lg shadow-lg">
-            <h3 className="text-2xl font-semibold text-black mb-2">
+            <h3 className="text-2xl font-semibold  bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-black hover:from-pink-500 hover:to-yellow-500 transition-colors duration-300 text-black mb-2">
               Is It Legal To Play Chess for Money on ProChesser.com?
             </h3>
             <p className="text-lg text-gray-700">
@@ -166,7 +166,7 @@ const FrequentlyAskedQuestions = () => {
             </p>
           </div>
           <div className="p-4 border-l-4 border-yellow-500 bg-white rounded-lg shadow-lg">
-            <h3 className="text-2xl font-semibold text-black mb-2">
+            <h3 className="text-2xl font-semibold  bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-black hover:from-pink-500 hover:to-yellow-500 transition-colors duration-300 text-black mb-2">
               Can I Play Chess for Money Outside My Country?
             </h3>
             <p className="text-lg text-gray-700">
@@ -175,7 +175,7 @@ const FrequentlyAskedQuestions = () => {
           </div>
 
           <div className="p-4 border-l-4 border-yellow-500 bg-white rounded-lg shadow-lg">
-                        <h3 className="text-2xl font-semibold text-black mb-2">
+                        <h3 className="text-2xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-black hover:from-pink-500 hover:to-yellow-500 transition-colors duration-300 text-black mb-2">
 
               Are There Limits to How Much I Can Play or Win?
             </h3>
@@ -185,7 +185,7 @@ const FrequentlyAskedQuestions = () => {
             </p>
           </div>
           <div className="p-4 border-l-4 border-yellow-500 bg-white rounded-lg shadow-lg">
-                        <h3 className="text-2xl font-semibold text-black mb-2">
+                        <h3 className="text-2xl font-semibold  bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-black hover:from-pink-500 hover:to-yellow-500 transition-colors duration-300 text-black mb-2">
 
               Is the ProChesser App Available for Download?
             </h3>
@@ -195,7 +195,7 @@ const FrequentlyAskedQuestions = () => {
             </p>
           </div>
           <div className="p-4 border-l-4 border-yellow-500 bg-white rounded-lg shadow-lg">
-                        <h3 className="text-2xl font-semibold text-black mb-2">
+                        <h3 className="text-2xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-black hover:from-pink-500 hover:to-yellow-500 transition-colors duration-300 text-black mb-2">
 
               Can I Earn Differently From the ProChesser Platform?
             </h3>
@@ -205,7 +205,7 @@ const FrequentlyAskedQuestions = () => {
             </p>
           </div>
           <div className="p-4 border-l-4 border-yellow-500 bg-white rounded-lg shadow-lg">
-                        <h3 className="text-2xl font-semibold text-black mb-2">
+                        <h3 className="text-2xl font-semibold  bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-black hover:from-pink-500 hover:to-yellow-500 transition-colors duration-300 text-black mb-2">
 
               Who Can I Contact for More Information?
             </h3>
