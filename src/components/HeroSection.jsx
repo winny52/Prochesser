@@ -1,29 +1,22 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import backgroundImage from '../assets/ChessImage6.jpg'; // Replace with your image file
+import mockupImage from '../assets/mockup.png'; // Replace with your image file
 
 const HeroSection = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="pt-32 relative w-screen h-screen bg-gradient-to-b from-gray-900 to-black text-white overflow-hidden">
-      {/* Background image and overlay */}
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-black opacity-60"></div> {/* Dark overlay for readability */}
-        <div
-          className="absolute inset-0 w-full h-full bg-cover bg-center transform scale-180" // Zoom out to 90%
-          style={{ backgroundImage: `url(${backgroundImage})`, opacity: 0.85 }} // Reduce opacity of the image
-        ></div>
-      </div>
-
-      {/* Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center h-full px-6 sm:px-12">
-        <div className="flex-1 text-center md:text-left">
+    <section className="pt-32 w-screen h-screen bg-gradient-to-b from-gray-900 to-black text-white">
+      {/* Content Section */}
+      <div className="relative z-10 flex flex-col md:flex-row items-center justify-between h-full px-6 sm:px-12">
+        
+        {/* Left: Text Content */}
+        <div className="flex-1 text-center md:text-left md:pr-10 order-2 md:order-1"> {/* Order change for smaller devices */}
           <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight tracking-tight">
             Turn Every Checkmate Into a Payday: <br className="hidden md:block" /> Compete, Conquer, Cash In
           </h1>
 
-          <p className="mt-6 text-base font-bold sm:text-lg md:text-xl lg:text-2xl leading-relaxed md:leading-normal  max-w-2xl mx-auto md:mx-0 text-white">
+          <p className="mt-6 text-base font-bold sm:text-lg md:text-xl lg:text-2xl leading-relaxed md:leading-normal max-w-2xl mx-auto md:mx-0 text-white">
             Immerse yourself in a world where strategy meets reward. At ProChesser, every checkmate isn't just a win on the board; it's a victory for your wallet. Experience the thrill of classic chess with the added excitement of earning with each move.
           </p>
 
@@ -42,6 +35,15 @@ const HeroSection = () => {
               Learn More
             </button>
           </div>
+        </div>
+
+        {/* Right: Image */}
+        <div className="flex-1 w-full md:w-1/2 h-full flex items-center justify-center md:pl-10 order-2 md:order-1"> {/* Order change for smaller devices */}
+          <img
+            src={mockupImage}
+            alt="Mockup"
+            className="w-full h-auto max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg"
+          />
         </div>
       </div>
     </section>
