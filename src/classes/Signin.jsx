@@ -6,7 +6,7 @@ const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate(); 
 
   const handleSignIn = async (e) => {
     e.preventDefault();
@@ -19,7 +19,7 @@ const SignIn = () => {
     try {
       // Make a POST request to the custom WordPress API endpoint to authenticate the user
       const response = await axios.post('http://localhost/wordpress/wp-json/jwt-auth/v1/login', {
-        username: email, // Sending email as the username
+        username: email, 
         password: password,
       });
 

@@ -40,8 +40,8 @@ const Register = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          first_name: formData.firstName, // Updated to match server expectation
-          last_name: formData.lastName, // Updated to match server expectation
+          first_name: formData.firstName, 
+          last_name: formData.lastName, 
           username: formData.username,
           email: formData.email,
           password: formData.password,
