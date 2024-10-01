@@ -135,6 +135,7 @@ import Blog from './components/Blog';
 import Content from './classes/Content';
 import Register from './classes/Register';
 import Header from './Dashboard/Header';
+import WelcomePage from './classes/WelcomePage';
 
 function App() {
   // This hook needs to be inside Router
@@ -163,6 +164,8 @@ function App() {
         <Route path="/profile" element={<Dashboard />} />
         <Route path="/register" element={<Register />} />
         <Route path="/blog" element={<Blog />} />
+        <Route path="/welcome" element={<WelcomePage/>} />
+
       </Routes>
       <Footer />
     </div>

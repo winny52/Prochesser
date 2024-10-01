@@ -41,14 +41,14 @@ const Guide = () => {
 
         {/* Third Column */}
         <section className="pb-8 md:pl-4">
-          <h3 className="text-xl md:text-xl font-bold text-center mb-4">Newsletter Section</h3>
+          <h3 className="text-xl md:text-xl font-bold text-center mb-4"> Our Newsletter </h3>
           <p className="text-base md:text-lg text-center">
             Subscribe to our newsletter for the latest updates and exclusive offers. Get chess tips, updates on upcoming tournaments, and more directly in your inbox.
           </p>
           <div className="text-center mt-4">
             <button
               onClick={() => navigate("/subscribe")}
-              className="bg-yellow-500 text-black py-2 px-6 rounded-full hover:bg-yellow-600 hover:text-white font-bold transition-colors"
+              className="bg-yellow-500 mt-12 text-black py-2 px-6 rounded-full hover:bg-yellow-600 hover:text-white font-bold transition-colors"
             >
               Subscribe
             </button>

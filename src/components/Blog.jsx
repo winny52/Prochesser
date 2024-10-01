@@ -23,7 +23,7 @@ const Blog = () => {
 
   return (
     <div>
-      <h1 classname="text-yellow-600"> Posts</h1>
+      <h1 className="text-yellow-600"> Posts</h1>
       <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
     {posts.map(post => (
       <li key={post.id} className="border p-4 rounded-lg shadow-md">

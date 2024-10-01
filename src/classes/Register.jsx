@@ -54,10 +54,13 @@ const Register = () => {
         throw new Error(data.message || 'Failed to register');
       }
 
+       // Store the username in local storage
+    localStorage.setItem('user', JSON.stringify({ username: formData.username }));
+
       setSuccess('User registration successful!');
 
-      // Redirect to the dashboard after successful registration
-      navigate('/dashboard'); // Add this line for redirection
+      // Redirect to the welcomepage after successful registration
+      navigate('/welcome'); 
     } catch (error) {
       setError(error.message);
     } finally {
