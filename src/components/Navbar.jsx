@@ -51,7 +51,7 @@ const Navbar = () => {
       </div>
 
       {/* Menu Links for mobile */}
-      <div className={`sm:flex justify-center items-center p-4 bg-gray-100 ${isOpen ? 'block' : 'hidden'}`}>
+      <div className={`sm:flex justify-center items-center p-4  bg-gray-100 ${isOpen ? 'block' : 'hidden'}`}>
         <ul className="flex sm:space-x-4 flex-col sm:flex-row space-y-4 sm:space-y-0">
           <li>
             <Link to="/" className="text-black hover:text-yellow-500" onClick={toggleMenu}>
