@@ -1,27 +1,45 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link ,useNavigate} from 'react-router-dom';
+import { fetchLogin } from '../fetch/login';
 
 const Login = () => {
   const [formData, setFormData] = useState({
     username: '',
     password: '',
   });
-
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle login logic here
-    console.log('Login Data:', formData);
+    console.log('mklamvslkams');
+    
+    if (!formData.username|| !formData.password) {
+      setError('Please fill out both fields.');
+      return;
+    }
+    setError('');
+
+    try {
+      const data = await fetchLogin(formData.username,formData.password);
+      localStorage.setItem('token',data.token);
+      navigate('/dashboard'); 
+    } catch (error) {
+      setError('Invalid email or password.');
+      console.error('Sign-in error:', error);
+    }
+  
+
   };
 
   return (
     <section className="pt-32 relative w-screen bg-black text-black py-16 px-6 mx-auto">
  
     <div className="flex justify-center items-center h-120 mt- bg-black">
-      <form onSubmit={handleSubmit} className="bg-black p-8 rounded shadow-md w-96">
+      <form onSubmit={handleSubmit} className="bg-black p-8 text-white rounded shadow-md w-96">
         <h2 className="text-2xl font-bold mb-6 text-center text-yellow-500">Login</h2>
         
         <div className="mb-4">

@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate
-
+import { fetchSignup } from '../fetch/login';
 const Register = () => {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
-    username: '',
     email: '',
     password: '',
     confirmPassword: '',
@@ -32,37 +31,15 @@ const Register = () => {
     }
 
     setLoading(true);
-
-    try {
-      const response = await fetch('http://localhost/wordpress/wp-json/custom-api/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          first_name: formData.firstName, 
-          last_name: formData.lastName, 
-          username: formData.username,
-          email: formData.email,
-          password: formData.password,
-        }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || 'Failed to register');
-      }
-
-       // Store the username in local storage
-    localStorage.setItem('user', JSON.stringify({ username: formData.username }));
-
+     
+    try {      
+       const data = await fetchSignup(formData);
+       localStorage.setItem('token',data.token);
       setSuccess('User registration successful!');
-
-      // Redirect to the welcomepage after successful registration
       navigate('/welcome'); 
     } catch (error) {
       setError(error.message);
+      alert(error.message || "Some error occured");
     } finally {
       setLoading(false);
     }
@@ -73,7 +50,7 @@ const Register = () => {
       <div className="flex w-full justify-center items-center min-h-screen text-white">
         <form
           onSubmit={handleSubmit}
-          className="bg-black p-8 rounded-lg shadow-md w-96 space-y-6 md:space-y-8"
+          className="bg-black p-8 rounded-lg shadow-md w-96  space-y-6 md:space-y-8"
         >
           <h2 className="text-2xl font-extrabold text-center text-yellow-500 animate-pulse">Sign Up</h2>
 
@@ -92,7 +69,7 @@ const Register = () => {
               name="firstName"
               value={formData.firstName}
               onChange={handleChange}
-              className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 transition duration-300"
+              className="w-full px-4 py-2 bg-gray-900 border border-gray-700  rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 transition duration-300"
               required
             />
           </div>
@@ -107,22 +84,6 @@ const Register = () => {
               id="lastName"
               name="lastName"
               value={formData.lastName}
-              onChange={handleChange}
-              className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 transition duration-300"
-              required
-            />
-          </div>
-
-          {/* Username Input */}
-          <div>
-            <label className="block text-sm font-bold text-gray-300 mb-2" htmlFor="username">
-              Username
-            </label>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              value={formData.username}
               onChange={handleChange}
               className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 transition duration-300"
               required
