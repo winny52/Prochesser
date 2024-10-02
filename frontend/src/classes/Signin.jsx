@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
-
+import {fetchLogin} from '../fetch/login';
+import { useNavigate } from 'react-router-dom';
 const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -17,24 +17,10 @@ const SignIn = () => {
     setError('');
 
     try {
-      // Make a POST request to the custom WordPress API endpoint to authenticate the user
-      const response = await axios.post('http://localhost/wordpress/wp-json/jwt-auth/v1/login', {
-        username: email, 
-        password: password,
-      });
-
-      const token = response.data.token; // Store the token from the response
-
-      // Store the token in local storage
-      localStorage.setItem('token', token);
-      // Optionally, store user info if returned
-      // localStorage.setItem('userDetails', JSON.stringify(response.data));
-
-      console.log('User signed in successfully', response.data);
-      // Redirect to dashboard or another page here
-      navigate('/dashboard'); // Use navigate to redirect
+      const data = await fetchLogin(email,password);
+      localStorage.setItem('token',data.token);
+      navigate('/dashboard'); 
     } catch (error) {
-      // Handle errors (e.g., invalid credentials)
       setError('Invalid email or password.');
       console.error('Sign-in error:', error);
     }

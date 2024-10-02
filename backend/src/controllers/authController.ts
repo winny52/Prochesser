@@ -3,12 +3,14 @@
 import { Request, Response } from 'express';
 import prisma from '../prismaClient';
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
+import { generateToken } from '../utils';
 
 const saltRounds = 10;
 
 export const Signup = async (req: Request, res: Response) => {
-  const { email, password, name } = req.body;
+  console.log(req.body);
+  
+  const { firstname, lastname, password,email } = req.body;
 
   try {
     // Check if user already exists
@@ -16,26 +18,25 @@ export const Signup = async (req: Request, res: Response) => {
     if (existingUser) {
       return res.status(400).json({ message: 'User already exists' });
     }
+console.log('nlkvklam',existingUser);
 
-    // Hash password
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    // Create user
     const user = await prisma.user.create({
       data: {
         email,
         password: hashedPassword,
-        name,
+        firstname,
+        lastname,
       },
     });
 
-    // Generate JWT
-    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET as string, {
-      expiresIn: '1h',
-    });
+    const token = generateToken({ userId: user.id });
 
-    res.status(201).json({ token, user: { id: user.id, email: user.email, name: user.name } });
+    res.status(201).json({ token});
   } catch (error) {
+    console.log(error);
+    
     res.status(500).json({ message: 'Internal Server Error' });
   }
 };
@@ -53,12 +54,33 @@ export const Login = async (req: Request, res: Response) => {
     if (!match) return res.status(400).json({ message: 'Invalid Credentials' });
 
     // Generate JWT
-    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET as string, {
-      expiresIn: '1h',
-    });
+    const token = generateToken({ userId: user.id });
 
-    res.status(200).json({ token, user: { id: user.id, email: user.email, name: user.name } });
+    res.status(200).json({ token});
   } catch (error) {
+    console.log(error);
+    
     res.status(500).json({ message: 'Internal Server Error' });
   }
 };
+
+export const refresh =  async (req:any,res:Response)=>{
+  try {
+    if (req.user) {
+      res.status(200).json({
+        user: req.user,
+      });
+    } else {
+      res.status(401).json({
+        user: null,
+        message: "Unauthorized",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: "Something went wrong",
+      error,
+    });
+  }
+}
