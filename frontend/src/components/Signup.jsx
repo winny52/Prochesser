@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { fetchSignup } from '../fetch/login';
+import { useNavigate } from 'react-router-dom';
 
 const SignUp =()=> {
   const [formData, setFormData] = useState({
@@ -9,19 +11,36 @@ const SignUp =()=> {
     password: '',
     confirmPassword: '',
   });
-
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    // Handle sign-up logic here
+    setError('');
+    setSuccess('');
+
     if (formData.password !== formData.confirmPassword) {
-      alert('Passwords do not match');
+      setError('Passwords do not match');
       return;
     }
-    console.log('Sign Up Data:', formData);
+
+    setLoading(true);
+     
+    try {      
+       const data = await fetchSignup(formData);
+       localStorage.setItem('token',data.token);
+      setSuccess('User registration successful!');
+      navigate('/welcome'); 
+    } catch (error) {
+      setError(error.message);
+      alert(error.message || "Some error occured");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
