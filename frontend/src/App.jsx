@@ -21,6 +21,7 @@ import Register from './classes/Register';
 import Header from './Dashboard/Header';
 import WelcomePage from './classes/WelcomePage';
 import ClassesFooter from './Dashboard/ClassesFooter';
+import Profile from './Dashboard/Profile';
 
 function App() {
   const location = useLocation();
@@ -46,10 +47,10 @@ function App() {
         <Route path="/learnchess" element={<Content />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/profile" element={<Dashboard />} />
         <Route path="/register" element={<Register />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/welcome" element={<WelcomePage />} />
+        <Route path='/profile' element={<Profile/>}/>
       </Routes>
 
       {/* Conditionally render Footer or ClassesFooter based on the route */}

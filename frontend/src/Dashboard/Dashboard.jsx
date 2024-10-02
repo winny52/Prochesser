@@ -21,12 +21,9 @@
 
 // export default Dashboard;
 import React from 'react';
-import Header from './Header';
 import WelcomeBanner from './WelcomeBanner';
 import CourseOverview from './CourseOverview';
-import LearningPath from './Learningpath';
-import LearningTools from './Learningtools';
-import SupportSection from './Support';
+import Support from './Support';
 
 const Dashboard = () => {
   // Mock user data
@@ -51,9 +48,8 @@ const Dashboard = () => {
       
       <WelcomeBanner userName={user.name} />
       <CourseOverview packageName={packageName} progress={progress} />
-      <LearningPath modules={modules} />
-      <LearningTools />
-      <SupportSection />
+      <Support/>
+      
     </div>
     </section>
   );
