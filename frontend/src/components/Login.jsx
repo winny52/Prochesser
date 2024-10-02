@@ -1,38 +1,18 @@
 import React, { useState } from 'react';
-import { Link ,useNavigate} from 'react-router-dom';
+import { Link} from 'react-router-dom';
 import { fetchLogin } from '../fetch/login';
+import { userState } from '../state/userState';
 
 const Login = () => {
-  const [formData, setFormData] = useState({
-    username: '',
-    password: '',
-  });
+const [email,setEmail]=useState('')
+const [password,setPassword]=useState('')
+
   const [error, setError] = useState('');
-  const navigate = useNavigate();
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('mklamvslkams');
-    
-    if (!formData.username|| !formData.password) {
-      setError('Please fill out both fields.');
-      return;
-    }
-    setError('');
-
-    try {
-      const data = await fetchLogin(formData.username,formData.password);
-      localStorage.setItem('token',data.token);
-      navigate('/dashboard'); 
-    } catch (error) {
-      setError('Invalid email or password.');
-      console.error('Sign-in error:', error);
-    }
-  
-
+    await fetchLogin(email,password,setError);  
   };
 
   return (
@@ -50,8 +30,8 @@ const Login = () => {
             type="text"
             id="username"
             name="username"
-            value={formData.username}
-            onChange={handleChange}
+            value={email}
+            onChange={(e)=>setEmail(e.target.value)}
             className="w-full px-3 py-2 border rounded shadow-sm focus:outline-none focus:border-yellow-500"
             required
           />
@@ -65,8 +45,8 @@ const Login = () => {
             type="password"
             id="password"
             name="password"
-            value={formData.password}
-            onChange={handleChange}
+            value={password}
+            onChange={(e)=>setPassword(e.target.value)}
             className="w-full px-3 py-2 border rounded shadow-sm focus:outline-none focus:border-yellow-500"
             required
           />

@@ -1,17 +1,14 @@
 import React, { useState } from 'react';
 import { fetchSignup } from '../fetch/login';
-import { useNavigate } from 'react-router-dom';
 
 const SignUp =()=> {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
-    username: '',
     email: '',
     password: '',
     confirmPassword: '',
   });
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const handleChange = (e) => {
@@ -22,25 +19,9 @@ const SignUp =()=> {
     e.preventDefault();
     setError('');
     setSuccess('');
-
-    if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match');
-      return;
-    }
-
     setLoading(true);
-     
-    try {      
-       const data = await fetchSignup(formData);
-       localStorage.setItem('token',data.token);
-      setSuccess('User registration successful!');
-      navigate('/welcome'); 
-    } catch (error) {
-      setError(error.message);
-      alert(error.message || "Some error occured");
-    } finally {
-      setLoading(false);
-    }
+    await fetchSignup(formData,setError,setSuccess);
+    setLoading(false);
   };
 
   return (
@@ -72,21 +53,6 @@ const SignUp =()=> {
             id="lastName"
             name="lastName"
             value={formData.lastName}
-            onChange={handleChange}
-                        className="w-full px-3 py-2 border rounded shadow-sm focus:outline-none focus:border-yellow-500"
-
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-white text-sm font-bold mb-2" htmlFor="username">
-            Username
-          </label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            value={formData.username}
             onChange={handleChange}
                         className="w-full px-3 py-2 border rounded shadow-sm focus:outline-none focus:border-yellow-500"
 

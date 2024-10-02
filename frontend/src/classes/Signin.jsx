@@ -1,29 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import {fetchLogin} from '../fetch/login';
-import { useNavigate } from 'react-router-dom';
+
 const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const navigate = useNavigate(); 
 
   const handleSignIn = async (e) => {
     e.preventDefault();
-    if (!email || !password) {
-      setError('Please fill out both fields.');
-      return;
-    }
-    setError('');
-
-    try {
-      const data = await fetchLogin(email,password);
-      localStorage.setItem('token',data.token);
-      navigate('/dashboard'); 
-    } catch (error) {
-      setError('Invalid email or password.');
-      console.error('Sign-in error:', error);
-    }
+  await fetchLogin(email,password,setError);  
   };
 
   return (
