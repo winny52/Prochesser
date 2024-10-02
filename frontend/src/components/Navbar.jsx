@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate
-import { FaBars, FaTimes } from 'react-icons/fa'; // Importing icons for the mobile menu
+import { Link, useNavigate } from 'react-router-dom'; 
+import { FaBars, FaTimes } from 'react-icons/fa'; 
+import {userState} from "../state/userState";
+import { useRecoilValue } from 'recoil';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const navigate = useNavigate(); // Initialize the navigate function
+  const user = useRecoilValue(userState);
+  const navigate = useNavigate(); 
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -17,6 +20,12 @@ const Navbar = () => {
     // Navigate to the login page when button is clicked
     navigate('/login');
   };
+   
+  const handleLogoutClick = ()=>{
+   localStorage.removeItem('token')
+   localStorage.removeItem('user')
+    window.location.reload();
+  }
 
   return (
     <nav className="bg-white w-full fixed top-0 z-20 shadow-md">
@@ -34,6 +43,12 @@ const Navbar = () => {
         </div>
 
         {/* Buttons for larger screens */}
+        {(user)?<button
+            onClick={handleLogoutClick}
+            className="bg-yellow-500 text-black font-bold py-2 px-4 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105 hover:bg-yellow-400"
+          >
+            Logout
+          </button>:
         <div className="hidden sm:flex space-x-4">
           <button
             onClick={handleLoginClick}
@@ -47,7 +62,7 @@ const Navbar = () => {
           >
             Create Account
           </button>
-        </div>
+        </div>}
       </div>
 
       {/* Menu Links for mobile */}

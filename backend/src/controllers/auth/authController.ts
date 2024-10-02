@@ -1,9 +1,9 @@
 // src/controllers/authController.ts
 
 import { Request, Response } from 'express';
-import prisma from '../prismaClient';
+import prisma from '../../prismaClient';
 import bcrypt from 'bcrypt';
-import { generateToken } from '../utils';
+import { generateToken } from '../../utils';
 
 const saltRounds = 10;
 
@@ -67,9 +67,7 @@ export const Login = async (req: Request, res: Response) => {
 export const refresh =  async (req:any,res:Response)=>{
   try {
     if (req.user) {
-      res.status(200).json({
-        user: req.user,
-      });
+      res.status(200).json({...req.user});
     } else {
       res.status(401).json({
         user: null,

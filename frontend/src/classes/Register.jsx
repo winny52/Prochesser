@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate
+import { Link } from 'react-router-dom'; 
 import { fetchSignup } from '../fetch/login';
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -14,7 +14,6 @@ const Register = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   
-  const navigate = useNavigate(); // Initialize useNavigate
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -24,25 +23,9 @@ const Register = () => {
     e.preventDefault();
     setError('');
     setSuccess('');
-
-    if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match');
-      return;
-    }
-
     setLoading(true);
-     
-    try {      
-       const data = await fetchSignup(formData);
-       localStorage.setItem('token',data.token);
-      setSuccess('User registration successful!');
-      navigate('/welcome'); 
-    } catch (error) {
-      setError(error.message);
-      alert(error.message || "Some error occured");
-    } finally {
-      setLoading(false);
-    }
+    await fetchSignup(formData,setError,setSuccess);
+    setLoading(false);
   };
 
   return (

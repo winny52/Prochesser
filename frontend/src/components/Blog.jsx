@@ -6,23 +6,11 @@ const Blog = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    axios.get('http://localhost/wordpress/wp-json/wp/v2/posts')
-      .then(response => {
-        setPosts(response.data);
-        setLoading(false);
-      })
-      .catch(error => {
-        setError(error);
-        setLoading(false);
-      });
-  }, []);
 
-  if (loading) return <p>Loading...</p>;
   if (error) return <p>Error loading posts: {error.message}</p>;
 
   return (
-    <div>
+    <div className='w-full'>
       <h1 className="text-yellow-600"> Posts</h1>
       <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
     {posts.map(post => (

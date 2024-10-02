@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-
+import { RecoilRoot, useRecoilState, useRecoilValueLoadable } from 'recoil';
 import './App.css';
 import Login from './components/Login';
 import SignUp from './components/Signup';
@@ -22,35 +22,56 @@ import Header from './Dashboard/Header';
 import WelcomePage from './classes/WelcomePage';
 import ClassesFooter from './Dashboard/ClassesFooter';
 import Profile from './Dashboard/Profile';
+import { PrivateRoute, PublicRoute } from './routes'; 
+import { userState, fetchUserState } from "./state/userState";
 
 function App() {
   const location = useLocation();
+  const [user, setUser] = useRecoilState(userState);
 
   // Check if the current route starts with "/dashboard"
   const isDashboardRoute = location.pathname.startsWith('/dashboard');
+  
+  const userLoadable = useRecoilValueLoadable(fetchUserState);
+
+  // Handle user loading based on Loadable state
+  useEffect(() => {
+    if (userLoadable.state === 'hasValue') {
+      setUser(userLoadable.contents); // Set user data in state
+    } else if (userLoadable.state === 'hasError') {
+      setUser(null);
+    }
+  }, [userLoadable, setUser]);
+
+  if (userLoadable.state === 'loading') {
+    return <div>Loading...</div>;
+  }
 
   return (
-    <div>
+    <div className='w-screen'>
       {/* Conditionally render Navbar or Header based on the route */}
       {isDashboardRoute ? <Header /> : <Navbar />}
 
       <ScrollToTop />
       <Routes>
-        <Route path="/signup" element={<SignUp />} />
+        {/* Public Routes */}
+        <Route path="/signup" element={<PublicRoute element={SignUp} />} />
         <Route path="/" element={<Homepage />} />
         <Route path="/faqs" element={<FrequentlyAskedQuestions />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<PublicRoute element={Login} />} />
         <Route path="/about" element={<About />} />
         <Route path="/testimonials" element={<Testimonials />} />
         <Route path="/subscribe" element={<Newsletter />} />
         <Route path="/how-it-works" element={<HowItWorks />} />
         <Route path="/learnchess" element={<Content />} />
-        <Route path="/signin" element={<SignIn />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/signin" element={<PublicRoute element={SignIn} />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/welcome" element={<WelcomePage />} />
-        <Route path='/profile' element={<Profile/>}/>
+        <Route path="/register" element={<PublicRoute element={Register} />} />
+
+        {/* Protected Routes wrapped in Route */}
+        <Route path="/dashboard" element={<PrivateRoute element={Dashboard} />} />
+        <Route path="/profile" element={<PrivateRoute element={Profile} />} />
       </Routes>
 
       {/* Conditionally render Footer or ClassesFooter based on the route */}
@@ -62,7 +83,9 @@ function App() {
 export default function AppWrapper() {
   return (
     <Router>
-      <App />
+      <RecoilRoot>
+        <App />
+      </RecoilRoot>
     </Router>
   );
 }

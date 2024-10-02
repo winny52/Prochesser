@@ -1,9 +1,13 @@
 import React from 'react';
-import ChessImage from '../assets/ChessImage4.avif'; // Ensure the image path is correct
+import ChessImage from '../assets/ChessImage4.avif'; 
+import { userState } from '../state/userState';
+import { useRecoilValue } from 'recoil';
 
 const WelcomeBanner = () => {
-  const user = JSON.parse(localStorage.getItem('user')); // Get user data from local storage
-  const username = user ? user.username : 'Guest'; // Fallback in case user is not found
+  const user = useRecoilValue(userState);
+  console.log(user);
+  
+  const username = user.user ? user.user.firstname : 'Guest'; 
 
   return (
     <div className="relative bg-blue-600 rounded-lg overflow-hidden" style={{ backgroundImage: `url(${ChessImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
