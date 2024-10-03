@@ -16,9 +16,10 @@
     const user = req.user;
   
     try {
-      const purchases = await prisma.purchase.findMany({
+      const purchases = await prisma.subscription.findMany({
         where: {
           userId: user.id, 
+          status:"ACTIVE"
         },
         include: {
           package: true, 
