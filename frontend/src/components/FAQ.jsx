@@ -1,3 +1,5 @@
+//Main component that displays the Faq section of chess game
+
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 

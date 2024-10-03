@@ -1,9 +1,13 @@
+//Page to be displayed after successful user registration
+//Displays the packages to choose from and prompts user to pay for chosen package
+
+
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import WelcomeBanner from '../Dashboard/WelcomeBanner'; // Adjust the import path as necessary
+import WelcomeBanner from '../Dashboard/WelcomeBanner'; 
 
 const WelcomePage = () => {
-  const navigate = useNavigate(); // Hook to navigate between pages
+  const navigate = useNavigate(); 
 
   const packages = [
     {

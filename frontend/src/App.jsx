@@ -26,12 +26,13 @@ import { PrivateRoute, PublicRoute } from './routes';
 import { userState, fetchUserState } from "./state/userState";
 import Payment from './payment';
 import Spinner from './components/spinner';
+import TawkTo from './components/Tawkto';
 function App() {
   const location = useLocation();
   const [user, setUser] = useRecoilState(userState);
 
-  // Check if the current route starts with "/dashboard"
-  const isDashboardRoute = location.pathname.startsWith('/dashboard');
+  // Check if the current route starts with "/dashboard or /profile"
+  const isDashboardOrProfileRoute = location.pathname.startsWith('/dashboard') || location.pathname === '/profile';
   
   const userLoadable = useRecoilValueLoadable(fetchUserState);
 
@@ -50,8 +51,9 @@ function App() {
 
   return (
     <div className='w-screen'>
+      <TawkTo/>
       {/* Conditionally render Navbar or Header based on the route */}
-      {isDashboardRoute ? <Header /> : <Navbar />}
+      {isDashboardOrProfileRoute ? <Header /> : <Navbar />}
 
       <ScrollToTop />
       <Routes>
@@ -76,7 +78,7 @@ function App() {
         <Route path="/payment/:secret_token/:api_ref/:mode" element={<PublicRoute element={Payment} />} />
       </Routes>
 
-      {isDashboardRoute ? <ClassesFooter /> : <Footer />}
+      {isDashboardOrProfileRoute ? <ClassesFooter /> : <Footer />}
     </div>
   );
 }
