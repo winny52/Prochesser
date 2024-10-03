@@ -75,7 +75,7 @@ function App() {
         <Route path="/dashboard" element={<PrivateRoute element={Dashboard} />} />
         <Route path="/welcome" element={<PrivateRoute element={WelcomePage} />} />
         <Route path="/profile" element={<PrivateRoute element={Profile} />} />
-        <Route path="/payment/:secret_token/:api_ref/:mode" element={<PrivateRoute element={Payment} />} />
+        <Route path="/payment/:secret_token/:api_ref/:mode" element={<PublicRoute element={Payment} />} />
       </Routes>
 
       {isDashboardOrProfileRoute ? <ClassesFooter /> : <Footer />}
