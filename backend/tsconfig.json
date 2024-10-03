@@ -24,5 +24,5 @@
   "include": [
     "src/**/*", // Adjust according to your folder structure
     "src/type.d.ts" // Add this if not included in the above
-  ]
+, "src/seed.ts"  ]
 }

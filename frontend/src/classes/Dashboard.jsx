@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faWallet, faChalkboardTeacher } from '@fortawesome/free-solid-svg-icons';
+import Spinner from '../components/spinner';
 
 const Dashboard = () => {
   const [learner, setLearner] = useState(null);
@@ -35,7 +36,7 @@ const Dashboard = () => {
     }
   };
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Spinner/>;
   if (error) return <p>{error}</p>;
 
   return (

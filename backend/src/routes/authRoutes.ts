@@ -2,7 +2,7 @@
 
 import express from 'express';
 import { validateLogin, validateSignup } from '../middlewares/authMiddleware';
-const {Signup,Login,refresh}= require('../controllers/authController');
+const {Signup,Login,refresh}= require('../controllers/auth/authController');
 const { authenticateJWT } = require('../middlewares/authMiddleware');
 const router = express.Router();
 
