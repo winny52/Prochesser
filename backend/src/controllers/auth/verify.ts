@@ -3,6 +3,7 @@ import prisma from "../../prismaClient"
 import {verifyToken,generateToken} from "../../utils"
 import  jwt  from "jsonwebtoken";
 import bcrypt from "bcrypt";
+
 export const verifyPasswordToken = async (req: Request, res: Response) => {
     console.log("verify");
     

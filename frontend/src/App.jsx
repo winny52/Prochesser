@@ -24,7 +24,8 @@ import ClassesFooter from './Dashboard/ClassesFooter';
 import Profile from './Dashboard/Profile';
 import { PrivateRoute, PublicRoute } from './routes'; 
 import { userState, fetchUserState } from "./state/userState";
-
+import Payment from './payment';
+import Spinner from './components/spinner';
 function App() {
   const location = useLocation();
   const [user, setUser] = useRecoilState(userState);
@@ -44,7 +45,7 @@ function App() {
   }, [userLoadable, setUser]);
 
   if (userLoadable.state === 'loading') {
-    return <div>Loading...</div>;
+    return <Spinner/>;
   }
 
   return (
@@ -66,15 +67,15 @@ function App() {
         <Route path="/learnchess" element={<Content />} />
         <Route path="/signin" element={<PublicRoute element={SignIn} />} />
         <Route path="/blog" element={<Blog />} />
-        <Route path="/welcome" element={<WelcomePage />} />
         <Route path="/register" element={<PublicRoute element={Register} />} />
 
         {/* Protected Routes wrapped in Route */}
         <Route path="/dashboard" element={<PrivateRoute element={Dashboard} />} />
+        <Route path="/welcome" element={<PrivateRoute element={WelcomePage} />} />
         <Route path="/profile" element={<PrivateRoute element={Profile} />} />
+        <Route path="/payment/:secret_token/:api_ref/:mode" element={<PrivateRoute element={Payment} />} />
       </Routes>
 
-      {/* Conditionally render Footer or ClassesFooter based on the route */}
       {isDashboardRoute ? <ClassesFooter /> : <Footer />}
     </div>
   );

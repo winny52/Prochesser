@@ -1,6 +1,11 @@
 import React from 'react';
+import { BACKEND_URL } from '../constant';
+import axios from 'axios';
+import { useRecoilValue } from 'recoil';
+import { userState } from '../state/userState';
 
 const LearningSection = () => {
+  const user = useRecoilValue(userState);
   const packages = [
     {
       name: 'Beginner Package: "Pawn to King"',
@@ -15,6 +20,7 @@ const LearningSection = () => {
         'Weekly games with AI opponents',
         'Monthly group Q&A with experienced chess coaches',
       ],
+      type:"beginner"
     },
     {
       name: 'Intermediate Package: "Master the Middlegame"',
@@ -30,6 +36,7 @@ const LearningSection = () => {
         'Personal game reviews with feedback to help you improve',
       ],
       popularLabel: true, // Add a property to indicate popularity
+      type:"intermediate"
     },
     {
       name: 'Advanced Package: "Road to Mastery"',
@@ -44,10 +51,41 @@ const LearningSection = () => {
         'Access to private online tournaments and competitive games',
         'A personal chess library of resources and annotated games',
       ],
+      type:"advanced"
     },
   ];
 
-  return (
+  async function GetUrl(type) {
+    const token = localStorage.getItem('token');
+    if (!user || !token) {
+      window.location.href = "/login";
+      return;
+    }
+    
+    const url = `${BACKEND_URL}/api/payment/get-url`;
+    const userId = user.user.id;
+    try {
+      const response = await axios.post(
+        url,
+        {
+          userId: userId,
+          name: type
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      
+      const data = response.data;
+      console.log(data);
+    } catch (error) {
+      console.error('Error fetching payment URL:', error);
+    }
+  }
+  
+    return (
     <section className="learning-section py-12 bg-gray-100">
       <h2 className="text-4xl font-bold text-center mb-12 text-gray-800">Our Learning Packages </h2>
       <div className="package-grid grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-8">
@@ -73,7 +111,7 @@ const LearningSection = () => {
                 </li>
               ))}
             </ul>
-            <button className="bg-yellow-600 text-white font-bold py-2 px-6 rounded-full mt-4 hover:bg-yellow-600 hover:shadow-lg transition-colors duration-300">
+            <button className="bg-yellow-600 text-white font-bold py-2 px-6 rounded-full mt-4 hover:bg-yellow-600 hover:shadow-lg transition-colors duration-300" onClick={(e)=>GetUrl(packageData.type)}>
               {packageData.cta}
             </button>
           </div>

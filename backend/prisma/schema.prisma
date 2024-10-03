@@ -18,26 +18,65 @@ model User {
   emailVerified DateTime?
   otp           String?
   otpExpiresAt  DateTime?
-  purchases Purchase[]
+  purchases Subscription[]
   createdAt DateTime   @default(now())
+
+  Transaction Transaction[]
 }
 
 model Package {
   id          String     @id @default(cuid())
-  name        String
+  name        String     @unique
   description String
   price       Float
   createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-  purchases   Purchase[]
+  subscriptions   Subscription[]
+  Transaction Transaction[]
 }
 
-model Purchase {
-  id        String   @id @default(cuid())
-  user      User     @relation(fields: [userId], references: [id])
-  userId    String
-  package   Package  @relation(fields: [packageId], references: [id])
-  packageId String
-  paymentId String   @unique // Instasend Payment ID
-  createdAt DateTime @default(now())
+model Subscription {
+  id          String     @id @default(cuid())
+  user        User                @relation(fields: [userId], references: [id])
+  userId      String
+  package     Package             @relation(fields: [packageId], references: [id])
+  packageId   String
+  status      SubscriptionStatus
+  startDate   DateTime            @default(now())
+  endDate     DateTime?
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+
+  @@unique([userId, packageId])
+}
+
+model Transaction {
+  id               Int                @id @default(autoincrement())
+  user             User               @relation(fields: [userId], references: [id])
+  userId           String
+  package          Package            @relation(fields: [packageId], references: [id])
+  packageId        String
+  amount           Float
+  finalAmountInUSD Float
+  currency         String
+  signature        String
+  checkoutId       String
+  apiRef           String             @unique
+  secretToken      String
+  mode             String
+  status           TransactionStatus  @default(PENDING)
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+}
+
+enum TransactionStatus {
+  PENDING
+  COMPLETED
+  CANCELLED
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  CANCELLED
+  EXPIRED
+  PENDING
 }
