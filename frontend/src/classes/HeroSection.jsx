@@ -1,3 +1,6 @@
+//HeroSection for the Academy
+
+
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 

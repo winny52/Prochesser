@@ -1,3 +1,6 @@
+//Combines components to give the AboutPage for ProChesser
+
+
 import React from "react";
 import WhoAreWe from "./WhoAreWe";
 import WhyChooseProChesser from "./WhyChooseProChesser";
