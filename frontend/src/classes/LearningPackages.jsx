@@ -102,6 +102,7 @@ const LearningSection = () => {
       );
 
       const data = response.data;
+      window.location.href = data.paymentDetails
       console.log(data);
     } catch (error) {
       console.error('Error fetching payment URL:', error);

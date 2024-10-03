@@ -33,14 +33,18 @@ export const authenticateJWT = async (req: any, res: Response, next: NextFunctio
           id: true,
           firstname: true,
           lastname:true,
-          purchases:true,
           email: true,
         }
       });
   
       if (!user) return res.status(403).json({ message: "User not found" });
-      
-      req.user = { user, token };
+      const subscriptions = await prisma.subscription.findMany({
+         where:{
+           userId:user.id,
+           status:'ACTIVE'
+         }
+      })
+      req.user = { user, token ,subscriptions};
       next();
     } catch (error) {
       console.log(error)
