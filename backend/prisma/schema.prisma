@@ -1,0 +1,82 @@
+// prisma/schema.prisma
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String     @id @default(cuid())
+  email     String     @unique
+  password  String
+  firstname String
+  lastname  String
+  emailVerified DateTime?
+  otp           String?
+  otpExpiresAt  DateTime?
+  purchases Subscription[]
+  createdAt DateTime   @default(now())
+
+  Transaction Transaction[]
+}
+
+model Package {
+  id          String     @id @default(cuid())
+  name        String     @unique
+  description String
+  price       Float
+  createdAt   DateTime   @default(now())
+  subscriptions   Subscription[]
+  Transaction Transaction[]
+}
+
+model Subscription {
+  id          String     @id @default(cuid())
+  user        User                @relation(fields: [userId], references: [id])
+  userId      String
+  package     Package             @relation(fields: [packageId], references: [id])
+  packageId   String
+  status      SubscriptionStatus
+  startDate   DateTime            @default(now())
+  endDate     DateTime?
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+
+  @@unique([userId, packageId])
+}
+
+model Transaction {
+  id               Int                @id @default(autoincrement())
+  user             User               @relation(fields: [userId], references: [id])
+  userId           String
+  package          Package            @relation(fields: [packageId], references: [id])
+  packageId        String
+  amount           Float
+  finalAmountInUSD Float
+  currency         String
+  signature        String
+  checkoutId       String
+  apiRef           String             @unique
+  secretToken      String
+  mode             String
+  status           TransactionStatus  @default(PENDING)
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+}
+
+enum TransactionStatus {
+  PENDING
+  COMPLETED
+  CANCELLED
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  CANCELLED
+  EXPIRED
+  PENDING
+}

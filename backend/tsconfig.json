@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    /* Projects */
+    // ... other settings ...
+
+    /* Language and Environment */
+    "target": "es2016",                                  /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
+
+    /* Modules */
+    "module": "commonjs",                                /* Specify what module code is generated. */
+    "rootDir": "./src",                                  /* Specify the root folder within your source files. */
+
+    /* Interop Constraints */
+    "esModuleInterop": true,                             /* Emit additional JavaScript to ease support for importing CommonJS modules. */
+    "allowSyntheticDefaultImports": true,                /* Allow default imports from modules with no default export. */
+
+    /* Type Checking */
+    "strict": true,                                      /* Enable all strict type-checking options. */
+
+    /* Completeness */
+    "skipLibCheck": true ,                                /* Skip type checking all .d.ts files. */
+  "typeRoots": ["./node_modules/@types", "./src/types"]
+  },
+  "include": [
+    "src/**/*", // Adjust according to your folder structure
+    "src/type.d.ts" // Add this if not included in the above
+, "src/seed.ts"  ]
+}
