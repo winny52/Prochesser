@@ -26,10 +26,7 @@ const WelcomeBanner = () => {
           Your journey to chess mastery begins now!
         </p>
 
-        {/* CTA Button */}
-        <button className="mt-10 bg-white text-blue-600 hover:bg-blue-200 hover:scale-105 transition-all duration-300 shadow-lg w-full md:w-auto py-3 px-8 rounded-full">
-          Start Learning
-        </button>
+       
 
        
       </div>

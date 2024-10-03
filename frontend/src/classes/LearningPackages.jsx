@@ -3,6 +3,7 @@ import { BACKEND_URL } from '../constant';
 import axios from 'axios';
 import { useRecoilValue } from 'recoil';
 import { userState } from '../state/userState';
+import { FaCheckCircle } from 'react-icons/fa'; // Import tick icon from FontAwesome
 
 const LearningSection = () => {
   const user = useRecoilValue(userState);
@@ -20,7 +21,14 @@ const LearningSection = () => {
         'Weekly games with AI opponents',
         'Monthly group Q&A with experienced chess coaches',
       ],
-      type:"beginner"
+      whatYoullLearn: [
+        'Master the chessboard and how each piece moves.',
+        'Understand basic rules like check, checkmate, and special moves (castling, en passant).',
+        'Learn essential tactics: forks, pins, and skewers.',
+        'Discover basic checkmate patterns.',
+        'Practice with easy-to-solve chess puzzles and interactive games.',
+      ],
+      type: "beginner",
     },
     {
       name: 'Intermediate Package: "Master the Middlegame"',
@@ -35,8 +43,15 @@ const LearningSection = () => {
         'Monthly one-on-one coaching sessions (60 min) with an expert coach',
         'Personal game reviews with feedback to help you improve',
       ],
-      popularLabel: true, // Add a property to indicate popularity
-      type:"intermediate"
+      whatYoullLearn: [
+        'Explore advanced opening strategies and plans.',
+        'Strengthen your middlegame understanding: piece coordination, pawn structure, and space control.',
+        'Learn deeper tactics like discovered attacks, removing the defender, and advanced combinations.',
+        'Analyze famous chess games to understand common patterns and mistakes.',
+        'Improve your ability to anticipate your opponent\'s moves.',
+      ],
+      popularLabel: 'Most Popular', // Updated to reflect the 'Most Popular' label
+      type: "intermediate",
     },
     {
       name: 'Advanced Package: "Road to Mastery"',
@@ -51,7 +66,15 @@ const LearningSection = () => {
         'Access to private online tournaments and competitive games',
         'A personal chess library of resources and annotated games',
       ],
-      type:"advanced"
+      whatYoullLearn: [
+        'Opening preparation tailored to your playing style.',
+        'Advanced tactics and multi-move combinations.',
+        'Mastering complex endgames, including bishop vs. knight, pawn endgames, and more.',
+        'Chess psychology: managing time pressure and handling competitive play.',
+        'Prepare for tournaments and rated games on platforms like Chess.com or Lichess.',
+      ],
+      recommendedLabel: 'Recommended', 
+      type: "advanced",
     },
   ];
 
@@ -61,7 +84,7 @@ const LearningSection = () => {
       window.location.href = "/login";
       return;
     }
-    
+
     const url = `${BACKEND_URL}/api/payment/get-url`;
     const userId = user.user.id;
     try {
@@ -69,7 +92,7 @@ const LearningSection = () => {
         url,
         {
           userId: userId,
-          name: type
+          name: type,
         },
         {
           headers: {
@@ -77,17 +100,17 @@ const LearningSection = () => {
           },
         }
       );
-      
+
       const data = response.data;
       console.log(data);
     } catch (error) {
       console.error('Error fetching payment URL:', error);
     }
   }
-  
-    return (
+
+  return (
     <section className="learning-section py-12 bg-gray-100">
-      <h2 className="text-4xl font-bold text-center mb-12 text-gray-800">Our Learning Packages </h2>
+      <h2 className="text-4xl font-bold text-center mb-12 text-gray-800">Our Learning Packages</h2>
       <div className="package-grid grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-8">
         {packages.map((packageData, index) => (
           <div
@@ -98,20 +121,38 @@ const LearningSection = () => {
               {packageData.name}
               {packageData.popularLabel && (
                 <span className="bg-blue-800 text-white font-semibold text-xs uppercase rounded-full px-2 ml-2">
-                  Most Popular and Recommended
+                  {packageData.popularLabel}
+                </span>
+              )}
+              {packageData.recommendedLabel && (
+                <span className="bg-yellow-600 text-white font-semibold text-xs uppercase rounded-full px-2 ml-2">
+                  {packageData.recommendedLabel}
                 </span>
               )}
             </h3>
             <p className="text-xl mb-4 font-bold">{packageData.price}</p>
             <p className="text-gray-900 mb-6 hover:text-white">{packageData.description}</p>
-            <ul className="list-disc list-inside space-y-2 mb-6">
+            <ul className="list-inside space-y-2 mb-6">
               {packageData.includedMaterials.map((material, i) => (
-                <li className="text-gray-900 hover:text-white transition-colors" key={i}>
+                <li className="flex items-center text-gray-900 hover:text-white transition-colors" key={i}>
+                  <FaCheckCircle className="text-yellow-600 mr-2" /> {/* Tick icon */}
                   {material}
                 </li>
               ))}
             </ul>
-            <button className="bg-yellow-600 text-white font-bold py-2 px-6 rounded-full mt-4 hover:bg-yellow-600 hover:shadow-lg transition-colors duration-300" onClick={(e)=>GetUrl(packageData.type)}>
+            <h4 className="text-lg font-semibold mb-2">What You'll Learn:</h4>
+            <ul className="list-inside space-y-2 mb-6">
+              {packageData.whatYoullLearn.map((lesson, i) => (
+                <li className="flex items-center text-gray-900 hover:text-white transition-colors" key={i}>
+                  <FaCheckCircle className="text-yellow-600 mr-2" /> {/* Tick icon */}
+                  {lesson}
+                </li>
+              ))}
+            </ul>
+            <button
+              className="bg-yellow-600 text-white font-bold py-2 px-6 rounded-full mt-4 hover:bg-yellow-600 hover:shadow-lg transition-colors duration-300"
+              onClick={(e) => GetUrl(packageData.type)}
+            >
               {packageData.cta}
             </button>
           </div>
