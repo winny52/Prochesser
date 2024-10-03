@@ -22,7 +22,7 @@ import Header from './Dashboard/Header';
 import WelcomePage from './classes/WelcomePage';
 import ClassesFooter from './Dashboard/ClassesFooter';
 import Profile from './Dashboard/Profile';
-import { PrivateRoute, PublicRoute } from './routes'; 
+import { PrivateRoute, PublicRoute, SubscriptionPrivateRoutes } from './routes'; 
 import { userState, fetchUserState } from "./state/userState";
 import Payment from './payment';
 import Spinner from './components/spinner';
@@ -72,7 +72,7 @@ function App() {
         <Route path="/register" element={<PublicRoute element={Register} />} />
 
         {/* Protected Routes wrapped in Route */}
-        <Route path="/dashboard" element={<PrivateRoute element={Dashboard} />} />
+        <Route path="/dashboard" element={<SubscriptionPrivateRoutes element={Dashboard} />} />
         <Route path="/welcome" element={<PrivateRoute element={WelcomePage} />} />
         <Route path="/profile" element={<PrivateRoute element={Profile} />} />
         <Route path="/payment/:secret_token/:api_ref/:mode" element={<PublicRoute element={Payment} />} />
