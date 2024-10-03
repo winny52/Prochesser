@@ -44,7 +44,7 @@ const FAQ = () => {
               You only need a phone or laptop and a stable internet connection for seamless online gaming.
             </p>
           </div>
-          <div className="p-4 border-l-4 border-yellow-500 bg-white rounded-lg shadow-lg">
+          {/* <div className="p-4 border-l-4 border-yellow-500 bg-white rounded-lg shadow-lg">
             <h3 className="text-2xl font-semibold text-black mb-2">
               How Can I Sign Up and Start Playing?
             </h3>
@@ -59,7 +59,7 @@ const FAQ = () => {
             <p className="text-lg text-gray-700">
               After creating an account, go to your profile, select the deposit option, and follow the payment instructions.
             </p>
-          </div>
+          </div> */}
         </div>
 
         {/* Explore More Button */}
