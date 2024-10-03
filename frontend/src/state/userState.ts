@@ -8,6 +8,7 @@ interface User {
   email: string;
   firstname: string;
 lastname:string;
+subscriptions:any
 }
 
 export const userState = atom<User | null>({
