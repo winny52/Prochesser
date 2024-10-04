@@ -33,7 +33,7 @@ const Navbar = () => {
 
         {/* Hamburger Menu for small screens */}
         <div className="sm:hidden">
-          <button onClick={toggleMenu} className="focus:outline-none">
+          <button onClick={toggleMenu} className="text-black  focus:outline-none">
             {isOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
           </button>
         </div>
