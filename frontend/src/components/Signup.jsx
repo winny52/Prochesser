@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { fetchSignup } from '../fetch/login';
+import { fetchSignup } from '../fetch/fetch';
 
 const SignUp =()=> {
   const [formData, setFormData] = useState({

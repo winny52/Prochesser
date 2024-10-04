@@ -1,3 +1,4 @@
+import { BACKEND_URL, FRONTEND_URL } from "./constants";
 import { generateToken } from "./utils";
 import nodemailer from "nodemailer";
 
@@ -26,7 +27,7 @@ const transporter = nodemailer.createTransport({
         html: `<p>Hi! There, You have recently visited 
              our website and entered your email.
              Please follow the given link to verify your email:</p>
-             <a href="http://localhost:5000/api/auth/verify/${token}">Verify</a>
+             <a href="${BACKEND_URL}/api/auth/verify/${token}">Verify</a>
              Thanks`,
       };
   
@@ -40,7 +41,7 @@ const transporter = nodemailer.createTransport({
   // Function to send the forgot password email with a reset link
   export const SendForgotPassword = async (email: string, token: string) => {
     try {
-      const resetLink = `${process.env.FRONTEND_URL}/reset-password/${token}`;
+      const resetLink = `${FRONTEND_URL}/reset-password/${token}`;
   console.log('Sending: ',token);
   
       const mailOptions = {

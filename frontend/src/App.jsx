@@ -28,6 +28,8 @@ import Payment from './payment';
 import Spinner from './components/spinner';
 import TawkTo from './components/Tawkto';
 import SubscriptionPrompt from './classes/Subscriptionpage';
+import ForgotPassword from './components/forgotpassword';
+import ResetPassword from './components/resetpassword';
 function App() {
   const location = useLocation();
   const [user, setUser] = useRecoilState(userState);
@@ -61,17 +63,20 @@ function App() {
       <Routes>
         {/* Public Routes */}
         <Route path="/signup" element={<PublicRoute element={SignUp} />} />
+        <Route path="/login" element={<PublicRoute element={Login} />} />
+        <Route path="/signin" element={<PublicRoute element={SignIn} />} />
+        <Route path="/register" element={<PublicRoute element={Register} />} />
+        <Route path="/forgotpassword" element={<PublicRoute element={ForgotPassword} />} />
+        <Route path="/reset-password/:id" element={<PublicRoute element={ResetPassword} />} />
+        
         <Route path="/" element={<Homepage />} />
         <Route path="/faqs" element={<FrequentlyAskedQuestions />} />
-        <Route path="/login" element={<PublicRoute element={Login} />} />
         <Route path="/about" element={<About />} />
         <Route path="/testimonials" element={<Testimonials />} />
         <Route path="/subscribe" element={<Newsletter />} />
         <Route path="/how-it-works" element={<HowItWorks />} />
         <Route path="/learnchess" element={<Content />} />
-        <Route path="/signin" element={<PublicRoute element={SignIn} />} />
         <Route path="/blog" element={<Blog />} />
-        <Route path="/register" element={<PublicRoute element={Register} />} />
        <Route path='/prompt' element={<SubscriptionPrompt/>}/>
         {/* Protected Routes wrapped in Route */}
         <Route path="/dashboard" element={<SubscriptionPrivateRoutes element={Dashboard} />} />

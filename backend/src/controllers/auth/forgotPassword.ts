@@ -3,6 +3,7 @@ import prisma from "../../prismaClient"
 import {verifyToken,generateToken} from "../../utils"
 import  jwt  from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import { SendForgotPassword } from "../../verify";
 
 export const verifyPasswordToken = async (req: Request, res: Response) => {
     console.log("verify");
@@ -67,7 +68,7 @@ export const verifyPasswordToken = async (req: Request, res: Response) => {
       },
     });
     
-//    await SendForgotPassword(email,token);
+   await SendForgotPassword(email,token);
     res.status(200).json({ message: "Password reset link sent to your email" });
     }catch(e){
       return res.status(500).json({

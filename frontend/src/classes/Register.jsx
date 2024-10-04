@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom'; 
-import { fetchSignup } from '../fetch/login';
+import { fetchSignup } from '../fetch/fetch';
 const Register = () => {
   const [formData, setFormData] = useState({
     firstName: '',
