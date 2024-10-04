@@ -9,12 +9,13 @@ const [email,setEmail]=useState('')
 
 
   const handleSubmit = async (e) => {
+    e.preventDefault();
    if(!email){
     alert("Enter email")
     return;
    }
 
- await fetchForgotPassword(email)
+const data = await fetchForgotPassword(email)
 
   };
 

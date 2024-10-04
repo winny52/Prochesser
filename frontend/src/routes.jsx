@@ -23,7 +23,7 @@ export const PublicRoute = ({ element: Component }) => {
     return <Spinner/>
   }
 
-  return user ? <Navigate to="/dashboard" /> : <Component />;
+  return user ? <Navigate to="/" /> : <Component />;
 };
 
 export const SubscriptionPrivateRoutes = ({ element: Component }) => {

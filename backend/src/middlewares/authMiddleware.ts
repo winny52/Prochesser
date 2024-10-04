@@ -25,10 +25,10 @@ export const authenticateJWT = async (req: any, res: Response, next: NextFunctio
   
   try {
     const decoded: any = verifyToken(token);
-    
+    console.log(decoded);
     const user = await prisma.user.findFirst({
       where: {
-        email: decoded.email,
+        id: decoded.userId,
       },
       select: {
         id: true,

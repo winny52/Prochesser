@@ -19,7 +19,7 @@ import axios from "axios";
    console.log(response.data); 
    const data = response.data;
     localStorage.setItem('token',token);
-    window.location.href = '/dashboard'; 
+    window.location.href = '/'; 
   } catch (error) {
     setError('Invalid email or password.');
     console.error('Sign-in error:', error);
@@ -61,7 +61,7 @@ import axios from "axios";
     
        localStorage.setItem('token',data.token);
       setSuccess('User registration successful!');
-      window.location.href='/welcome'; 
+      window.location.href='/'; 
     } catch (error) {
       setError(error.message);
       alert(error.message || "Some error occured");
@@ -97,7 +97,6 @@ export async function fetchForgotPassword(email) {
 }
 
 export async function fetchUpdatePassword(token,pass) {
-  e.preventDefault();
 
   if (!token) {
     alert("url is not right");
@@ -127,6 +126,9 @@ const url = `${BACKEND_URL}/api/auth/updateforgotpassword`
 }
 
 export  async function verifyResetPasswordToken(token,setError,setEmail) {
+console.log(token);
+
+  
   try {
     const response = await fetch(`${BACKEND_URL}/api/auth/verifyResetToken/${token}`, {
       method: "GET",
@@ -134,13 +136,12 @@ export  async function verifyResetPasswordToken(token,setError,setEmail) {
 
     const result = await response.json();
 
+    console.log(result);   
     if (!response.ok) {
       setError(result.message || "Invalid or expired token");
-      window.location.href = "/login"
     }
     else{
-        setEmail(result.email)
-        console.log(email);   
+      setEmail(result.email)
     }
   } catch (err) {
     console.log("Failed to verify token",err);
