@@ -133,6 +133,11 @@ const Navbar = () => {
             </Link>
           </li>
           <li>
+            <Link to="/how-it-works" className="text-black hover:text-yellow-500" onClick={toggleMenu}>
+              How It Works
+            </Link>
+          </li>
+          <li>
             <Link to="/faqs" className="text-black hover:text-yellow-500" onClick={toggleMenu}>
               FAQs
             </Link>

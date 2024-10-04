@@ -106,14 +106,6 @@ const LearningSection = () => {
             </h3>
             <p className="text-xl mb-4 font-bold">{packageData.price}</p>
             <p className="text-gray-900 mb-6 hover:text-white">{packageData.description}</p>
-            <ul className="list-inside space-y-2 mb-6">
-              {packageData.includedMaterials.map((material, i) => (
-                <li className="flex items-center text-gray-900 hover:text-white transition-colors" key={i}>
-                  <FaCheckCircle className="text-yellow-600 mr-2 w-5 h-5" /> {/* Tick icon */}
-                  {material}
-                </li>
-              ))}
-            </ul>
             <h4 className="text-lg font-semibold mb-2">What You'll Learn:</h4>
             <ul className="list-inside space-y-2 mb-6">
               {packageData.whatYoullLearn.map((lesson, i) => (
@@ -123,6 +115,18 @@ const LearningSection = () => {
                 </li>
               ))}
             </ul>
+
+            <h4 className="text-lg font-semibold mb-2">Included Materials:</h4>
+
+            <ul className="list-inside space-y-2 mb-6">
+              {packageData.includedMaterials.map((material, i) => (
+                <li className="flex items-center text-gray-900 hover:text-white transition-colors" key={i}>
+                  <FaCheckCircle className="text-yellow-600 mr-2 w-5 h-5" /> {/* Tick icon */}
+                  {material}
+                </li>
+              ))}
+            </ul>
+        
             <div className="flex justify-center mt-4">
               <button
                 className="bg-yellow-600 text-white font-bold py-2 px-6 rounded-full hover:bg-yellow-500 hover:shadow-lg transition-colors duration-300"
