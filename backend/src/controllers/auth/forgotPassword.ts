@@ -59,7 +59,7 @@ export const verifyPasswordToken = async (req: Request, res: Response) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    const token = generateToken({ id: user.id, email: user.email }, "10m");
+    const token = generateToken({ id: user.id, email: user.email });
     await prisma.user.update({
       where: { email },
       data: {
@@ -132,17 +132,26 @@ export const verifyPasswordToken = async (req: Request, res: Response) => {
   
   
   export const verifyResetToken = async (req: Request, res: Response) => {
-    try {
-      const { token } = req.params;
+    const { token } = req.params;
   
-      // Verify the token
+    if (!token) {
+      return res.status(400).json({ message: "Token is required" });
+    }
+  
+    try {
+      console.log(token);
       let decoded;
       try {
-        decoded = verifyToken(token) as {
+         decoded = verifyToken(token) as {
           id:string;
           data: string;
         };
       } catch (err) {
+        return res.status(400).json({ message: "Invalid or expired token" });
+      }
+  
+  
+      if (!decoded || !decoded.id) {
         return res.status(400).json({ message: "Invalid or expired token" });
       }
   

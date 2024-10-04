@@ -45,12 +45,15 @@ const Navbar = () => {
           <Link to="/learnchess" className="text-black hover:text-yellow-500">Academy</Link>
 
           {user ? (
+            <>
+          {user.subscriptions.length>0&&<Link to="/dashboard" className="text-black hover:text-yellow-500">Dashboard</Link>}
             <button
               onClick={handleLogoutClick}
               className="bg-yellow-500 text-black font-bold py-2 px-4 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105 hover:bg-yellow-400"
             >
               Logout
             </button>
+            </>
           ) : (
             <>
               {/* Login Button with Submenu */}

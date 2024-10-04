@@ -28,6 +28,8 @@ export const fetchUserState = selector<User | null>({
             Authorization: `Bearer ${token}`,
           },
         });
+        console.log(response);
+        
         return response.data;
       } catch (error) {
         console.error('Error fetching user:', error);
