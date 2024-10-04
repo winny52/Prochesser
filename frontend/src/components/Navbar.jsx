@@ -12,9 +12,7 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const toggleMenu = () => setIsOpen(!isOpen);
-
   const toggleSubmenu = () => setSubmenuOpen(!submenuOpen);
-
   const toggleLoginSubmenu = () => setLoginSubmenuOpen(!loginSubmenuOpen);
 
   const handleLogoutClick = () => {
@@ -33,95 +31,103 @@ const Navbar = () => {
 
         {/* Hamburger Menu for small screens */}
         <div className="sm:hidden">
-          <button onClick={toggleMenu} className="text-black  focus:outline-none">
+          <button onClick={toggleMenu} className="text-black focus:outline-none">
             {isOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
           </button>
         </div>
 
-        {/* Buttons for larger screens */}
-        {user ? (
-          <button
-            onClick={handleLogoutClick}
-            className="bg-yellow-500 text-black font-bold py-2 px-4 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105 hover:bg-yellow-400"
-          >
-            Logout
-          </button>
-        ) : (
-          <div className="hidden sm:flex space-x-4 relative">
-            {/* Login Button with Submenu */}
-            <button
-              onClick={toggleLoginSubmenu} // Toggle login submenu on click
-              className="text-black font-bold py-2 px-4 rounded-full shadow-lg transition duration-300 ease-in-out transform"
-            >
-              Login
-            </button>
+        {/* Navigation Links for larger screens */}
+        <div className="hidden sm:flex items-center space-x-4">
+          <Link to="/" className="text-black hover:text-yellow-500">Home</Link>
+          <Link to="/about" className="text-black hover:text-yellow-500">About</Link>
+          <Link to="/faqs" className="text-black hover:text-yellow-500">FAQs</Link>
+          <Link to="/blog" className="text-black hover:text-yellow-500">Our Blog</Link>
+          <Link to="/learnchess" className="text-black hover:text-yellow-500">Academy</Link>
 
-            {/* Login Submenu for login options */}
-            {loginSubmenuOpen && (
-              <div className="absolute top-12 right-24 bg-white shadow-lg rounded-lg z-10 p-4">
-                <ul className="space-y-2">
-                  <li>
-                    <Link
-                      to="/signin"
-                      className="block text-black hover:text-yellow-500"
-                      onClick={() => setLoginSubmenuOpen(false)} // Close submenu on click
-                    >
-                      Learners 
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      to="/login"
-                      className="block text-black hover:text-yellow-500"
-                      onClick={() => setLoginSubmenuOpen(false)} // Close submenu on click
-                    >
-                      Gamers
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-            )}
-
-            {/* Create Account Button with Submenu */}
+          {user ? (
             <button
-              onClick={toggleSubmenu} // Toggle create account submenu on click
+              onClick={handleLogoutClick}
               className="bg-yellow-500 text-black font-bold py-2 px-4 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105 hover:bg-yellow-400"
             >
-              Create Account
+              Logout
             </button>
+          ) : (
+            <>
+              {/* Login Button with Submenu */}
+              <button
+                onClick={toggleLoginSubmenu}
+                className="text-black font-bold py-2 px-4 rounded-full shadow-lg transition duration-300 ease-in-out transform"
+              >
+                Login
+              </button>
 
-            {/* Submenu for account creation */}
-            {submenuOpen && (
-              <div className="absolute top-12 right-0 bg-white shadow-lg rounded-lg z-10 p-4">
-                <ul className="space-y-2">
-                  <li>
-                    <Link
-                      to="/register"
-                      className="block text-black hover:text-yellow-500"
-                      onClick={() => setSubmenuOpen(false)} // Close submenu on click
-                    >
-                      Learners Account
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      to="/signup"
-                      className="block text-black hover:text-yellow-500"
-                      onClick={() => setSubmenuOpen(false)} // Close submenu on click
-                    >
-                      Gamers Account
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-            )}
-          </div>
-        )}
+              {/* Login Submenu for login options */}
+              {loginSubmenuOpen && (
+                <div className="absolute top-12 right-24 bg-white shadow-lg rounded-lg z-10 p-4">
+                  <ul className="space-y-2">
+                    <li>
+                      <Link
+                        to="/signin"
+                        className="block text-black hover:text-yellow-500"
+                        onClick={() => setLoginSubmenuOpen(false)}
+                      >
+                        Learners
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to="/login"
+                        className="block text-black hover:text-yellow-500"
+                        onClick={() => setLoginSubmenuOpen(false)}
+                      >
+                        Gamers
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
+              )}
+
+              {/* Create Account Button with Submenu */}
+              <button
+                onClick={toggleSubmenu}
+                className="bg-yellow-500 text-black font-bold py-2 px-4 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105 hover:bg-yellow-400"
+              >
+                Create Account
+              </button>
+
+              {/* Submenu for account creation */}
+              {submenuOpen && (
+                <div className="absolute top-12 right-0 bg-white shadow-lg rounded-lg z-10 p-4">
+                  <ul className="space-y-2">
+                    <li>
+                      <Link
+                        to="/register"
+                        className="block text-black hover:text-yellow-500"
+                        onClick={() => setSubmenuOpen(false)}
+                      >
+                        Learners Account
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to="/signup"
+                        className="block text-black hover:text-yellow-500"
+                        onClick={() => setSubmenuOpen(false)}
+                      >
+                        Gamers Account
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </>
+          )}
+        </div>
       </div>
 
       {/* Menu Links for mobile */}
-      <div className={`sm:flex justify-center items-center p-4 bg-gray-100 ${isOpen ? 'block' : 'hidden'}`}>
-        <ul className="flex sm:space-x-4 flex-col sm:flex-row space-y-4 sm:space-y-0">
+      <div className={`sm:hidden p-4 bg-gray-100 ${isOpen ? 'block' : 'hidden'}`}>
+        <ul className="flex flex-col space-y-4">
           <li>
             <Link to="/" className="text-black hover:text-yellow-500" onClick={toggleMenu}>
               Home
@@ -130,11 +136,6 @@ const Navbar = () => {
           <li>
             <Link to="/about" className="text-black hover:text-yellow-500" onClick={toggleMenu}>
               About
-            </Link>
-          </li>
-          <li>
-            <Link to="/how-it-works" className="text-black hover:text-yellow-500" onClick={toggleMenu}>
-              How It Works
             </Link>
           </li>
           <li>
@@ -152,6 +153,57 @@ const Navbar = () => {
               Academy
             </Link>
           </li>
+
+          {/* Add Login and Create Account to mobile menu */}
+          {!user && (
+            <>
+              <li>
+                <button
+                  onClick={toggleLoginSubmenu}
+                  className="text-black font-bold py-2 px-4 rounded-full shadow-lg transition duration-300 ease-in-out transform"
+                >
+                  Login
+                </button>
+                {loginSubmenuOpen && (
+                  <ul className="space-y-2 pl-4">
+                    <li>
+                      <Link to="/signin" className="block text-black hover:text-yellow-500" onClick={toggleMenu}>
+                        Learners
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/login" className="block text-black hover:text-yellow-500" onClick={toggleMenu}>
+                        Gamers
+                      </Link>
+                    </li>
+                  </ul>
+                )}
+              </li>
+              <li>
+                <button
+                  onClick={toggleSubmenu}
+                  className="bg-yellow-500 text-black font-bold py-2 px-4 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105 hover:bg-yellow-400"
+
+                >
+                  Create Account
+                </button>
+                {submenuOpen && (
+                  <ul className="space-y-2 pl-4">
+                    <li>
+                      <Link to="/register" className="block text-black hover:text-yellow-500" onClick={toggleMenu}>
+                        Learners Account
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/signup" className="block text-black hover:text-yellow-500" onClick={toggleMenu}>
+                        Gamers Account
+                      </Link>
+                    </li>
+                  </ul>
+                )}
+              </li>
+            </>
+          )}
         </ul>
       </div>
     </nav>
