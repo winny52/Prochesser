@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
-    <footer className="bg-white w-full text-black py-10 ">
+    <footer className="bg-white w-full text-black py-10">
       <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 px-4">
         
         <div>
@@ -21,9 +21,6 @@ const Footer = () => {
             <li className="mb-2">
               <Link to="/blog" className="text-black hover:text-yellow-500">Read Our Blog</Link>
             </li>
-            {/* <li className="mb-2">
-              <Link to="/community" className="text-black hover:text-yellow-500">Community</Link>
-            </li> */}
           </ul>
         </div>
 
@@ -33,9 +30,6 @@ const Footer = () => {
             <li className="mb-2">
               <Link to="/game-lobby" className="text-black hover:text-yellow-500">Play Chess</Link>
             </li>
-            {/* <li className="mb-2">
-              <Link to="/affiliate" className="text-black hover:text-yellow-500">Become a ProChesser Affiliate</Link>
-            </li> */}
           </ul>
         </div>
 
@@ -56,8 +50,9 @@ const Footer = () => {
 
       <div className="mt-8 text-center text-sm">
         <p>&copy; ProChesser 2024. All rights reserved.</p>
-        <p>
-          <em>It is not just a game but a Duel of Minds. Not just a player but a Winner. This is ProChesser.com. </em></p>
+        < p font style={italic}>
+          <em>It is not just a game but a Duel of Minds. Not just a player but a Winner. This is ProChesser.com.</em>
+        </p>
       </div>
     </footer>
   );
