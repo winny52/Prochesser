@@ -115,6 +115,9 @@ const LearningSection = () => {
                 </li>
               ))}
             </ul>
+
+            <h4 className="text-lg font-semibold mb-2">Included Materials:</h4>
+
             <ul className="list-inside space-y-2 mb-6">
               {packageData.includedMaterials.map((material, i) => (
                 <li className="flex items-center text-gray-900 hover:text-white transition-colors" key={i}>
