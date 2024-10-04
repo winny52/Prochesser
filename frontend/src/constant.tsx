@@ -1,1 +1,0 @@
-export const BACKEND_URL =  "https://sturdy-umbrella-xqp9vx6gj4qc9qw5-3000.app.github.dev" 

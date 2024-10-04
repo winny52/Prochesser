@@ -27,6 +27,8 @@ export default function PaymentPopup({packag,setPackag,user}){
         const data = response.data;
         if(!data.paymentDetails){
           console.log(data);
+          setPackag(null)
+          alert(data.message)
           return;
         }else{
           window.location.href = data.paymentDetails;
