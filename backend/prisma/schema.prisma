@@ -18,7 +18,7 @@ model User {
   emailVerified DateTime?
   otp           String?
   otpExpiresAt  DateTime?
-  purchases Subscription[]
+  Subscription Subscription[]
   createdAt DateTime   @default(now())
 
   Transaction Transaction[]
@@ -30,8 +30,8 @@ model Package {
   description String
   price       Float
   createdAt   DateTime   @default(now())
-  subscriptions   Subscription[]
   Transaction Transaction[]
+  Subscription Subscription[]
 }
 
 model Subscription {
@@ -42,7 +42,7 @@ model Subscription {
   packageId   String
   status      SubscriptionStatus
   startDate   DateTime            @default(now())
-  endDate     DateTime?           
+  endDate     DateTime           
   createdAt   DateTime            @default(now())
   updatedAt   DateTime            @updatedAt
 
@@ -50,7 +50,7 @@ model Subscription {
 }
 
 model Transaction {
-  id               Int                @id @default(autoincrement())
+  id          String     @id @default(cuid())
   user             User               @relation(fields: [userId], references: [id])
   userId           String
   package          Package            @relation(fields: [packageId], references: [id])

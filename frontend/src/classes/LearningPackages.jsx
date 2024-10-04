@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BACKEND_URL } from '../constant';
 import axios from 'axios';
 import { useRecoilValue } from 'recoil';
 import { userState } from '../state/userState';
 import { FaCheckCircle } from 'react-icons/fa'; // Import tick icon from FontAwesome
+import PaymentPopup from '../components/popup';
 
 const LearningSection = () => {
   const user = useRecoilValue(userState);
+  const [packag,setPackag]=useState(null);
   const packages = [
     {
       name: 'Beginner Package: "Pawn to King"',
@@ -78,39 +80,10 @@ const LearningSection = () => {
     },
   ];
 
-  async function GetUrl(type) {
-    const token = localStorage.getItem('token');
-    if (!user || !token) {
-      window.location.href = "/login";
-      return;
-    }
-
-    const url = `${BACKEND_URL}/api/payment/get-url`;
-    const userId = user.user.id;
-    try {
-      const response = await axios.post(
-        url,
-        {
-          userId: userId,
-          name: type,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      const data = response.data;
-      window.location.href = data.paymentDetails
-      console.log(data);
-    } catch (error) {
-      console.error('Error fetching payment URL:', error);
-    }
-  }
 
   return (
     <section className="learning-section py-12 bg-gray-100">
+    {packag&&  <PaymentPopup setPackag={setPackag}  user={user} packag={packag}/> }
       <h2 className="text-4xl font-bold text-center mb-12 text-gray-800">Our Learning Packages</h2>
       <div className="package-grid grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-8">
         {packages.map((packageData, index) => (
@@ -153,7 +126,10 @@ const LearningSection = () => {
             <div className="flex justify-center mt-4">
               <button
                 className="bg-yellow-600 text-white font-bold py-2 px-6 rounded-full hover:bg-yellow-500 hover:shadow-lg transition-colors duration-300"
-                onClick={(e) => GetUrl(packageData.type)}
+                onClick={(e) => {
+                  setPackag(packageData);
+                  console.log('nasnclksa',packag);
+                }}
               >
                 {packageData.cta}
               </button>

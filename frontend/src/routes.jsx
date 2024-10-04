@@ -29,10 +29,11 @@ export const PublicRoute = ({ element: Component }) => {
 export const SubscriptionPrivateRoutes = ({ element: Component }) => {
   const user = useRecoilValue(userState); // Use useRecoilValue to avoid unnecessary re-renders
 
-  if (user === null) {
+  if (user === undefined) {
     return <Spinner />; 
   }
-  if (user && (!user.subscriptions || user.subscriptions.length === 0)) {
+  if(user===null)return <Navigate to="/login" />; 
+  if ((user && (!user.subscriptions || user.subscriptions.length === 0))) {
     return <Navigate to="/" />; 
   }
 

@@ -41,6 +41,7 @@ function App() {
   useEffect(() => {
     if (userLoadable.state === 'hasValue') {
       setUser(userLoadable.contents); // Set user data in state
+      console.log(userLoadable.contents);
     } else if (userLoadable.state === 'hasError') {
       setUser(null);
     }

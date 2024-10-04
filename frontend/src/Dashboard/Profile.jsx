@@ -4,6 +4,13 @@ import { userState } from '../state/userState';
 
 const Profile = () => {
   const user = useRecoilValue(userState).user;
+  const handleLogoutClick = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    window.location.reload();
+  };
+
+
   return (
     <div className="profile-section bg-white shadow-lg rounded-lg p-8 flex flex-col items-center">
       {/* Profile Picture */}
@@ -37,7 +44,7 @@ const Profile = () => {
         <button className="bg-blue-600 text-white py-2 px-4 rounded-full transition duration-300 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 mr-4">
           Edit Profile
         </button>
-        <button className="bg-red-600 text-white py-2 px-4 rounded-full transition duration-300 hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-300">
+        <button className="bg-red-600 text-white py-2 px-4 rounded-full transition duration-300 hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-300" onClick={handleLogoutClick}>
           Log Out
         </button>
       </div>
