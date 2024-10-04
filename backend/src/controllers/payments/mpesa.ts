@@ -8,8 +8,11 @@ const IntaSend   = require("intasend-node")
 
 
  export const getUrl = async (req: any, res: Response) => {
-  const { userId, name } = req.body;
-  const user = req.user.user;
+  const {  name } = req.body;
+  console.log(req.user);
+  
+  const user = req.user;
+  const userId = user.id;
   console.log(user,name);
   
 
@@ -20,13 +23,18 @@ const IntaSend   = require("intasend-node")
   try {
     // Find the package by name
     const packag = await prisma.package.findUnique({
-      where: { name: name },
+      where: {
+         name: name
+      },
     });
-
+    
     if (!packag) {
       return res.status(404).json({ error: "Package not found." });
     }
-
+    const subscription = user.subscriptions
+  if(subscription.length>0&&subscription.some((sub: { endDate: number; startDate: number; })=>sub.endDate>sub.startDate)){
+ return res.status(200).json({message:"Already have this plan Active Subscription",subscription,user})
+  }
     // Extract necessary information
     const currency = "USD";
     const mode = "mpesa"; 

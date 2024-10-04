@@ -15,39 +15,51 @@ export const validateLogin = [
   body('password').exists().withMessage('Password is required'),
 ];
 export const authenticateJWT = async (req: any, res: Response, next: NextFunction) => {
-    const authHeader = req.headers["authorization"];
+  const authHeader = req.headers["authorization"];
   
-    if (!authHeader) {
-      return res.status(401).json({ message: "Unauthorized: No token provided" });
+  if (!authHeader) {
+    return res.status(401).json({ message: "Unauthorized: No token provided" });
+  }
+  
+  const token = authHeader.split(" ")[1];
+  
+  try {
+    const decoded: any = verifyToken(token);
+    
+    const user = await prisma.user.findFirst({
+      where: {
+        email: decoded.email,
+      },
+      select: {
+        id: true,
+        firstname: true,
+        lastname: true,
+        email: true,
+      },
+    });
+    
+    if (!user) {
+      return res.status(403).json({ message: "User not found" });
     }
-  
-    const token = authHeader.split(" ")[1];
-  
-    try {
-      const decoded: any = verifyToken(token);
-      const user = await prisma.user.findFirst({
-        where: {
-          email: decoded.email,
-        },
-        select: {
-          id: true,
-          firstname: true,
-          lastname:true,
-          email: true,
-        }
-      });
-  
-      if (!user) return res.status(403).json({ message: "User not found" });
-      const subscriptions = await prisma.subscription.findMany({
-         where:{
-           userId:user.id,
-           status:'ACTIVE'
-         }
-      })
-      req.user = { user, token ,subscriptions};
-      next();
-    } catch (error) {
-      console.log(error)
-      return res.status(403).json({ message: "Forbidden: Invalid token" });
-    }
-  };
+    
+    const oneMonthAgo = new Date();
+    oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+
+    const subscriptions = await prisma.subscription.findMany({
+      where: {
+        userId: user.id,
+        status: 'ACTIVE',
+        AND: [
+          { startDate: { lte: new Date() } }, 
+          { endDate: { gt: new Date() } }     
+        ]
+      },
+    });
+
+    req.user = { ...user, subscriptions };
+    next();
+  } catch (error) {
+    console.error(error);
+    return res.status(403).json({ message: "Forbidden: Invalid token" });
+  }
+};
