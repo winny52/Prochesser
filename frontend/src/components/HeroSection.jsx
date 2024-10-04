@@ -19,7 +19,7 @@ const HeroSection = () => {
 </h1>
 
 
-          <p className="mt-6 text-base font-bold sm:text-lg md:text-xl lg:text-2xl leading-relaxed md:leading-normal max-w-2xl mx-auto md:mx-0  bg-clip-text text-black">
+          <p className="mt-6 text-base font-bold sm:text-lg md:text-l lg:text-xl leading-relaxed md:leading-normal max-w-2xl mx-auto md:mx-0  bg-clip-text text-black">
             Immerse yourself in a world where strategy meets reward. At ProChesser, every checkmate isn't just a win on the board; it's a victory for your wallet. Experience the thrill of classic chess with the added excitement of earning with each move.
           </p>
 

@@ -12,7 +12,7 @@ import MiniHowItWorks from "./miniHowItWorks";
 const Homepage =()=> {
     return (
         
-        <div className="w-full">
+        <div className="w-full mt-16 ">
         <HeroSection/> 
         <MiniHowItWorks/>
         <GameLobbySection/>

@@ -121,7 +121,7 @@ const LearningSection = () => {
             <h3 className="text-2xl font-bold mb-4">
               {packageData.name}
               {packageData.popularLabel && (
-                <span className="bg-blue-800 text-white font-semibold text-xs uppercase rounded-full px-2 ml-2">
+                <span className="bg-yellow-600 text-white font-semibold text-xs uppercase rounded-full px-2 ml-2">
                   {packageData.popularLabel}
                 </span>
               )}
@@ -136,7 +136,7 @@ const LearningSection = () => {
             <ul className="list-inside space-y-2 mb-6">
               {packageData.includedMaterials.map((material, i) => (
                 <li className="flex items-center text-gray-900 hover:text-white transition-colors" key={i}>
-                  <FaCheckCircle className="text-yellow-600 mr-2" /> {/* Tick icon */}
+                  <FaCheckCircle className="text-yellow-600 mr-2 w-5 h-5" /> {/* Tick icon */}
                   {material}
                 </li>
               ))}
@@ -150,12 +150,14 @@ const LearningSection = () => {
                 </li>
               ))}
             </ul>
-            <button
-              className="bg-yellow-600 text-white font-bold py-2 px-6 rounded-full mt-4 hover:bg-yellow-600 hover:shadow-lg transition-colors duration-300"
-              onClick={(e) => GetUrl(packageData.type)}
-            >
-              {packageData.cta}
-            </button>
+            <div className="flex justify-center mt-4">
+              <button
+                className="bg-yellow-600 text-white font-bold py-2 px-6 rounded-full hover:bg-yellow-500 hover:shadow-lg transition-colors duration-300"
+                onClick={(e) => GetUrl(packageData.type)}
+              >
+                {packageData.cta}
+              </button>
+            </div>
           </div>
         ))}
       </div>

@@ -27,6 +27,7 @@ import { userState, fetchUserState } from "./state/userState";
 import Payment from './payment';
 import Spinner from './components/spinner';
 import TawkTo from './components/Tawkto';
+import SubscriptionPrompt from './classes/Subscriptionpage';
 function App() {
   const location = useLocation();
   const [user, setUser] = useRecoilState(userState);
@@ -70,7 +71,7 @@ function App() {
         <Route path="/signin" element={<PublicRoute element={SignIn} />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/register" element={<PublicRoute element={Register} />} />
-
+       <Route path='/prompt' element={<SubscriptionPrompt/>}/>
         {/* Protected Routes wrapped in Route */}
         <Route path="/dashboard" element={<SubscriptionPrivateRoutes element={Dashboard} />} />
         <Route path="/welcome" element={<PrivateRoute element={WelcomePage} />} />
