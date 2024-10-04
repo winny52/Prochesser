@@ -50,7 +50,7 @@ const Footer = () => {
 
       <div className="mt-8 text-center text-sm">
         <p>&copy; ProChesser 2024. All rights reserved.</p>
-        < p font style={italic}>
+        < p className="italic">
           <em>It is not just a game but a Duel of Minds. Not just a player but a Winner. This is ProChesser.com.</em>
         </p>
       </div>
