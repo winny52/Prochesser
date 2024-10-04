@@ -1,14 +1,14 @@
 import { BACKEND_URL } from "../constant";
 import axios from "axios";
 export default function PaymentPopup({packag,setPackag,user}){
-  
- async function GetIntaSendUrl() {
-    const type = packag.type;
-      const token = localStorage.getItem('token');
+  const token = localStorage.getItem('token');
       if (!user || !token) {
         window.location.href = "/login";
         return;
       }
+ async function GetIntaSendUrl() {
+    const type = packag.type;
+      
       console.log(user);
       const url = `${BACKEND_URL}/api/payment/get-url`;
       try {
