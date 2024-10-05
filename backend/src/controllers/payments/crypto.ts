@@ -1,6 +1,9 @@
-import { BINANCE_API_KEY, BINANCE_SECRET_KEY, NODE_ENV } from "../../constants";
+import { BACKEND_ROUTE, BACKEND_URL, BINANCE_API_KEY, BINANCE_SECRET_KEY, CRYPTO_DEPOSIT_PERCENT, CRYPTO_MERCHANT_ID, CRYPTO_PAYMENT_API_KEY, CRYTPOMUS_URI, FRONTEND_URL, NODE_ENV } from "../../constants";
 import prisma from "../../prismaClient";
+import { Request,Response } from "express";
 import { cloneDeep } from "lodash";
+import { generateSignature, generateUniqueId, getFinalAmountInCurrency } from "../../utils";
+import axios from "axios";
 
 export async function convertCryptoToUSD(symbol: string, amount: number) {
     try {
@@ -18,7 +21,6 @@ export async function convertCryptoToUSD(symbol: string, amount: number) {
   
       const prices = await client.prices();
   
-      // Symbol example: 'BTCUSDT' for Bitcoin to USD, 'ETHUSDT' for Ethereum to USD
       const cryptoSymbol = `${symbol.toUpperCase()}USDT`; // e.g., 'BTCUSDT' or 'ETHUSDT'
   
       // Get the current price in USD
@@ -143,3 +145,322 @@ export async function convertCryptoToUSD(symbol: string, amount: number) {
   
     return dbTransactions;
   }
+
+  export const getURL = async (req: any, res: Response) => {
+    try {
+      let { currency ,name} = req.body;
+      const user = req.user
+      const packag = await prisma.package.findUnique({
+        where: {
+           name: name
+        },
+      });
+      
+      if (!packag) {
+        return res.status(404).json({ error: "Package not found." });
+      }
+      const subscription = user.subscriptions
+    if(subscription.length>0&&subscription.some((sub: { endDate: number; startDate: number; })=>sub.endDate>sub.startDate)){
+   return res.status(200).json({message:"Already have this plan Active Subscription",subscription,user})
+    }
+
+      const mode = "crypto";
+  
+      const finalamountInUSD = await getFinalAmountInCurrency(packag.price, currency);
+  
+      if (!finalamountInUSD)
+        return res
+          .status(500)
+          .json({ message: "Invalid currency", status: "error" });
+  
+      
+  
+      const platform_charges = parseFloat(
+        (finalamountInUSD * CRYPTO_DEPOSIT_PERCENT).toFixed(2)
+      );
+  
+      // Main Crypto related coding
+      const secret_token = generateUniqueId();
+      let api_ref = generateUniqueId();
+      try {
+        const payload = {
+          amount: finalamountInUSD,
+          currency: "USD",
+          order_id: api_ref,
+          url_callback: `${BACKEND_URL}/${BACKEND_ROUTE}/cryptopayment/success/transaction`,
+        };
+  
+        const bufferData = Buffer.from(JSON.stringify(payload))
+          .toString("base64")
+          .concat(CRYPTO_PAYMENT_API_KEY);
+  
+        const signature = generateSignature(bufferData);
+  
+        const { data } = await axios.post(`${CRYTPOMUS_URI}/payment`, payload, {
+          headers: {
+            merchant: CRYPTO_MERCHANT_ID,
+            sign: signature,
+            "Content-Type": "application/json",
+          },
+        });
+  
+        if (
+          !data ||
+          !data?.result ||
+          !data?.result?.url ||
+          !data?.result?.order_id
+        ) {
+          console.error("Data not received from cryptomus");
+          return res
+            .status(500)
+            .json({ message: "Internal server error", status: "error" });
+        }
+ 
+        const createRecord = await prisma.transaction.create({
+          data: {
+            userId: user.id,
+            packageId: packag.id,
+            amount: packag.price,
+            apiRef:api_ref,
+            currency,
+            status: 'PENDING',
+            mode,
+            secretToken:secret_token,
+            signature,
+          checkoutId: data.result.order_id,
+          finalAmountInUSD:finalamountInUSD
+          },
+        });
+        if (!createRecord) {
+          console.error("Something went wrong while creating a transaction");
+          return res.status(500).json({
+            message: "Something went wrong in adding data to transaction table",
+            status: "error",
+          });
+        }
+  
+        res.status(200).json({
+          message: "Payment request successful",
+          paymentDetails: data.result.url, // We will get this from data
+        });
+      } catch (error) {
+        console.log(
+          "Something went wrong while creating order",
+          error,
+          "" + error
+        );
+        return res.status(500).json({
+          message: "Something went wrong while creating order",
+        });
+      }
+    } catch (error) {
+      console.error("Error Sending Crypto Payment URL2:", error);
+      res.status(500).json({ message: "Internal server error", status: "error" });
+    }
+  };
+
+  export const successTransaction = async (req: any, res: Response) => {
+    try {
+      const { order_id, sign } = req.body;
+  
+      console.log("NODE_ENV", NODE_ENV, NODE_ENV === "development");
+      if (NODE_ENV === "development") console.log("Order id", order_id);
+  
+      if (!sign) {
+        return res.status(401).json({
+          status: false,
+          message: "Unauthorized User",
+        });
+      }
+  
+      const data = JSON.parse(req.rawBody);
+  
+      delete data.sign;
+  
+      const bufferData = Buffer.from(JSON.stringify(data))
+        .toString("base64")
+        .concat(CRYPTO_PAYMENT_API_KEY);
+  
+      const hash = generateSignature(bufferData);
+  
+      if (hash !== sign) {
+        return res.status(401).json({
+          message: "Unauthorized Transaction",
+          status: "error",
+        });
+      }
+  
+      // Check for the transaction using signature and checkout_id
+      const transaction = await prisma.transaction.findFirst({
+        where: {
+          checkoutId: order_id,
+          mode: "crypto",
+        },
+      });
+  
+      if (!transaction)
+        return res
+          .status(404)
+          .json({ message: "Transaction not found", status: "error" });
+  
+      if (transaction.status !== "PENDING") {
+        return res.status(401).json({
+          message: "Transaction already completed, cancelled or requested",
+          status: "error",
+        });
+      }
+      
+
+      const result = await prisma.$transaction(async (prisma) => {
+        // Update the transaction status to COMPLETED
+        const updatedTransaction = await prisma.transaction.update({
+          where: { id: transaction.id },
+          data: { status: "COMPLETED" },
+        });
+  
+        // Check for existing active subscription for the user-package combination
+        const existingSubscription = await prisma.subscription.findFirst({
+          where: {
+            userId: transaction.userId,
+            packageId: transaction.packageId,
+            status: 'ACTIVE',
+          }
+        });
+  
+        if (existingSubscription) {
+          // Optionally, extend the existing subscription's endDate
+          const currentEndDate = existingSubscription.endDate || new Date();
+          const newEndDate = new Date(currentEndDate);
+          newEndDate.setMonth(newEndDate.getMonth() + 1); // Extend by 1 month
+  
+          const updatedSubscription = await prisma.subscription.update({
+            where: { id: existingSubscription.id },
+            data: {
+              endDate: newEndDate,
+            }
+          });
+  
+          return { updatedTransaction, updatedSubscription };
+        } else {
+          // Create a new subscription
+          const startDate = new Date();
+          const endDate = new Date();
+          endDate.setMonth(endDate.getMonth() + 1); // Set endDate to 1 month from now
+  
+          const newSubscription = await prisma.subscription.create({
+            data: {
+              userId: transaction.userId,
+              packageId: transaction.packageId,
+              status: 'ACTIVE',
+              startDate: startDate,
+              endDate: endDate,
+            }
+          });
+  
+          return { updatedTransaction, newSubscription };
+        }
+      });
+
+      res.redirect(`${FRONTEND_URL}/`);
+    } catch (error) {
+      console.error("Internal Error:", error);
+      res.status(500).json({ message: "Internal server error", status: "error" });
+    }
+  };
+
+  export const getId = async (req:any, res: Response) => {
+  try {
+    const { address, packagename, currency } = req.body;
+    const user = req.user;
+    const mode = "crypto";
+console.log(req.body)
+    // Validate the incoming data
+    if (!address || !packagename || !currency) {
+      return res.status(400).json({
+        status: "error",
+        message: "Please provide address, package name, and currency",
+      });
+    }
+
+    // Find the package
+    const packag = await prisma.package.findUnique({
+      where: {
+        name: packagename,
+      },
+    });
+
+    if (!packag) {
+      return res.status(404).json({ error: "Package not found." });
+    }
+
+    // Check if the user already has an active subscription
+    const activeSubscription = user.subscriptions.find(
+      (sub: { endDate: Date; startDate: Date }) => sub.endDate > new Date()
+    );
+
+    if (activeSubscription) {
+      return res.status(200).json({
+        message: "You already have an active subscription for this package.",
+        subscription: activeSubscription,
+        user,
+      });
+    }
+
+    const amount = packag.price;
+
+    // Log secret token in development mode
+    if (NODE_ENV === "development") {
+      console.log("Secret Token", BINANCE_API_KEY, BINANCE_SECRET_KEY);
+    }
+    const Binance = require("binance-api-node").default;
+    const client = Binance({
+      apiKey: BINANCE_API_KEY,
+      apiSecret: BINANCE_SECRET_KEY,
+    });
+
+    // Convert the crypto amount to USD
+    const finalAmountInUSD = await convertCryptoToUSD(currency, amount);
+    if (!finalAmountInUSD) {
+      return res.status(500).json({ message: "Invalid currency", status: "error" });
+    }
+
+    // Create the transaction
+    // await prisma.transaction.create({
+    //   data: {
+    //     user:  user.id ,
+    //     packageId: packag.id,
+    //     amount,
+    //     status: "PENDING",
+    //     signature: "",
+    //     checkoutId: "",
+    //     mode,
+    //     currency,
+    //     platform_charges: finalAmountInUSD * 0.03,
+    //     finalAmountInUSD,
+    //     wallet_address: address,
+    //   },
+    // });
+
+    // Get the deposit address from Binance
+    const depositAddress = await client.depositAddress({
+      coin: currency,
+    });
+
+    if (!depositAddress?.address) {
+      return res.status(500).json({
+        message: `Could not retrieve deposit address for ${currency}`,
+        status: "error",
+      });
+    }
+
+    console.log(`Deposit Address for ${currency}: ${depositAddress.address}`);
+
+    res.status(200).json({
+      message: "success",
+      wallet_address: depositAddress.address,
+    });
+  } catch (error) {
+    console.error("Error processing crypto payment:", error);
+    res.status(500).json({ message: "Internal server error", status: "error" });
+  }
+};

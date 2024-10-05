@@ -32,7 +32,7 @@ export default function Payment() {
 
         // redirect to /account if success
         if (data) {
-          navigate("/dashboard");
+          navigate("/");
         }
       } catch (error) {
         console.error(`Error during fetching:`, error);

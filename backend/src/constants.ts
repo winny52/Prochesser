@@ -16,3 +16,4 @@ export const CRYTPOMUS_URI = process.env.CRYTPOMUS_URI ?? "https://api.cryptomus
 
 export const BINANCE_SECRET_KEY = process.env.BINANCE_SECRET_KEY ?? "";
 export const BINANCE_API_KEY = process.env.BINANCE_API_KEY ?? ""
+export const BACKEND_ROUTE = 'api'

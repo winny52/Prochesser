@@ -59,11 +59,13 @@ model Transaction {
   finalAmountInUSD Float
   currency         String
   signature        String
+  platform_charges Float?
   checkoutId       String
-  apiRef           String             @unique
-  secretToken      String
-  mode             String
+  apiRef           String             @unique  @default("")
+  secretToken      String             @default("") 
+  mode             String             @default("")
   status           TransactionStatus  @default(PENDING)
+   wallet_address   String            @default("")
   createdAt        DateTime           @default(now())
   updatedAt        DateTime           @updatedAt
 }
