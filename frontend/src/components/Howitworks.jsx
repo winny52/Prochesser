@@ -9,7 +9,7 @@ const HowItWorks = () => {
   };
 
   return (
-    <section className="relative w-screen bg-gradient-to-r from-gray-100 to-gray-200 text-black py-16 px-6 mt-24 mx-auto">
+    <section className="relative w-screen bg-gradient-to-r from-yellow-100 to-gray-200 text-black py-16 px-6 mt-24 mx-auto">
       {/* Decorative Background */}
       <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-pink-100 to-yellow-100 opacity-20"></div>
     
@@ -27,17 +27,17 @@ const HowItWorks = () => {
 
         {/* Step-by-Step Instructions */}
         <div className="space-y-10">
-          <div className="flex flex-col md:flex-row items-start hover:bg-yellow-600 p-6 rounded-lg transition-all duration-300">
+          <div className="flex flex-col md:flex-row items-start hover:bg-yellow-600 p-6 rounded-lg transition-all duration-300 transform hover:-translate-y-2 shadow-lg">
             <span className="text-2xl font-bold text-black md:mr-6 mb-2 md:mb-0">Step 1:</span>
             <p className="text-lg text-gray-700">Sign Up: Begin by creating your free account in just a few minutes.</p>
           </div>
 
-          <div className="flex flex-col md:flex-row items-start hover:bg-yellow-600 p-6 rounded-lg transition-all duration-300">
+          <div className="flex flex-col md:flex-row items-start hover:bg-yellow-600 p-6 rounded-lg transition-all duration-300 transform hover:-translate-y-2 shadow-lg">
             <span className="text-2xl font-bold text-black md:mr-6 mb-2 md:mb-0">Step 2:</span>
             <p className="text-lg text-gray-700">Deposit Funds: Add funds to your account to prepare for gameplay.</p>
           </div>
 
-          <div className="flex flex-col md:flex-row items-start hover:bg-yellow-600 p-6 rounded-lg transition-all duration-300">
+          <div className="flex flex-col md:flex-row items-start hover:bg-yellow-600 p-6 rounded-lg transition-all duration-300 transform hover:-translate-y-2 shadow-lg">
             <span className="text-2xl font-bold text-black md:mr-6 mb-2 md:mb-0">Step 3:</span>
             <p className="text-lg text-gray-700">Enter the Game Lobby: Upon entering the lobby, you will have three options:</p>
           </div>
@@ -55,17 +55,17 @@ const HowItWorks = () => {
             </p>
           </div>
 
-          <div className="flex flex-col md:flex-row items-start hover:bg-yellow-600 p-6 rounded-lg transition-all duration-300">
+          <div className="flex flex-col md:flex-row items-start hover:bg-yellow-600 p-6 rounded-lg transition-all duration-300 transform hover:-translate-y-2 shadow-lg">
             <span className="text-2xl font-bold text-black md:mr-6 mb-2 md:mb-0">Step 4:</span>
             <p className="text-lg text-gray-700">Play and Win: Engage in your blitz chess game, aiming for a win within 5 or 10 minutes. You can achieve victory by checkmate or by timing out your opponent, earning 85% profit from your stake. For example, winning a $100 stake would yield $185. Please note that losses result in the forfeiture of your stake, while draws or stalemates incur no deductions.</p>
           </div>
 
-          <div className="flex flex-col md:flex-row items-start hover:bg-yellow-600 p-6 rounded-lg transition-all duration-300">
+          <div className="flex flex-col md:flex-row items-start hover:bg-yellow-600 p-6 rounded-lg transition-all duration-300 transform hover:-translate-y-2 shadow-lg">
             <span className="text-2xl font-bold text-black md:mr-6 mb-2 md:mb-0">Step 5:</span>
             <p className="text-lg text-gray-700">Claim Your Winnings: Play at least three games and withdraw your winnings whenever you choose, with funds usually processed within 24 hours.</p>
           </div>
 
-          <div className="flex flex-col md:flex-row items-start hover:bg-yellow-600 p-6 rounded-lg transition-all duration-300">
+          <div className="flex flex-col md:flex-row items-start hover:bg-yellow-600 p-6 rounded-lg transition-all duration-300 transform hover:-translate-y-2 shadow-lg">
             <span className="text-2xl font-bold text-black md:mr-6 mb-2 md:mb-0">Step 6:</span>
             <p className="text-lg text-gray-700">Continue Playing: If you’re ready for more action, simply return to Step 3 to engage in additional games and further increase your earnings.</p>
           </div>
@@ -78,12 +78,12 @@ const HowItWorks = () => {
 
         {/* Call-to-action Button */}
         <div className="mt-12 text-center">
-          <button
+          {/* <button
             onClick={handleWatchVideoClick}
             className="bg-yellow-500 hover:bg-yellow-600 text-black hover:text-white font-bold py-3 px-8 rounded-full shadow-lg transition-transform transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-yellow-300 focus:ring-opacity-50"
           >
             Watch Video
-          </button>
+          </button> */}
         </div>
       </div>
     </section>

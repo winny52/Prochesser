@@ -8,25 +8,31 @@ const TawkTo = () => {
     script.charset = 'UTF-8';
     script.setAttribute('crossorigin', '*');
 
+    // Tawk.to API event handlers to ensure it's loaded before accessing functions
     script.onload = () => {
       window.Tawk_API = window.Tawk_API || {};
       window.Tawk_LoadStart = new Date();
 
-      // Hide widget on small screens
-      if (window.innerWidth < 768) {
-        window.Tawk_API.hideWidget();
-      }
+      // Check if widget is initialized before using its functions
+      window.Tawk_API.onLoad = () => {
+        if (window.innerWidth < 768) {
+          window.Tawk_API.hideWidget();
+        }
+      };
     };
 
+    // Insert the script into the document
     const firstScript = document.getElementsByTagName('script')[0];
     firstScript.parentNode.insertBefore(script, firstScript);
 
     // Handle widget visibility on resize
     const handleResize = () => {
-      if (window.innerWidth < 768) {
-        window.Tawk_API?.hideWidget();
-      } else {
-        window.Tawk_API?.showWidget();
+      if (window.Tawk_API && window.Tawk_API.hideWidget && window.Tawk_API.showWidget) {
+        if (window.innerWidth < 768) {
+          window.Tawk_API.hideWidget();
+        } else {
+          window.Tawk_API.showWidget();
+        }
       }
     };
 
