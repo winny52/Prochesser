@@ -61,7 +61,7 @@ model Transaction {
   signature        String
   platform_charges Float?
   checkoutId       String
-  apiRef           String             @unique  @default("")
+  apiRef           String              @default("")
   secretToken      String             @default("") 
   mode             String             @default("")
   status           TransactionStatus  @default(PENDING)
