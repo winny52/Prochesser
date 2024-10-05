@@ -52,13 +52,13 @@ export default function PaymentPopup({packag,setPackag,user}){
 
           <div className="p-6 flex justify-center items-center flex-col">
             <button
-              className="px-4 py-2 bg-blue-500 mb-2 w-full text-white rounded-md hover:bg-blue-600 transition-colors"
+              className="px-4 py-2 bg-yellow-600 mb-2 w-full text-black rounded-md hover:bg-yellow-600 transition-colors"
             onClick={GetIntaSendUrl}
             >
               Pay with IntaSend
             </button>
             <button
-              className="px-4 py-2 bg-green-500 mb-2 w-full text-white rounded-md hover:bg-green-600 transition-colors"
+              className="px-4 py-2 bg-yellow-600 mb-2 w-full text-black rounded-md hover:bg-yellow-600 transition-colors"
             >
               Pay with Crypto
             </button>
