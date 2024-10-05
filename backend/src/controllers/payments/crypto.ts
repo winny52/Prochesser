@@ -5,121 +5,51 @@ import { cloneDeep } from "lodash";
 import { generateSignature, generateUniqueId, getFinalAmountInCurrency } from "../../utils";
 import axios from "axios";
 
-export async function convertCryptoToUSD(symbol: string, amount: number) {
-    try {
-      // Get the latest price for the symbol (e.g., BTCUSDT, ETHUSDT)
-      console.log("NODE_ENV", NODE_ENV, NODE_ENV === "development");
-  
-      if (NODE_ENV === "development")
-        console.log("Secret Token", BINANCE_API_KEY, BINANCE_SECRET_KEY);
-  
-      const Binance = require("binance-api-node").default;
-      const client = Binance({
-        apiKey: BINANCE_API_KEY,
-        apiSecret: BINANCE_SECRET_KEY,
-      });
-  
-      const prices = await client.prices();
-  
-      const cryptoSymbol = `${symbol.toUpperCase()}USDT`; // e.g., 'BTCUSDT' or 'ETHUSDT'
-  
-      // Get the current price in USD
-      const usdPrice = parseFloat(prices[cryptoSymbol]);
-  
-      if (!usdPrice) {
-        throw new Error(`Price not available for ${symbol}`);
-      }
-  
-      // Calculate the equivalent USD value for the given crypto amount
-      const usdValue = usdPrice * amount;
-  
-      console.log(
-        `${amount} ${symbol} is equivalent to $${usdValue.toFixed(2)} USD`
-      );
-      return usdValue;
-    } catch (error: any) {
-      console.error("Error fetching price:", error.message);
+//helper function
+export async function convertUSDTToCrypto(symbol: string, usdtAmount: number) {
+  try {
+    // Check the environment and log API keys if in development mode
+    console.log("NODE_ENV", NODE_ENV, NODE_ENV === "development");
+
+    if (NODE_ENV === "development")
+      console.log("Secret Token", BINANCE_API_KEY, BINANCE_SECRET_KEY);
+
+    // Initialize Binance client
+    const Binance = require("binance-api-node").default;
+    const client = Binance({
+      apiKey: BINANCE_API_KEY,
+      apiSecret: BINANCE_SECRET_KEY,
+    });
+
+    // Fetch current prices from Binance
+    const prices = await client.prices();
+
+    // Symbol example: 'BTCUSDT' for Bitcoin, 'ETHUSDT' for Ethereum
+    const cryptoSymbol = `${symbol.toUpperCase()}USDT`; // e.g., 'BTCUSDT' or 'ETHUSDT'
+
+    // Get the current price of the cryptocurrency in terms of USDT
+    const cryptoPriceInUSDT = parseFloat(prices[cryptoSymbol]);
+   console.log(cryptoPriceInUSDT);
+   
+    if (!cryptoPriceInUSDT) {
+      throw new Error(`Price not available for ${symbol}`);
     }
+
+    // Calculate the equivalent cryptocurrency amount for the given USDT amount
+    const cryptoAmount = usdtAmount / cryptoPriceInUSDT;
+
+    console.log(
+      `${usdtAmount} USDT is equivalent to ${cryptoAmount.toFixed(8)} ${symbol}`
+    );
+    return cryptoAmount;
+  } catch (error: any) {
+    console.error("Error fetching price:", error.message);
   }
+}
 
 
-  export const checkTransactionStatus = async () => {
-    try {
-      // Get all successful transactions for past 15 mins
-      const currentTime = Date.now();
-      // Set the start time to 15 minutes ago
-      const fifteenMinutesAgo = currentTime - 15 * 60 * 1000;
-  
-      if (NODE_ENV === "development")
-        console.log("Secret Token", BINANCE_API_KEY, BINANCE_SECRET_KEY);
-  
-      const Binance = require("binance-api-node").default;
-      const client = Binance({
-        apiKey: BINANCE_API_KEY,
-        apiSecret: BINANCE_SECRET_KEY,
-      });
-      const transactions = await client.depositHistory({
-        status: 1,
-        startTime: fifteenMinutesAgo,
-        endTime: currentTime,
-      });
-      console.log(
-        `Success Transactions between ${new Date(
-          fifteenMinutesAgo
-        )} and ${new Date(currentTime)}`
-      );
-      console.log(transactions);
-      console.log("Transaction Count: ", transactions.length);
-  
-      if (!transactions || transactions.length === 0) {
-        return;
-      }
-  
-      const conditions = transactions.map((transaction: any) => {
-        return {
-          wallet_address: transaction.address,
-          amount: transaction.amount,
-          mode: "crypto",
-          currency: transaction.coin,
-          status: "PENDING",
-        };
-      });
-  
-      let dbTransactions = await prisma.transaction.findMany({
-        where: {
-          OR: conditions,
-        },
-      });
-  
-      if (!dbTransactions || dbTransactions.length === 0) {
-        console.log("No pending transactions found in DB");
-        return;
-      }
-  
-      dbTransactions = matchTransactions(dbTransactions, transactions);
-  
-      console.log("Combined Transactions", dbTransactions);
-  
-      for (let i = 0; i < dbTransactions.length; i++) {
-        const dbTransaction = transactions[i];
-        console.log(dbTransaction);
-  
-  
-        console.log("Transaction for ", dbTransaction, "updated");
-        console.log(
-          "Balance updated for User -> ",
-          dbTransaction?.userId,
-          "with $",
-          dbTransaction?.finalamountInUSD
-        );
-      }
-    } catch (error) {
-      console.error("Currency conversion error:", error);
-      throw new Error("Unable to convert currency.");
-    }
-  };
-  
-  function matchTransactions(dbTransactions: any[], transactions: any[]) {
+//helper function
+export  function matchTransactions(dbTransactions: any[], transactions: any[]) {
     // Create a copy of transactions array to keep track of used transactions
     const availableTransactions = cloneDeep(transactions); // [...transactions];
   
@@ -146,228 +76,10 @@ export async function convertCryptoToUSD(symbol: string, amount: number) {
     return dbTransactions;
   }
 
-  export const getURL = async (req: any, res: Response) => {
-    try {
-      let { currency ,name} = req.body;
-      const user = req.user
-      const packag = await prisma.package.findUnique({
-        where: {
-           name: name
-        },
-      });
-      
-      if (!packag) {
-        return res.status(404).json({ error: "Package not found." });
-      }
-      const subscription = user.subscriptions
-    if(subscription.length>0&&subscription.some((sub: { endDate: number; startDate: number; })=>sub.endDate>sub.startDate)){
-   return res.status(200).json({message:"Already have this plan Active Subscription",subscription,user})
-    }
 
-      const mode = "crypto";
-  
-      const finalamountInUSD = await getFinalAmountInCurrency(packag.price, currency);
-  
-      if (!finalamountInUSD)
-        return res
-          .status(500)
-          .json({ message: "Invalid currency", status: "error" });
-  
-      
-  
-      const platform_charges = parseFloat(
-        (finalamountInUSD * CRYPTO_DEPOSIT_PERCENT).toFixed(2)
-      );
-  
-      // Main Crypto related coding
-      const secret_token = generateUniqueId();
-      let api_ref = generateUniqueId();
-      try {
-        const payload = {
-          amount: finalamountInUSD,
-          currency: "USD",
-          order_id: api_ref,
-          url_callback: `${BACKEND_URL}/${BACKEND_ROUTE}/cryptopayment/success/transaction`,
-        };
-  
-        const bufferData = Buffer.from(JSON.stringify(payload))
-          .toString("base64")
-          .concat(CRYPTO_PAYMENT_API_KEY);
-  
-        const signature = generateSignature(bufferData);
-  
-        const { data } = await axios.post(`${CRYTPOMUS_URI}/payment`, payload, {
-          headers: {
-            merchant: CRYPTO_MERCHANT_ID,
-            sign: signature,
-            "Content-Type": "application/json",
-          },
-        });
-  
-        if (
-          !data ||
-          !data?.result ||
-          !data?.result?.url ||
-          !data?.result?.order_id
-        ) {
-          console.error("Data not received from cryptomus");
-          return res
-            .status(500)
-            .json({ message: "Internal server error", status: "error" });
-        }
- 
-        const createRecord = await prisma.transaction.create({
-          data: {
-            userId: user.id,
-            packageId: packag.id,
-            amount: packag.price,
-            apiRef:api_ref,
-            currency,
-            status: 'PENDING',
-            mode,
-            secretToken:secret_token,
-            signature,
-          checkoutId: data.result.order_id,
-          finalAmountInUSD:finalamountInUSD
-          },
-        });
-        if (!createRecord) {
-          console.error("Something went wrong while creating a transaction");
-          return res.status(500).json({
-            message: "Something went wrong in adding data to transaction table",
-            status: "error",
-          });
-        }
-  
-        res.status(200).json({
-          message: "Payment request successful",
-          paymentDetails: data.result.url, // We will get this from data
-        });
-      } catch (error) {
-        console.log(
-          "Something went wrong while creating order",
-          error,
-          "" + error
-        );
-        return res.status(500).json({
-          message: "Something went wrong while creating order",
-        });
-      }
-    } catch (error) {
-      console.error("Error Sending Crypto Payment URL2:", error);
-      res.status(500).json({ message: "Internal server error", status: "error" });
-    }
-  };
 
-  export const successTransaction = async (req: any, res: Response) => {
-    try {
-      const { order_id, sign } = req.body;
-  
-      console.log("NODE_ENV", NODE_ENV, NODE_ENV === "development");
-      if (NODE_ENV === "development") console.log("Order id", order_id);
-  
-      if (!sign) {
-        return res.status(401).json({
-          status: false,
-          message: "Unauthorized User",
-        });
-      }
-  
-      const data = JSON.parse(req.rawBody);
-  
-      delete data.sign;
-  
-      const bufferData = Buffer.from(JSON.stringify(data))
-        .toString("base64")
-        .concat(CRYPTO_PAYMENT_API_KEY);
-  
-      const hash = generateSignature(bufferData);
-  
-      if (hash !== sign) {
-        return res.status(401).json({
-          message: "Unauthorized Transaction",
-          status: "error",
-        });
-      }
-  
-      // Check for the transaction using signature and checkout_id
-      const transaction = await prisma.transaction.findFirst({
-        where: {
-          checkoutId: order_id,
-          mode: "crypto",
-        },
-      });
-  
-      if (!transaction)
-        return res
-          .status(404)
-          .json({ message: "Transaction not found", status: "error" });
-  
-      if (transaction.status !== "PENDING") {
-        return res.status(401).json({
-          message: "Transaction already completed, cancelled or requested",
-          status: "error",
-        });
-      }
-      
 
-      const result = await prisma.$transaction(async (prisma) => {
-        // Update the transaction status to COMPLETED
-        const updatedTransaction = await prisma.transaction.update({
-          where: { id: transaction.id },
-          data: { status: "COMPLETED" },
-        });
-  
-        // Check for existing active subscription for the user-package combination
-        const existingSubscription = await prisma.subscription.findFirst({
-          where: {
-            userId: transaction.userId,
-            packageId: transaction.packageId,
-            status: 'ACTIVE',
-          }
-        });
-  
-        if (existingSubscription) {
-          // Optionally, extend the existing subscription's endDate
-          const currentEndDate = existingSubscription.endDate || new Date();
-          const newEndDate = new Date(currentEndDate);
-          newEndDate.setMonth(newEndDate.getMonth() + 1); // Extend by 1 month
-  
-          const updatedSubscription = await prisma.subscription.update({
-            where: { id: existingSubscription.id },
-            data: {
-              endDate: newEndDate,
-            }
-          });
-  
-          return { updatedTransaction, updatedSubscription };
-        } else {
-          // Create a new subscription
-          const startDate = new Date();
-          const endDate = new Date();
-          endDate.setMonth(endDate.getMonth() + 1); // Set endDate to 1 month from now
-  
-          const newSubscription = await prisma.subscription.create({
-            data: {
-              userId: transaction.userId,
-              packageId: transaction.packageId,
-              status: 'ACTIVE',
-              startDate: startDate,
-              endDate: endDate,
-            }
-          });
-  
-          return { updatedTransaction, newSubscription };
-        }
-      });
-
-      res.redirect(`${FRONTEND_URL}/`);
-    } catch (error) {
-      console.error("Internal Error:", error);
-      res.status(500).json({ message: "Internal server error", status: "error" });
-    }
-  };
-
+  //Sends a wallet address to the user to make a payment
   export const getId = async (req:any, res: Response) => {
   try {
     const { address, packagename, currency } = req.body;
@@ -412,34 +124,37 @@ console.log(req.body)
     if (NODE_ENV === "development") {
       console.log("Secret Token", BINANCE_API_KEY, BINANCE_SECRET_KEY);
     }
+
     const Binance = require("binance-api-node").default;
+    
     const client = Binance({
       apiKey: BINANCE_API_KEY,
       apiSecret: BINANCE_SECRET_KEY,
     });
 
     // Convert the crypto amount to USD
-    const finalAmountInUSD = await convertCryptoToUSD(currency, amount);
-    if (!finalAmountInUSD) {
+    const finalAmountInCrypto = await convertUSDTToCrypto(currency, amount);
+    
+    if (!finalAmountInCrypto) {
       return res.status(500).json({ message: "Invalid currency", status: "error" });
     }
 
-    // Create the transaction
-    // await prisma.transaction.create({
-    //   data: {
-    //     user:  user.id ,
-    //     packageId: packag.id,
-    //     amount,
-    //     status: "PENDING",
-    //     signature: "",
-    //     checkoutId: "",
-    //     mode,
-    //     currency,
-    //     platform_charges: finalAmountInUSD * 0.03,
-    //     finalAmountInUSD,
-    //     wallet_address: address,
-    //   },
-    // });
+   const transaction= await prisma.transaction.create({
+      data: {
+        userId:  user.id ,
+        packageId: packag.id,
+        amount:finalAmountInCrypto,
+        status: "PENDING",
+        signature: "",
+        checkoutId: "",
+        mode,
+        currency,
+        platform_charges: amount * 0.03,
+        finalAmountInUSD:amount,
+        wallet_address: address,
+      },
+    });
+console.log(transaction);
 
     // Get the deposit address from Binance
     const depositAddress = await client.depositAddress({
@@ -458,9 +173,135 @@ console.log(req.body)
     res.status(200).json({
       message: "success",
       wallet_address: depositAddress.address,
+      amountIncrypto:finalAmountInCrypto
     });
   } catch (error) {
     console.error("Error processing crypto payment:", error);
     res.status(500).json({ message: "Internal server error", status: "error" });
+  }
+};
+
+export const checkTransactionStatus = async () => {
+  try {
+    // Get all successful transactions for past 15 mins
+    const currentTime = Date.now();
+    // Set the start time to 15 minutes ago
+    const fifteenMinutesAgo = currentTime - 15 * 60 * 1000;
+
+    if (NODE_ENV === "development")
+      console.log("Secret Token", BINANCE_API_KEY, BINANCE_SECRET_KEY);
+
+    const Binance = require("binance-api-node").default;
+    const client = Binance({
+      apiKey: BINANCE_API_KEY,
+      apiSecret: BINANCE_SECRET_KEY,
+    });
+    const transactions = await client.depositHistory({
+      status: 1,
+      startTime: fifteenMinutesAgo,
+      endTime: currentTime,
+    });
+    console.log(
+      `Success Transactions between ${new Date(
+        fifteenMinutesAgo
+      )} and ${new Date(currentTime)}`
+    );
+    console.log(transactions);
+    console.log("Transaction Count: ", transactions.length);
+
+    if (!transactions || transactions.length === 0) {
+      return;
+    }
+
+    const conditions = transactions.map((transaction: any) => {
+      return {
+        wallet_address: transaction.address,
+        amount: transaction.amount,
+        mode: "crypto",
+        currency: transaction.coin,
+        status: "PENDING",
+      };
+    });
+
+    let dbTransactions = await prisma.transaction.findMany({
+      where: {
+        OR: conditions,
+      },
+    });
+
+    if (!dbTransactions || dbTransactions.length === 0) {
+      console.log("No pending transactions found in DB");
+      return;
+    }
+
+    dbTransactions = matchTransactions(dbTransactions, transactions);
+
+    console.log("Combined Transactions", dbTransactions);
+
+    for (let i = 0; i < dbTransactions.length; i++) {
+      const dbTransaction = transactions[i];
+      console.log(dbTransaction);
+
+      const result = await prisma.$transaction(async (prisma) => {
+        // Update the transaction status to COMPLETED
+        const updatedTransaction = await prisma.transaction.update({
+          where: { id: dbTransaction.id },
+          data: { status: "COMPLETED" },
+        });
+  
+        // Check for existing active subscription for the user-package combination
+        const existingSubscription = await prisma.subscription.findFirst({
+          where: {
+            userId: dbTransaction.userId,
+            packageId: dbTransaction.packageId,
+            status: 'ACTIVE',
+          }
+        });
+  
+        if (existingSubscription) {
+          // Optionally, extend the existing subscription's endDate
+          const currentEndDate = existingSubscription.endDate || new Date();
+          const newEndDate = new Date(currentEndDate);
+          newEndDate.setMonth(newEndDate.getMonth() + 1); // Extend by 1 month
+  
+          const updatedSubscription = await prisma.subscription.update({
+            where: { id: existingSubscription.id },
+            data: {
+              endDate: newEndDate,
+            }
+          });
+  
+          return { updatedTransaction, updatedSubscription };
+        } else {
+          // Create a new subscription
+          const startDate = new Date();
+          const endDate = new Date();
+          endDate.setMonth(endDate.getMonth() + 1); // Set endDate to 1 month from now
+  
+          const newSubscription = await prisma.subscription.create({
+            data: {
+              userId: dbTransaction.userId,
+              packageId: dbTransaction.packageId,
+              status: 'ACTIVE',
+              startDate: startDate,
+              endDate: endDate,
+            }
+          });
+  
+          return { updatedTransaction, newSubscription };
+        }
+      });
+
+      console.log("Transaction for ", dbTransaction, "updated");
+      console.log(
+        "Balance updated for User -> ",
+        dbTransaction?.userId,
+        "with $",
+        dbTransaction?.finalamountInUSD
+      );
+    }
+  } catch (error) {
+    console.error("Currency conversion error:", error);
+    throw new Error("Unable to convert currency.");
   }
 };
