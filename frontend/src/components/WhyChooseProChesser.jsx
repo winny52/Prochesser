@@ -83,7 +83,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrophy, faDollarSign, faBrain, faMobileAlt, faShieldAlt, faUsers, faHandsHelping, faGraduationCap, faHands } from '@fortawesome/free-solid-svg-icons';
-import { FaHandsHelping } from 'react-icons/fa';
 
 const WhyChooseProChesser = () => {
   return (
