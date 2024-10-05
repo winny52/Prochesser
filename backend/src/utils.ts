@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { randomUUID } from 'crypto';
+import crypto,{ randomUUID } from 'crypto';
 import jwt from 'jsonwebtoken';
 import { BCRYPT_SECRET_KEY, CURRENCY_RATE_URL } from './constants';
 import bcrypt from "bcrypt";
@@ -63,3 +63,7 @@ export async function compareHash(password: string, storedHash: string): Promise
     return false;
   }
 }
+
+export const generateSignature = (data: string) => {
+  return crypto.createHash("md5").update(data).digest("hex");
+};

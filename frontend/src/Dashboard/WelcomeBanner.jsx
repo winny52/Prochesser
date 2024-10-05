@@ -7,7 +7,7 @@ const WelcomeBanner = () => {
   const user = useRecoilValue(userState);
   console.log(user);
   
-  const username = user.user ? user.user.firstname : 'Guest'; 
+  const username = user ? user.firstname : 'Guest'; 
 
   return (
     <div className="relative bg-blue-600 rounded-lg overflow-hidden" style={{ backgroundImage: `url(${ChessImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>

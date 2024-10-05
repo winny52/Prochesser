@@ -27,12 +27,11 @@ import Support from './Support';
 
 const Dashboard = () => {
   // Mock user data
-  const user = {
+  const exuser = {
     name: 'John Doe',
     email: 'johndoe@example.com',
     role: 'Learner'
   };
-
   // Mock package data
   const packageName = 'Pro Chess Mastery';
   const progress = 75; // Percentage of course completion
@@ -46,7 +45,7 @@ const Dashboard = () => {
     <section className="relative w-screen mx-auto">
     <div className='w-full'>
       
-      <WelcomeBanner userName={user.name} />
+      <WelcomeBanner />
       <CourseOverview packageName={packageName} progress={progress} />
       <Support/>
       

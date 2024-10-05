@@ -1,7 +1,9 @@
 import express,{Request,Response} from 'express';
 import authRoutes from './routes/authRoutes';
-import paymentRouter from "./routes/paymentRoutes"
+import paymentRouter from "./routes/mpesapaymentRoutes"
 import packagesRouter from "./routes/packageRoutes"
+import cryptoPaymentRouter from "./routes/crypto";
+import { BACKEND_ROUTE } from './constants';
 import cors from "cors";
 const app = express();
 const PORT  = process.env.PORT
@@ -12,8 +14,9 @@ app.get('/',(req:Request,res:Response)=>{
     res.send("hellow")
 })
 
-app.use('/api/auth', authRoutes);
-app.use("/api/payment",paymentRouter);
-app.use("/api/package",packagesRouter);
+app.use(`/${BACKEND_ROUTE}/cryptopayment`,cryptoPaymentRouter);
+app.use(`/${BACKEND_ROUTE}/auth`, authRoutes);
+app.use(`/${BACKEND_ROUTE}/payment`,paymentRouter);
+app.use(`/${BACKEND_ROUTE}/packag`,packagesRouter);
 
 app.listen(PORT,()=>console.log("Listening at port 3000"))

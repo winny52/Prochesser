@@ -3,7 +3,7 @@ import { useRecoilValue } from 'recoil';
 import { userState } from '../state/userState';
 
 const Profile = () => {
-  const user = useRecoilValue(userState).user;
+  const user = useRecoilValue(userState);
   const handleLogoutClick = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
