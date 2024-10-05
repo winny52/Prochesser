@@ -23,7 +23,7 @@ import WelcomePage from './classes/WelcomePage';
 import ClassesFooter from './Dashboard/ClassesFooter';
 import Profile from './Dashboard/Profile';
 import { PrivateRoute, PublicRoute, SubscriptionPrivateRoutes } from './routes'; 
-import { userState, fetchUserState } from "./state/userState";
+import { userState, fetchUserState,isLoadingState } from "./state/userState";
 import Payment from './payment';
 import Spinner from './components/spinner';
 import TawkTo from './components/Tawkto';
@@ -33,26 +33,25 @@ import ResetPassword from './components/resetpassword';
 function App() {
   const location = useLocation();
   const [user, setUser] = useRecoilState(userState);
-
-  // Check if the current route starts with "/dashboard or /profile"
-  const isDashboardOrProfileRoute = location.pathname.startsWith('/dashboard') || location.pathname === '/profile';
-  
+  const [isLoading, setIsLoading] = useRecoilState(isLoadingState);
+  const isDashboardOrProfileRoute = location.pathname.startsWith('/dashboard') || location.pathname === '/profile';  
   const userLoadable = useRecoilValueLoadable(fetchUserState);
 
-  // Handle user loading based on Loadable state
   useEffect(() => {
+    setIsLoading(true);
+
     if (userLoadable.state === 'hasValue') {
-      setUser(userLoadable.contents); // Set user data in state
-      console.log(userLoadable.contents);
+      setUser(userLoadable.contents); 
+      setIsLoading(false); 
     } else if (userLoadable.state === 'hasError') {
       setUser(null);
+      setIsLoading(false); 
     }
-  }, [userLoadable, setUser]);
+  }, [userLoadable, setUser, setIsLoading]);
 
-  if (userLoadable.state === 'loading') {
-    return <Spinner/>;
+  if (isLoading) {
+    return <Spinner />;
   }
-
   return (
     <div className='w-screen'>
       <TawkTo/>
@@ -77,11 +76,11 @@ function App() {
         <Route path="/how-it-works" element={<HowItWorks />} />
         <Route path="/learnchess" element={<Content />} />
         <Route path="/blog" element={<Blog />} />
-       <Route path='/prompt' element={<SubscriptionPrompt/>}/>
+       <Route path='/prompt/:type' element={<SubscriptionPrompt/>}/>
         {/* Protected Routes wrapped in Route */}
         <Route path="/dashboard" element={<SubscriptionPrivateRoutes element={Dashboard} />} />
-        <Route path="/welcome" element={<PrivateRoute element={WelcomePage} />} />
-        <Route path="/profile" element={<PrivateRoute element={Profile} />} />
+        <Route path="/welcome" element={<SubscriptionPrivateRoutes element={WelcomePage} />} />
+        <Route path="/profile" element={<SubscriptionPrivateRoutes element={Profile} />} />
         <Route path="/payment/:secret_token/:api_ref/:mode" element={<PublicRoute element={Payment} />} />
       </Routes>
 

@@ -1,4 +1,3 @@
-// src/state/userState.ts
 import { atom, selector } from 'recoil';
 import axios from 'axios';
 import { BACKEND_URL } from '../constant';
@@ -7,15 +6,17 @@ interface User {
   id: number;
   email: string;
   firstname: string;
-lastname:string;
-subscriptions:any
+  lastname: string;
+  subscriptions: any;
 }
 
+// Atom to store user data
 export const userState = atom<User | null>({
   key: 'userState',
   default: null,
 });
 
+// Selector to fetch user data (without managing loading state)
 export const fetchUserState = selector<User | null>({
   key: 'fetchUserState',
   get: async ({ get }) => {
@@ -28,8 +29,6 @@ export const fetchUserState = selector<User | null>({
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log(response);
-        
         return response.data;
       } catch (error) {
         console.error('Error fetching user:', error);
@@ -39,4 +38,10 @@ export const fetchUserState = selector<User | null>({
     }
     return null;
   },
+});
+
+// Atom to track the loading state
+export const isLoadingState = atom<boolean>({
+  key: 'isLoadingState',
+  default: false,
 });
