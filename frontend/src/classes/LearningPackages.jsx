@@ -60,7 +60,7 @@ const LearningSection = () => {
               <button
                 className="bg-yellow-600 text-white font-bold py-2 px-6 rounded-full hover:bg-yellow-500 hover:shadow-lg transition-colors duration-300"
                 onClick={(e) => {
-                 (user)?window.location.href = `/prompt/${packageData.type}`:window.location.href = '/login'
+                 (user)?window.location.href = `/prompt/${packageData.type}`:window.location.href = '/register'
                 }}
               >
                 {packageData.cta}
