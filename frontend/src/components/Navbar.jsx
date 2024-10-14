@@ -79,7 +79,7 @@ const Navbar = () => {
                     </li>
                     <li>
                       <Link
-                        to="/login"
+                        to="https://chess.gramo37.com/login"
                         className="block text-black hover:text-yellow-500"
                         onClick={() => setLoginSubmenuOpen(false)}
                       >
@@ -112,13 +112,13 @@ const Navbar = () => {
                       </Link>
                     </li>
                     <li>
-                      <Link
-                        to="/signup"
+                      <a
+                        href="https://chess.gramo37.com/signup"
                         className="block text-black hover:text-yellow-500"
                         onClick={() => setSubmenuOpen(false)}
                       >
                         Gamers Account
-                      </Link>
+                      </a>
                     </li>
                   </ul>
                 </div>
@@ -180,9 +180,9 @@ const Navbar = () => {
                       </Link>
                     </li>
                     <li>
-                      <Link to="/login" className="block text-black hover:text-yellow-500" onClick={toggleMenu}>
+                      <a href="https://chess.gramo37.com/login" className="block text-black hover:text-yellow-500" onClick={toggleMenu}>
                         Gamers
-                      </Link>
+                      </a>
                     </li>
                   </ul>
                 )}
@@ -203,9 +203,9 @@ const Navbar = () => {
                       </Link>
                     </li>
                     <li>
-                      <Link to="/signup" className="block text-black hover:text-yellow-500" onClick={toggleMenu}>
+                      <a href="https://chess.gramo37.com/signup" className="block text-black hover:text-yellow-500" onClick={toggleMenu}>
                         Gamers Account
-                      </Link>
+                      </a>
                     </li>
                   </ul>
                 )}
