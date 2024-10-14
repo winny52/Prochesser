@@ -77,6 +77,11 @@ function App() {
         <Route path="/learnchess" element={<Content />} />
         <Route path="/blog" element={<Blog />} />
        <Route path='/prompt/:type' element={<SubscriptionPrompt/>}/>
+
+       //testing dashboard to be deleted
+       <Route path="/dashboard" element={<Dashboard />} />
+
+
         {/* Protected Routes wrapped in Route */}
         <Route path="/dashboard" element={<SubscriptionPrivateRoutes element={Dashboard} />} />
         <Route path="/welcome" element={<SubscriptionPrivateRoutes element={WelcomePage} />} />
