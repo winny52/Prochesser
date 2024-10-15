@@ -68,7 +68,7 @@ const FrequentlyAskedQuestions = () => {
               Are My Financial Details Safe When Depositing Money?
             </h3>
             <p className="text-lg text-gray-700">
-              Absolutely. We partner with PayStack, a secure and reputable payment processor, to protect all mobile money and card transactions.
+            Absolutely. We partner with PayPal and IntaSend, both secure and reputable payment processors, to safeguard all mobile money and card transactions.
             </p>
           </div>
           <div className="p-4 border-l-4 border-yellow-500 bg-white rounded-lg shadow-lg">
@@ -92,7 +92,7 @@ const FrequentlyAskedQuestions = () => {
               Can I Deposit Using Cryptocurrency?
             </h3>
             <p className="text-lg text-gray-700">
-              Yes, for cryptocurrency deposits, please get in touch with us at support@prochesser.com.
+            Yes, for cryptocurrency deposits, please select the crypto option from the dashboard, follow the instructions, and complete the deposit.
             </p>
           </div>
           <div className="p-4 border-l-4 border-yellow-500 bg-white rounded-lg shadow-lg">
