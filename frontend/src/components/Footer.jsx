@@ -30,6 +30,9 @@ const Footer = () => {
             <li className="mb-2">
               <Link to="/game-lobby" className="text-black hover:text-yellow-500">Play Chess</Link>
             </li>
+            <li className="mb-2">
+              <Link to="/affliate" className="text-black hover:text-yellow-500">Become a ProChesser Affliate</Link>
+            </li>
           </ul>
         </div>
 

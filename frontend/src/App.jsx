@@ -72,6 +72,7 @@ function App() {
         <Route path="/faqs" element={<FrequentlyAskedQuestions />} />
         <Route path="/about" element={<About />} />
         <Route path="/testimonials" element={<Testimonials />} />
+        <Route path="/affliate" element={<h1 className='text-center text-3xl'>Become a ProChesser Affliate</h1>} />
         <Route path="/subscribe" element={<Newsletter />} />
         <Route path="/how-it-works" element={<HowItWorks />} />
         <Route path="/learnchess" element={<Content />} />
