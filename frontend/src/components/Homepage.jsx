@@ -1,6 +1,5 @@
 import React from "react";
 import HeroSection from "./HeroSection";
-import HowItWorks from "./Howitworks";
 import GameLobbySection from "./GameLobbySection";
 import WhyChooseProChesser from "./WhyChooseProChesser";
 import FAQ from "./miniFAQ";
