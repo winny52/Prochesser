@@ -242,7 +242,7 @@ export const checkTransactionStatus = async () => {
       const dbTransaction = transactions[i];
       console.log(dbTransaction);
 
-      const result = await prisma.$transaction(async (prisma) => {
+      const result = await prisma.$transaction(async (prisma: any) => {
         // Update the transaction status to COMPLETED
         const updatedTransaction = await prisma.transaction.update({
           where: { id: dbTransaction.id },

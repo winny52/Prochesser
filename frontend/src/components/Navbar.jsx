@@ -79,7 +79,7 @@ const Navbar = () => {
                     </li>
                     <li>
                       <Link
-                        to="https://chess.gramo37.com/login"
+                        to="http://prochesser.com/login"
                         className="block text-black hover:text-yellow-500"
                         onClick={() => setLoginSubmenuOpen(false)}
                       >
@@ -113,7 +113,7 @@ const Navbar = () => {
                     </li>
                     <li>
                       <a
-                        href="https://chess.gramo37.com/signup"
+                        href="http://prochesser.com/signup"
                         className="block text-black hover:text-yellow-500"
                         onClick={() => setSubmenuOpen(false)}
                       >
@@ -180,7 +180,7 @@ const Navbar = () => {
                       </Link>
                     </li>
                     <li>
-                      <a href="https://chess.gramo37.com/login" className="block text-black hover:text-yellow-500" onClick={toggleMenu}>
+                      <a href="http://prochesser.com/login" className="block text-black hover:text-yellow-500" onClick={toggleMenu}>
                         Gamers
                       </a>
                     </li>
@@ -203,7 +203,7 @@ const Navbar = () => {
                       </Link>
                     </li>
                     <li>
-                      <a href="https://chess.gramo37.com/signup" className="block text-black hover:text-yellow-500" onClick={toggleMenu}>
+                      <a href="http://prochesser.com/signup" className="block text-black hover:text-yellow-500" onClick={toggleMenu}>
                         Gamers Account
                       </a>
                     </li>
