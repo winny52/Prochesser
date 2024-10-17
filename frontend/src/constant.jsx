@@ -1,6 +1,9 @@
-export const BACKEND_URL =
-  import.meta.env.VITE_BACKEND_URL ?? "https://localhost:3000";
-export const CHESS_GAME_APP_URL = "https://chess.gramo37.com";
+// export const BACKEND_URL =
+//   import.meta.env.VITE_BACKEND_URL ?? "https://localhost:3000";
+
+export const CHESS_GAME_APP_URL = "http://prochesser.com";
+export const BACKEND_URL = "http://academy.prochesser.com"
+
 export const packages = [
   {
     name: 'Beginner Package: "Pawn to King"',

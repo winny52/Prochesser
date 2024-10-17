@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { userState } from '../state/userState';
 import { useRecoilValue } from 'recoil';
@@ -9,7 +9,7 @@ const Navbar = () => {
   const [submenuOpen, setSubmenuOpen] = useState(false); // Submenu state for account creation
   const [loginSubmenuOpen, setLoginSubmenuOpen] = useState(false); // Submenu state for login
   const user = useRecoilValue(userState);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const toggleMenu = () => setIsOpen(!isOpen);
   const toggleSubmenu = () => setSubmenuOpen(!submenuOpen);
@@ -163,7 +163,7 @@ const Navbar = () => {
           </li>
 
           {/* Add Login and Create Account to mobile menu */}
-          {!user && (
+          {!user ? (
             <>
               <li>
                 <button
@@ -210,6 +210,15 @@ const Navbar = () => {
                   </ul>
                 )}
               </li>
+            </>
+          ) : (
+            <>
+              <button
+                onClick={handleLogoutClick}
+                className="bg-yellow-500 text-black font-semibold py-2 px-3 rounded-full shadow-lg transition-transform duration-300 ease-in-out hover:scale-105 hover:bg-yellow-400"
+              >
+                Logout
+              </button>
             </>
           )}
         </ul>
