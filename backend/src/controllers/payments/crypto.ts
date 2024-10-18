@@ -1,6 +1,5 @@
 import { BACKEND_ROUTE, BACKEND_URL, BINANCE_API_KEY, BINANCE_SECRET_KEY, CRYPTO_DEPOSIT_PERCENT, CRYPTO_MERCHANT_ID, CRYPTO_PAYMENT_API_KEY, CRYTPOMUS_URI, FRONTEND_URL, NODE_ENV } from "../../constants";
 import prisma from "../../prismaClient";
-import { Request,Response } from "express";
 import { cloneDeep } from "lodash";
 import { generateSignature, generateUniqueId, getFinalAmountInCurrency } from "../../utils";
 import axios from "axios";
@@ -80,7 +79,7 @@ export  function matchTransactions(dbTransactions: any[], transactions: any[]) {
 
 
   //Sends a wallet address to the user to make a payment
-  export const getId = async (req:any, res: Response) => {
+  export const getId = async (req:any, res: any) => {
   try {
     const { address, packagename, currency } = req.body;
     const user = req.user;

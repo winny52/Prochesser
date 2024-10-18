@@ -1,11 +1,10 @@
-import { Request, Response } from "express";
 import prisma from "../../prismaClient";
 import { verifyToken, generateToken } from "../../utils";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { SendForgotPassword, SendNewsletterNotification } from "../../verify";
 
-export const verifyPasswordToken = async (req: Request, res: Response) => {
+export const verifyPasswordToken = async (req: any, res: any) => {
   console.log("verify");
 
   try {
@@ -46,7 +45,7 @@ export const verifyPasswordToken = async (req: Request, res: Response) => {
   }
 };
 
-export async function ForgotPassword(req: Request, res: Response) {
+export async function ForgotPassword(req: any, res: any) {
   try {
     const { email } = req.body;
 
@@ -77,7 +76,7 @@ export async function ForgotPassword(req: Request, res: Response) {
   }
 }
 
-export const resetPassword = async (req: Request, res: Response) => {
+export const resetPassword = async (req: any, res: any) => {
   try {
     const { token, newPassword } = req.body;
 
@@ -128,7 +127,7 @@ export const resetPassword = async (req: Request, res: Response) => {
   }
 };
 
-export const verifyResetToken = async (req: Request, res: Response) => {
+export const verifyResetToken = async (req: any, res: any) => {
   const { token } = req.params;
 
   if (!token) {
@@ -174,7 +173,7 @@ export const verifyResetToken = async (req: Request, res: Response) => {
   }
 };
 
-export async function NewsLetter(req: Request, res: Response) {
+export async function NewsLetter(req: any, res: any) {
   try {
     const { email } = req.body;
     if (!email) {

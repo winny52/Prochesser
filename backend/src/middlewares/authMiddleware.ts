@@ -1,4 +1,3 @@
-import { Request,Response,NextFunction } from "express";
 import prisma from "../prismaClient";
 import { verifyToken } from "../utils";
 import { body } from 'express-validator';
@@ -14,7 +13,7 @@ export const validateLogin = [
   body('email').isEmail().withMessage('Enter a valid email'),
   body('password').exists().withMessage('Password is required'),
 ];
-export const authenticateJWT = async (req: any, res: Response, next: NextFunction) => {
+export const authenticateJWT = async (req: any, res: any, next: any) => {
   const authHeader = req.headers["authorization"];
   
   if (!authHeader) {

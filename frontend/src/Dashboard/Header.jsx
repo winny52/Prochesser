@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa"; // Icons for the mobile menu
 
@@ -31,10 +31,7 @@ const Header = () => {
           <ul className="flex space-x-4">
             {[
               { to: "/dashboard", label: "Home" },
-              { to: "/how-it-works", label: "How it works" },
               { to: "/courses", label: "My Courses" },
-              { to: "/community", label: "Community" },
-              { to: "/resources", label: "Resources" },
               { to: "/profile", label: "Profile" },
             ].map((link, index) => (
               <li key={index}>

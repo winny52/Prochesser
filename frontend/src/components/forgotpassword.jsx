@@ -1,12 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link} from 'react-router-dom';
-import { fetchForgotPassword, fetchLogin } from '../fetch/fetch';
+import { fetchForgotPassword} from '../fetch/auth/index';
 
 const ForgotPassword = () => {
 const [email,setEmail]=useState('')
-
-  const [error, setError] = useState('');
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,6 +13,7 @@ const [email,setEmail]=useState('')
    }
 
 const data = await fetchForgotPassword(email)
+console.log(data);
 
   };
 

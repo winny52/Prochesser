@@ -1,7 +1,6 @@
- import { Request,Response } from "express";
  import prisma from "../../prismaClient";
 
- export async function getPackages(req: Request, res: Response) {
+ export async function getPackages(req: any, res: any) {
     try {
       const packages = await prisma.package.findMany(); 
       res.status(200).json(packages); 
@@ -12,7 +11,7 @@
   }
   
   // Function to get purchased packages by user
-  export async function getUserPurchasedPackages(req: any, res: Response) {
+  export async function getUserPurchasedPackages(req: any, res: any) {
     const user = req.user;
   
     try {

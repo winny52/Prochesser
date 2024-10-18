@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { packages } from "../constant";
 import { useRecoilValue } from "recoil";
 import { userState } from "../state/userState";
@@ -12,12 +12,12 @@ const LearningSection = () => {
   return (
     <section
       id="learningpackages"
-      className="learning-section py-12 bg-gray-100"
+      className="learning-section py-12  bg-black mt-10"
     >
       {packag && (
         <PaymentPopup setPackag={setPackag} user={user} packag={packag} />
       )}
-      <h2 className="text-4xl font-bold text-center mb-12 text-gray-800">
+      <h2 className="text-4xl font-bold text-center mb-12 ">
         Our Learning Packages
       </h2>
       <div className="package-grid grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-8">
@@ -43,7 +43,7 @@ const LearningSection = () => {
             <p className="text-gray-900 mb-6 hover:text-white">
               {packageData.description}
             </p>
-            <h4 className="text-lg font-semibold mb-2">What You'll Learn:</h4>
+            <h4 className="text-lg font-semibold mb-2">What You&apos;ll Learn:</h4>
             <ul className="list-inside space-y-2 mb-6">
               {packageData.whatYoullLearn.map((lesson, i) => (
                 <li
@@ -75,7 +75,7 @@ const LearningSection = () => {
             <div className="flex justify-center mt-4">
               <button
                 className="bg-yellow-600 text-white font-bold py-2 px-6 rounded-full hover:bg-yellow-500 hover:shadow-lg transition-colors duration-300"
-                onClick={(e) => {
+                onClick={() => {
                   user
                     ? (window.location.href = `/prompt/${packageData.type}`)
                     : (window.location.href = "/register");

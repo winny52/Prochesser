@@ -8,12 +8,12 @@ import {
   verifyResetToken,
   verifyPasswordToken,
 } from "../controllers/auth/forgotPassword";
-const {
+import  {
   Signup,
   Login,
   refresh,
-} = require("../controllers/auth/authController");
-const { authenticateJWT } = require("../middlewares/authMiddleware");
+} from "../controllers/auth/authController";
+import { authenticateJWT } from "../middlewares/authMiddleware";
 const router = express.Router();
 
 router.post("/signup", validateSignup, Signup);

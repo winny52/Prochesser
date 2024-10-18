@@ -1,4 +1,3 @@
-import { Request,Response } from "express";
 import prisma from "../../prismaClient";
 import { compareHash, generateUniqueId, getFinalAmountInCurrency, isValidEmail } from "../../utils";
 import { FRONTEND_URL, INTASEND_IS_TEST, INTASEND_PUBLISHABLE_KEY, INTASEND_SECRET_KEY, REDIRECT_URL } from "../../constants";
@@ -7,7 +6,7 @@ const IntaSend   = require("intasend-node")
  const NODE_ENV = process.env.NODE_ENV ?? "development"
 
 
- export const getUrl = async (req: any, res: Response) => {
+ export const getUrl = async (req: any, res: any) => {
   const {  name } = req.body;
   console.log(req.user);
   
@@ -122,7 +121,7 @@ const IntaSend   = require("intasend-node")
 };
 
 
-export const successFullTransaction = async (req: Request, res: Response) => {
+export const successFullTransaction = async (req: any, res: any) => {
   try {
     const { secret_token, mode, api_ref } = req.body;
 
@@ -237,3 +236,318 @@ export const successFullTransaction = async (req: Request, res: Response) => {
     res.status(500).json({ error: "Failed to record purchase." });
   }
 };
+
+
+export const validateTransaction = async (req:any, res: any) => {
+  try {
+    const { api_ref, challenge, state } = req.body;
+    const INSTASEND_CHALLENGE = ''
+    console.log(
+      "--------------------------------------------------------------------------------Triggering webhook for deposits--------------------------------------------------------------------------------------------"
+    );
+
+    console.log(challenge, api_ref, state, INSTASEND_CHALLENGE);
+
+    // Check for challenge and match it
+    if (challenge !== INSTASEND_CHALLENGE) {
+      console.log("User not authorized");
+      return res.status(400).json({
+        status: "error",
+        message: "User is unauthorized",
+      });
+    }
+
+    // Check for api_ref and match it
+    const transaction = await prisma.transaction.findFirst({
+      where: {
+       apiRef:api_ref,
+      },
+      select: {
+        id: true,
+        userId: true,
+        finalAmountInUSD: true,
+        status: true,
+        secretToken: true,
+        packageId: true,
+      },
+    });
+
+    if (!transaction) {
+      console.log("Transaction not found");
+      return res
+        .status(404)
+        .json({ message: "Transaction not found", status: "error" });
+    }
+
+    console.log("Transaction for deposit found -> ", transaction);
+
+    try {
+      if(state === "FAILED") {
+        await prisma.transaction.update({
+          where: { id: transaction.id },
+          data: {
+            status: "CANCELLED",
+          },
+        });
+
+        return res.status(400).json({
+          message: `Status is ${state}`,
+          status: "error",
+        });
+      }
+
+      if (state !== "COMPLETE") {
+        console.log("Payment is", state);
+
+        return res.status(400).json({
+          message: `Status is ${state}`,
+          status: "error",
+        });
+      }
+
+      // Check for if the transaction is pending
+      if (transaction.status !== "PENDING") {
+        console.log(
+          "Transaction already completed with status -> ",
+          transaction.status
+        );
+        return res.status(401).json({
+          message: "Transaction already completed or cancelled",
+          status: "error",
+        });
+      }
+
+      const result = await prisma.$transaction(async (prisma: any) => {
+      // Update the transaction status to COMPLETED
+      const updatedTransaction = await prisma.transaction.update({
+        where: { id: transaction.id },
+        data: { status: "COMPLETED" },
+      });
+
+      // Check for existing active subscription for the user-package combination
+      const existingSubscription = await prisma.subscription.findFirst({
+        where: {
+          userId: transaction.userId,
+          packageId: transaction.packageId,
+          status: 'ACTIVE',
+        }
+      });
+
+      if (existingSubscription) {
+        // Optionally, extend the existing subscription's endDate
+        const currentEndDate = existingSubscription.endDate || new Date();
+        const newEndDate = new Date(currentEndDate);
+        newEndDate.setMonth(newEndDate.getMonth() + 1); // Extend by 1 month
+
+        const updatedSubscription = await prisma.subscription.update({
+          where: { id: existingSubscription.id },
+          data: {
+            endDate: newEndDate,
+          }
+        });
+
+        return { updatedTransaction, updatedSubscription };
+      } else {
+        // Create a new subscription
+        const startDate = new Date();
+        const endDate = new Date();
+        endDate.setMonth(endDate.getMonth() + 1); // Set endDate to 1 month from now
+
+        const newSubscription = await prisma.subscription.create({
+          data: {
+            userId: transaction.userId,
+            packageId: transaction.packageId,
+            status: 'ACTIVE',
+            startDate: startDate,
+            endDate: endDate,
+          }
+        });
+
+        return { updatedTransaction, newSubscription };
+      }
+    });
+
+      console.log("Payment Completed");
+      res.status(200).json({
+        message: "Payment Successful",
+      });
+    } catch (error) {
+      console.log("Something went wrong in updating the balances", error);
+      await prisma.transaction.update({
+        where: { id: transaction.id },
+        data: {
+          status: "ERROR",
+        },
+      });
+    }
+  } catch (error) {
+    console.error("Error Validating Deposit:", error);
+    res.status(500).json({ message: "Internal server error", status: "error" });
+  }
+};
+
+export const updateTransaction = async (req: any, res: any) => {
+  try {
+    const { invoice_id } = req.body;
+    try {
+      const transactionCheck = await updateTransactionChecks(invoice_id);
+
+      if (!transactionCheck.status) {
+        return res.status(400).json({
+          status: false,
+          message: transactionCheck.message,
+        });
+      }
+
+      return res.status(200).json({
+        message: "Success",
+        resp: transactionCheck.message,
+      });
+    } catch (error) {
+      console.log(
+        "Something went wrong while fetching the transaction from Instasend",
+        error
+      );
+      res.status(500).json({ message: "Instasend error", status: "error" });
+    }
+  } catch (error) {
+    console.error("Error Fetching Transaction:", error);
+    res.status(500).json({ message: "Internal server error", status: "error" });
+  }
+};
+
+
+export async function updateTransactionChecks(invoice_id: string) {
+  try {
+    if(!invoice_id) return {
+      status: false,
+      message: "Invoice ID not provided"
+    }
+    const IntaSend = require("intasend-node");
+
+    let intasend = new IntaSend(
+      INTASEND_PUBLISHABLE_KEY,
+      INTASEND_SECRET_KEY,
+      INTASEND_IS_TEST
+    );
+
+    let collection = intasend.collection();
+    let resp = await collection.status(invoice_id);
+
+    if (!resp || !resp?.invoice?.state) {
+      return {
+        status: false,
+        message: "Transaction not found in Instasend",
+      };
+    }
+
+    if (resp.invoice.state !== "COMPLETE") {
+      // Don't update the DB and send a error message
+      return {
+        status: false,
+        message: "Transaction is imcomplete in instasend",
+      };
+    }
+
+    // If it is complete
+    // Check in DB if the status is PENDING
+    const transaction = await prisma.webhook.findFirst({
+      where: {
+        invoice_id,
+      },
+      select: {
+        invoice_id: true,
+        transaction: {
+          select: {
+            apiRef: true,
+            status: true,
+            userId: true,
+            finalAmountInUSD: true,
+            id: true,
+            packageId: true,
+          },
+        },
+      },
+    });
+
+    if (!transaction || !transaction.transaction) {
+      return {
+        status: false,
+        message: "Transaction not found",
+      };
+    }
+
+    // If status not pending return error
+    if (
+      !transaction.transaction.status ||
+      transaction.transaction.status !== "PENDING"
+    ) {
+      return {
+        status: false,
+        message: "Transaction already completed or cancelled",
+      };
+    }
+
+    // Update transaction it as successful
+  await prisma.$transaction(async (prisma: any) => {
+      // Update the transaction status to COMPLETED
+      const updatedTransaction = await prisma.transaction.update({
+        where: { id: transaction.invoice_id },
+        data: { status: "COMPLETED" },
+      });
+
+      // Check for existing active subscription for the user-package combination
+      const existingSubscription = await prisma.subscription.findFirst({
+        where: {
+          userId: transaction.transaction?.userId,
+          packageId: transaction.transaction?.packageId,
+          status: 'ACTIVE',
+        }
+      });
+
+      if (existingSubscription) {
+        // Optionally, extend the existing subscription's endDate
+        const currentEndDate = existingSubscription.endDate || new Date();
+        const newEndDate = new Date(currentEndDate);
+        newEndDate.setMonth(newEndDate.getMonth() + 1); // Extend by 1 month
+
+        const updatedSubscription = await prisma.subscription.update({
+          where: { id: existingSubscription.id },
+          data: {
+            endDate: newEndDate,
+          }
+        });
+
+        return { updatedTransaction, updatedSubscription };
+      } else {
+        // Create a new subscription
+        const startDate = new Date();
+        const endDate = new Date();
+        endDate.setMonth(endDate.getMonth() + 1); // Set endDate to 1 month from now
+
+        const newSubscription = await prisma.subscription.create({
+          data: {
+            userId: transaction.transaction?.userId,
+            packageId: transaction.transaction?.packageId,
+            status: 'ACTIVE',
+            startDate: startDate,
+            endDate: endDate,
+          }
+        });
+
+        // return { updatedTransaction, newSubscription };
+      }
+    });
+
+    return {
+      status: true,
+      message: resp
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      status: false,
+      message: "Internal Server Error",
+    };
+  }
+}

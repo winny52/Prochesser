@@ -1,6 +1,6 @@
 import express from 'express';
-const { authenticateJWT } = require('../middlewares/authMiddleware');
-const {getPackages,getUserPurchasedPackages}=require("../controllers/package")
+import { authenticateJWT } from '../middlewares/authMiddleware';
+import {getPackages,getUserPurchasedPackages} from "../controllers/package"
 const router = express.Router();
 
 

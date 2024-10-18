@@ -1,13 +1,12 @@
 // src/controllers/authController.ts
 
-import { Request, Response } from 'express';
 import prisma from '../../prismaClient';
 import bcrypt from 'bcrypt';
 import { generateToken } from '../../utils';
 
 const saltRounds = 10;
 
-export const Signup = async (req: Request, res: Response) => {
+export const Signup = async (req: any, res: any) => {
   console.log(req.body);
   
   const { firstname, lastname, password,email } = req.body;
@@ -41,7 +40,7 @@ console.log('nlkvklam',existingUser);
   }
 };
 
-export const Login = async (req: Request, res: Response) => {
+export const Login = async (req: any, res: any) => {
   const { email, password } = req.body;
 
   try {
@@ -64,7 +63,7 @@ export const Login = async (req: Request, res: Response) => {
   }
 };
 
-export const refresh =  async (req:any,res:Response)=>{
+export const refresh =  async (req:any,res:any)=>{
   try {
     if (req.user) {
       res.status(200).json({...req.user});
