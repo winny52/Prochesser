@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect} from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -7,27 +7,16 @@ import {
 } from "react-router-dom";
 import { RecoilRoot, useRecoilState, useRecoilValueLoadable } from "recoil";
 import "./App.css";
-import Login from "./components/Login";
-import SignUp from "./components/Signup";
-import Homepage from "./components/Homepage";
 import Navbar from "./components/Navbar";
-import FrequentlyAskedQuestions from "./components/FAQ";
-import Footer from "./components/Footer";
-import About from "./components/About";
-import Testimonials from "./components/Testimonials";
-import Newsletter from "./components/Newsletter";
-import HowItWorks from "./components/Howitworks";
 import ScrollToTop from "./components/ScrollTop";
 import SignIn from "./classes/Signin";
 import Dashboard from "./Dashboard/Dashboard";
-import Blog from "./components/Blog";
-import Content from "./classes/Content";
+import LearningPackages from "./classes/LearningPackages";
 import Register from "./classes/Register";
 import Header from "./Dashboard/Header";
 import WelcomePage from "./classes/WelcomePage";
-import ClassesFooter from "./Dashboard/ClassesFooter";
 import Profile from "./Dashboard/Profile";
-import { PrivateRoute, PublicRoute, SubscriptionPrivateRoutes } from "./routes";
+import {  PublicRoute, SubscriptionPrivateRoutes } from "./routes";
 import { userState, fetchUserState, isLoadingState } from "./state/userState";
 import Payment from "./payment";
 import Spinner from "./components/spinner";
@@ -35,10 +24,6 @@ import TawkTo from "./components/Tawkto";
 import SubscriptionPrompt from "./classes/Subscriptionpage";
 import ForgotPassword from "./components/forgotpassword";
 import ResetPassword from "./components/resetpassword";
-import AffiliateProgram from "./components/affiliate";
-import PrivacyPolicy from "./components/privacy";
-import TermsOfService from "./components/termsofservices";
-import Rules from "./components/rules";
 
 function App() {
   const location = useLocation();
@@ -62,6 +47,7 @@ function App() {
   }, [userLoadable, setUser, setIsLoading]);
 
   if (isLoading) {
+      console.log(user);
     return <Spinner />;
   }
   return (
@@ -72,11 +58,10 @@ function App() {
 
       <ScrollToTop />
       <Routes>
-        {/* Public Routes */}
-        <Route path="/signup" element={<PublicRoute element={SignUp} />} />
-        <Route path="/login" element={<PublicRoute element={Login} />} />
+
         <Route path="/signin" element={<PublicRoute element={SignIn} />} />
         <Route path="/register" element={<PublicRoute element={Register} />} />
+        
         <Route
           path="/forgotpassword"
           element={<PublicRoute element={ForgotPassword} />}
@@ -85,17 +70,7 @@ function App() {
           path="/reset-password/:id"
           element={<PublicRoute element={ResetPassword} />}
         />
-        <Route path="/" element={<Homepage />} />
-        <Route path="/faqs" element={<FrequentlyAskedQuestions />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/testimonials" element={<Testimonials />} />
-        <Route path="/affliate" element={<AffiliateProgram />} />
-        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/terms" element={<TermsOfService />} />
-        <Route path="/subscribe" element={<Newsletter />} />
-        <Route path="/how-it-works" element={<HowItWorks />} />
-        <Route path="/learnchess" element={<Content />} />
-        <Route path="/blog" element={<Blog />} />
+        <Route path="/" element={<LearningPackages />} />
         <Route path="/prompt/:type" element={<SubscriptionPrompt />} />
         {/* Protected Routes wrapped in Route */}
         <Route
@@ -115,8 +90,6 @@ function App() {
           element={<PublicRoute element={Payment} />}
         />
       </Routes>
-
-      {isDashboardOrProfileRoute ? <ClassesFooter /> : <Footer />}
     </div>
   );
 }

@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { fetchUpdatePassword, verifyResetPasswordToken } from '../fetch/fetch';
-import { userState } from '../state/userState';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { fetchUpdatePassword, verifyResetPasswordToken } from '../fetch/auth/index';
 
 const ResetPassword = () => {
   const [password, setPassword] = useState('');
@@ -10,7 +9,6 @@ const ResetPassword = () => {
   const [email,setEmail]=useState('')
 
   const { id } = useParams();
-  const navigate = useNavigate()
   // if(error){
   //   alert(error.message||"Something Happened")
   //   // navigate('/')

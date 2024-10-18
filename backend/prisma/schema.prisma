@@ -61,19 +61,55 @@ model Transaction {
   signature        String
   platform_charges Float?
   checkoutId       String
-  apiRef           String              @default("")
+  apiRef           String             @unique  @default(cuid())
   secretToken      String             @default("") 
   mode             String             @default("")
   status           TransactionStatus  @default(PENDING)
    wallet_address   String            @default("")
   createdAt        DateTime           @default(now())
   updatedAt        DateTime           @updatedAt
+webhook Webhook?
+}
+
+model Webhook {
+  id            String  @id @default(cuid())
+  job_id        String?
+  url           String?
+  invoice_id    String?
+  state         String?
+  provider      String?
+  charges       String?
+  net_amount    String?
+  currency      String?
+  account       String?
+  apiRef       String? @unique
+  host          String?
+  failed_reason String?
+  failed_code   String?
+  created_at    String?
+  updated_at    String?
+
+  transaction Transaction? @relation(fields: [apiRef], references: [apiRef])
+}
+
+model Webhook_retries {
+  id            String        @id @default(cuid())
+  status        WebhookStatus
+  error_message String?
+  job_id        String?
+  api_ref       String?
+}
+
+enum WebhookStatus {
+  SUCCESS
+  FAILURE
 }
 
 enum TransactionStatus {
   PENDING
   COMPLETED
   CANCELLED
+  ERROR
 }
 
 enum SubscriptionStatus {

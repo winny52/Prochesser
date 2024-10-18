@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -18,6 +18,7 @@ const Dashboard = () => {
         const response = await axios.get('http://localhost/wordpress/wp-json/custom/v1/learner');
         setLearner(response.data);
       } catch (err) {
+         console.log(err)
         setError('Failed to fetch learner data');
       } finally {
         setLoading(false);

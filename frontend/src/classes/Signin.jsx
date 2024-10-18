@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
-import {fetchLogin} from '../fetch/fetch';
+import { useState } from 'react';
+import {fetchLogin} from '../fetch/auth/index';
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
@@ -53,7 +52,7 @@ const SignIn = () => {
           </form>
 
           <p className="text-center text-gray-400 mt-4">
-            Don't have an account?{' '}
+            Don&apos;t have an account?
             <a href="/register" className="text-yellow-500 hover:text-yellow-600 underline">
               Register
             </a>

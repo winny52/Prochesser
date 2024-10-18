@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom'; 
-import { fetchSignup } from '../fetch/fetch';
+import { fetchSignup } from '../fetch/auth/index';
 const Register = () => {
   const [formData, setFormData] = useState({
     firstName: '',
@@ -57,7 +57,6 @@ const Register = () => {
             />
           </div>
 
-          {/* Last Name Input */}
           <div>
             <label className="block text-sm font-bold text-gray-300 mb-2" htmlFor="lastName">
               Last Name

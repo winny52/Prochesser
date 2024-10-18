@@ -1,6 +1,6 @@
 export const REDIRECT_URL = process.env.FRONTEND_URL
   ? `${process.env.FRONTEND_URL}/payment`
-  : "http://localhost:3000/payment";
+  : "http://localhost:5173/payment";
 export const FRONTEND_URL = process.env.FRONTEND_URL ?? "http://localhost:5173";
 
 export const INTASEND_PUBLISHABLE_KEY =

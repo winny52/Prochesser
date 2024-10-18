@@ -1,11 +1,11 @@
 
 import express from "express";
-const {
-  successTransaction, getId
-} = require('../controllers/payments/crypto');
-const {authenticateJWT}=require("../middlewares/authMiddleware");
-
 const router = express.Router();
+import {
+  getId
+} from '../controllers/payments/crypto';
+import  {authenticateJWT} from "../middlewares/authMiddleware";
+
 
 router.post("/get-wallet-address", authenticateJWT,getId);
 

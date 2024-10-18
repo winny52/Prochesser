@@ -6,14 +6,10 @@ import { useRecoilValue } from 'recoil';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [submenuOpen, setSubmenuOpen] = useState(false); // Submenu state for account creation
-  const [loginSubmenuOpen, setLoginSubmenuOpen] = useState(false); // Submenu state for login
   const user = useRecoilValue(userState);
-  // const navigate = useNavigate();
 
   const toggleMenu = () => setIsOpen(!isOpen);
-  const toggleSubmenu = () => setSubmenuOpen(!submenuOpen);
-  const toggleLoginSubmenu = () => setLoginSubmenuOpen(!loginSubmenuOpen);
+
 
   const handleLogoutClick = () => {
     localStorage.removeItem('token');
@@ -39,10 +35,8 @@ const Navbar = () => {
         {/* Navigation Links for larger screens */}
         <div className="hidden sm:flex items-center space-x-4">
           <Link to="/" className="text-black hover:text-yellow-500">Home</Link>
-          <Link to="/about" className="text-black hover:text-yellow-500">About</Link>
-          <Link to="/faqs" className="text-black hover:text-yellow-500">FAQs</Link>
-          <Link to="/blog" className="text-black hover:text-yellow-500">Blog</Link>
-          <Link to="/learnchess" className="text-black hover:text-yellow-500">Academy</Link>
+          <Link to="prochesser.com" className="text-black hover:text-yellow-500">Gamers</Link>
+
 
           {user ? (
             <>
@@ -57,72 +51,23 @@ const Navbar = () => {
           ) : (
             <>
               {/* Login Button with Submenu */}
-              <button
-                onClick={toggleLoginSubmenu}
+              <Link
+                to='/signin'
                 className="text-black font-bold py-2 px-4 rounded-full shadow-lg transition duration-300 ease-in-out transform"
               >
                 Login
-              </button>
+              </Link>
 
-              {/* Login Submenu for login options */}
-              {loginSubmenuOpen && (
-                <div className="absolute top-12 right-24 bg-white shadow-lg rounded-lg z-10 p-4">
-                  <ul className="space-y-2">
-                    <li>
-                      <Link
-                        to="/signin"
-                        className="block text-black hover:text-yellow-500"
-                        onClick={() => setLoginSubmenuOpen(false)}
-                      >
-                        Learners
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        to="http://prochesser.com/login"
-                        className="block text-black hover:text-yellow-500"
-                        onClick={() => setLoginSubmenuOpen(false)}
-                      >
-                        Gamers
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
-              )}
 
               {/* Create Account Button with Submenu */}
-              <button
-                onClick={toggleSubmenu}
-                className="bg-yellow-500 text-black font-bold py-2 px-4 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105 hover:bg-yellow-400"
+              <Link
+to="/register"
+                  className="bg-yellow-500 text-black font-bold py-2 px-4 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105 hover:bg-yellow-400"
               >
                 Create Account
-              </button>
+              </Link>
 
-              {/* Submenu for account creation */}
-              {submenuOpen && (
-                <div className="absolute top-12 right-0 bg-white shadow-lg rounded-lg z-10 p-4">
-                  <ul className="space-y-2">
-                    <li>
-                      <Link
-                        to="/register"
-                        className="block text-black hover:text-yellow-500"
-                        onClick={() => setSubmenuOpen(false)}
-                      >
-                        Learners Account
-                      </Link>
-                    </li>
-                    <li>
-                      <a
-                        href="http://prochesser.com/signup"
-                        className="block text-black hover:text-yellow-500"
-                        onClick={() => setSubmenuOpen(false)}
-                      >
-                        Gamers Account
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              )}
+             
             </>
           )}
         </div>
@@ -136,79 +81,26 @@ const Navbar = () => {
               Home
             </Link>
           </li>
-          <li>
-            <Link to="/about" className="text-black hover:text-yellow-500" onClick={toggleMenu}>
-              About
-            </Link>
-          </li>
-          <li>
-            <Link to="/how-it-works" className="text-black hover:text-yellow-500" onClick={toggleMenu}>
-              How It Works
-            </Link>
-          </li>
-          <li>
-            <Link to="/faqs" className="text-black hover:text-yellow-500" onClick={toggleMenu}>
-              FAQs
-            </Link>
-          </li>
-          <li>
-            <Link to="/blog" className="text-black hover:text-yellow-500" onClick={toggleMenu}>
-               Blog
-            </Link>
-          </li>
-          <li>
-            <Link to="/learnchess" className="text-black hover:text-yellow-500" onClick={toggleMenu}>
-              Academy
-            </Link>
-          </li>
-
+          
           {/* Add Login and Create Account to mobile menu */}
           {!user ? (
             <>
               <li>
-                <button
-                  onClick={toggleLoginSubmenu}
+                <Link
+                    to='/signin'
                   className="text-black font-bold py-2 px-4 rounded-full shadow-lg transition duration-300 ease-in-out transform"
                 >
                   Login
-                </button>
-                {loginSubmenuOpen && (
-                  <ul className="space-y-2 pl-4">
-                    <li>
-                      <Link to="/signin" className="block text-black hover:text-yellow-500" onClick={toggleMenu}>
-                        Learners
-                      </Link>
-                    </li>
-                    <li>
-                      <a href="http://prochesser.com/login" className="block text-black hover:text-yellow-500" onClick={toggleMenu}>
-                        Gamers
-                      </a>
-                    </li>
-                  </ul>
-                )}
+                </Link>
               </li>
               <li>
-                <button
-                  onClick={toggleSubmenu}
+                <Link
+                  to="/register"
                   className="bg-yellow-500 text-black font-bold py-2 px-4 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105 hover:bg-yellow-400"
 
                 >
                   Create Account
-                </button>
-                {submenuOpen && (
-                  <ul className="space-y-2 pl-4">
-                    <li>
-                      <Link to="/register" className="block text-black hover:text-yellow-500" onClick={toggleMenu}>
-                        Learners Account
-                      </Link>
-                    </li>
-                    <li>
-                      <a href="http://prochesser.com/signup" className="block text-black hover:text-yellow-500" onClick={toggleMenu}>
-                        Gamers Account
-                      </a>
-                    </li>
-                  </ul>
-                )}
+                </Link>
               </li>
             </>
           ) : (
